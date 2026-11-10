@@ -24,12 +24,10 @@ Status: **design notes, not a mold design.** Nothing here was run through mold-f
 | `battery_door` | Along x | XT60 cutout is through. | Add a molded finger notch and one snap hook on the lower edge. |
 | `head` | Along z (open top) | Lens hole (Ø10, through the front wall, in the pull-perpendicular direction, so it needs a small slide or a core pin) and the cable passage. | The two M2 pilot holes for the lid go into the 5.3 mm thick rear wall, which is a sink risk. Core that wall out and keep only local boss walls. |
 | `head_lid` | Along z | None. | 1 to 2.4 mm. Can become a clip-on lid and drop both screws. |
-| `neck_bracket` | Along the servo axis | Sleeve pocket is open on the horn side, good. | Small, a good first part to mold. |
-| `pelvis` | Along z | Two servo sleeves with rear recess. | Left and right halves are mirror parts, so molding one half twice is cheaper. |
 | `*_hip_yaw_link`, `*_hip_roll_link` | Along the servo axis | Pocket open on the horn side. Cable notch on the side is a small slide, or move it to the parting plane. | Good candidates for PA6-GF. Bosses at the horn screws need ribs. |
 | `*_thigh`, `*_shin` | Along the servo axis | Cable-tie slots (3.2 x 1.6 mm) are through-holes in the pull direction. Windows are exposed servo faces. | The long web needs ribbing. Draft matters on the 120 mm length. |
 | `*_ankle_link`, `*_foot` | Along z for the foot | Foot sole pocket, ankle sleeve. | Foot gets a TPU or overmolded rubber sole. Molding the sole in two shots adds cost, so keep the glued TPU pad in the first volume run. |
-| `*_shoulder_link`, `*_upper_arm`, `*_forearm`, `*_finger` | Along the servo axis (finger: along its pivot axis) | Servo sleeves and cable notches as above. | Forearm is the tallest part (141 mm), so check ejection. Finger can be glass-filled nylon. |
+| `*_upper_arm` (includes the shoulder hub), `*_forearm`, `*_finger` | Along the servo axis (finger: along its pivot axis) | Servo sleeves and cable notches as above. | Forearm is the tallest part (141 mm), so check ejection. Finger can be glass-filled nylon. |
 
 ## Not covered yet
 
