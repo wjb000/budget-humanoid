@@ -1,0 +1,21 @@
+{
+  "_comment": "Domain randomisation for Budget-19. Ranges are the BRIDGE-style starting set from sim/README.md; they are engineering guesses until sim/sysid.py has real servo data. 'scale' = multiply nominal, 'add' = add to nominal, 'range' = absolute uniform range.",
+  "enabled": true,
+  "body_mass":        {"type": "scale", "range": [0.85, 1.15], "per_body": true,  "note": "printed parts vary with infill/filament; servos are +/-2 g"},
+  "com_offset_m":     {"type": "add",   "range": [-0.006, 0.006], "bodies": ["base"], "note": "battery position, wiring"},
+  "kp":               {"type": "scale", "range": [0.7, 1.3], "per_joint": true},
+  "kd":               {"type": "scale", "range": [0.7, 1.3], "per_joint": true},
+  "tau_stall":        {"type": "scale", "range": [0.8, 1.0], "per_joint": true, "note": "datasheet stall is optimistic; sysid.py reports the real number"},
+  "joint_frictionloss": {"type": "range", "range": [0.01, 0.1], "per_joint": true},
+  "joint_damping":    {"type": "range", "range": [0.02, 0.12], "per_joint": true},
+  "joint_armature":   {"type": "scale", "range": [0.7, 1.5], "per_joint": true},
+  "latency_s":        {"type": "range", "range": [0.01, 0.04]},
+  "zero_offset_rad":  {"type": "add",   "range": [-0.05, 0.05], "per_joint": true, "note": "horn mounting error before software zero calibration"},
+  "backlash_rad":     {"type": "range", "range": [0.0, 0.026]},
+  "v_batt":           {"type": "range", "range": [10.0, 12.6], "note": "3S LiPo empty .. full"},
+  "r_batt":           {"type": "range", "range": [0.04, 0.15]},
+  "floor_friction":   {"type": "range", "range": [0.6, 1.2]},
+  "gravity_tilt_deg": {"type": "range", "range": [0.0, 1.5], "note": "IMU mounting tilt applied to the observation"},
+  "obs_noise": {"gyro_rad_s": 0.05, "gravity": 0.02, "joint_pos_rad": 0.004, "joint_vel_rad_s": 0.15},
+  "push": {"interval_s": [2.0, 5.0], "force_n": [0.0, 6.0], "duration_s": 0.1, "note": "random horizontal force on the torso"}
+}
