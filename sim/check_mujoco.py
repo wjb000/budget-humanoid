@@ -7,6 +7,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument('--seconds', type=float, default=5.0)
 ap.add_argument('--kp', type=float, default=None)
 ap.add_argument('--kv', type=float, default=None)
+ap.add_argument('--derate', type=float, default=1.0, help='fraction of datasheet stall torque you actually measured on a real servo (BRIDGE paper uses calibrated, not datasheet, limits); utilization is reported against it')
 ap.add_argument('--render', default=None, help='write a PNG of the final pose (needs EGL/OSMesa)')
 a = ap.parse_args()
 
@@ -44,7 +45,11 @@ print(f'torso tilt: final {tilts[-1]:.2f} deg, max {tilts.max():.2f} deg; both f
 worst = tq.max(0)
 names = [m.actuator(i).name for i in range(m.nu)]
 top = sorted(zip(worst, names), reverse=True)[:5]
-print('peak actuator load (fraction of 2.94 N m stall):', ', '.join(f'{n} {w:.2f}' for w, n in top))
+worst = worst / a.derate
+top = sorted(zip(worst, names), reverse=True)[:5]
+print(f'peak actuator load (fraction of 2.94 N m x {a.derate:g} usable torque):', ', '.join(f'{n} {w:.2f}' for w, n in top))
+sat = [n for w, n in zip(worst, names) if w > 0.8]
+print('upgrade candidates (peak load > 0.8, failure-guided upgrade rule; confirm across seeds and motions before buying STS3250):', ', '.join(sat) if sat else 'none in this stand test')
 print('settled actuator load (last 1 s mean):', ', '.join(f'{n} {w:.2f}' for w, n in sorted(zip(tq[-20:].mean(0), names), reverse=True)[:5]))
 stood = (sag < 30) and tilts.max() < 5 and feet_ok
 print('RESULT:', 'PASS - stands (position hold at zero pose)' if stood else 'FAIL - did not stand')
