@@ -1,0 +1,532 @@
+{
+ "joints": [
+  {
+   "name": "r_hip_yaw",
+   "id": 1,
+   "parent": "base",
+   "child": "r_hip_yaw_link",
+   "axis": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "pos_mm": [
+    -40.0,
+    -55.0,
+    317.0
+   ],
+   "lim": [
+    -0.51,
+    0.28
+   ],
+   "lim_nom": [
+    -0.6,
+    0.6
+   ]
+  },
+  {
+   "name": "r_hip_roll",
+   "id": 2,
+   "parent": "r_hip_yaw_link",
+   "child": "r_hip_roll_link",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    -28.2,
+    -55.0,
+    275.0
+   ],
+   "lim": [
+    -0.26,
+    0.22
+   ],
+   "lim_nom": [
+    -0.5,
+    0.5
+   ]
+  },
+  {
+   "name": "r_hip_pitch",
+   "id": 3,
+   "parent": "r_hip_roll_link",
+   "child": "r_thigh",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    -66.0,
+    275.0
+   ],
+   "lim": [
+    -0.66,
+    0.95
+   ],
+   "lim_nom": [
+    -1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "r_knee",
+   "id": 4,
+   "parent": "r_thigh",
+   "child": "r_shin",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    -107.6,
+    175.0
+   ],
+   "lim": [
+    -0.09,
+    1.9
+   ],
+   "lim_nom": [
+    -0.1,
+    2.0
+   ]
+  },
+  {
+   "name": "r_ankle_pitch",
+   "id": 5,
+   "parent": "r_shin",
+   "child": "r_ankle_link",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    -70.2,
+    78.0
+   ],
+   "lim": [
+    -0.76,
+    0.76
+   ],
+   "lim_nom": [
+    -0.8,
+    0.8
+   ]
+  },
+  {
+   "name": "r_ankle_roll",
+   "id": 6,
+   "parent": "r_ankle_link",
+   "child": "r_foot",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    22.0,
+    -55.0,
+    25.0
+   ],
+   "lim": [
+    -0.33,
+    0.33
+   ],
+   "lim_nom": [
+    -0.35,
+    0.35
+   ]
+  },
+  {
+   "name": "r_shoulder_pitch",
+   "id": 13,
+   "parent": "base",
+   "child": "r_shoulder_link",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    -22.4,
+    -93.5,
+    440.0
+   ],
+   "lim": [
+    -1.9,
+    1.9
+   ],
+   "lim_nom": [
+    -2.0,
+    2.0
+   ]
+  },
+  {
+   "name": "r_shoulder_roll",
+   "id": 14,
+   "parent": "r_shoulder_link",
+   "child": "r_upper_arm",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    -0.14999999999999858,
+    -108.7,
+    412.0
+   ],
+   "lim": [
+    -1.13,
+    0.09
+   ],
+   "lim_nom": [
+    -1.2,
+    1.2
+   ]
+  },
+  {
+   "name": "r_elbow",
+   "id": 15,
+   "parent": "r_upper_arm",
+   "child": "r_forearm",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    16.5,
+    -90.7,
+    359.0
+   ],
+   "lim": [
+    -1.42,
+    1.42
+   ],
+   "lim_nom": [
+    -1.5,
+    1.5
+   ]
+  },
+  {
+   "name": "r_gripper",
+   "id": 16,
+   "parent": "r_forearm",
+   "child": "r_finger",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    16.5,
+    -128.10000000000002,
+    305.0
+   ],
+   "lim": [
+    -0.47,
+    0.11
+   ],
+   "lim_nom": [
+    -0.5,
+    0.2
+   ]
+  },
+  {
+   "name": "l_hip_yaw",
+   "id": 7,
+   "parent": "base",
+   "child": "l_hip_yaw_link",
+   "axis": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "pos_mm": [
+    -40.0,
+    55.0,
+    317.0
+   ],
+   "lim": [
+    -0.28,
+    0.51
+   ],
+   "lim_nom": [
+    -0.6,
+    0.6
+   ]
+  },
+  {
+   "name": "l_hip_roll",
+   "id": 8,
+   "parent": "l_hip_yaw_link",
+   "child": "l_hip_roll_link",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    -28.2,
+    55.0,
+    275.0
+   ],
+   "lim": [
+    -0.22,
+    0.26
+   ],
+   "lim_nom": [
+    -0.5,
+    0.5
+   ]
+  },
+  {
+   "name": "l_hip_pitch",
+   "id": 9,
+   "parent": "l_hip_roll_link",
+   "child": "l_thigh",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    66.0,
+    275.0
+   ],
+   "lim": [
+    -0.95,
+    0.66
+   ],
+   "lim_nom": [
+    -1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "l_knee",
+   "id": 10,
+   "parent": "l_thigh",
+   "child": "l_shin",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    107.6,
+    175.0
+   ],
+   "lim": [
+    -0.09,
+    1.9
+   ],
+   "lim_nom": [
+    -0.1,
+    2.0
+   ]
+  },
+  {
+   "name": "l_ankle_pitch",
+   "id": 11,
+   "parent": "l_shin",
+   "child": "l_ankle_link",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    0.0,
+    70.2,
+    78.0
+   ],
+   "lim": [
+    -0.76,
+    0.76
+   ],
+   "lim_nom": [
+    -0.8,
+    0.8
+   ]
+  },
+  {
+   "name": "l_ankle_roll",
+   "id": 12,
+   "parent": "l_ankle_link",
+   "child": "l_foot",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    22.0,
+    55.0,
+    25.0
+   ],
+   "lim": [
+    -0.33,
+    0.33
+   ],
+   "lim_nom": [
+    -0.35,
+    0.35
+   ]
+  },
+  {
+   "name": "l_shoulder_pitch",
+   "id": 17,
+   "parent": "base",
+   "child": "l_shoulder_link",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    -22.4,
+    93.5,
+    440.0
+   ],
+   "lim": [
+    -1.9,
+    1.9
+   ],
+   "lim_nom": [
+    -2.0,
+    2.0
+   ]
+  },
+  {
+   "name": "l_shoulder_roll",
+   "id": 18,
+   "parent": "l_shoulder_link",
+   "child": "l_upper_arm",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "pos_mm": [
+    -0.14999999999999858,
+    108.7,
+    412.0
+   ],
+   "lim": [
+    -0.09,
+    1.13
+   ],
+   "lim_nom": [
+    -1.2,
+    1.2
+   ]
+  },
+  {
+   "name": "l_elbow",
+   "id": 19,
+   "parent": "l_upper_arm",
+   "child": "l_forearm",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    16.5,
+    90.7,
+    359.0
+   ],
+   "lim": [
+    -1.42,
+    1.42
+   ],
+   "lim_nom": [
+    -1.5,
+    1.5
+   ]
+  },
+  {
+   "name": "l_gripper",
+   "id": 20,
+   "parent": "l_forearm",
+   "child": "l_finger",
+   "axis": [
+    0.0,
+    1.0,
+    0.0
+   ],
+   "pos_mm": [
+    16.5,
+    128.10000000000002,
+    305.0
+   ],
+   "lim": [
+    -0.11,
+    0.18
+   ],
+   "lim_nom": [
+    -0.5,
+    0.2
+   ]
+  },
+  {
+   "name": "neck_yaw",
+   "id": 21,
+   "parent": "base",
+   "child": "neck_bracket",
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "pos_mm": [
+    -40.0,
+    0.0,
+    541.5
+   ],
+   "lim": [
+    -1.13,
+    1.13
+   ],
+   "lim_nom": [
+    -1.2,
+    1.2
+   ]
+  },
+  {
+   "name": "neck_pitch",
+   "id": 22,
+   "parent": "neck_bracket",
+   "child": "head",
+   "axis": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "pos_mm": [
+    -40.0,
+    -22.25,
+    566.5
+   ],
+   "lim": [
+    -0.33,
+    0.33
+   ],
+   "lim_nom": [
+    -0.35,
+    0.35
+   ]
+  }
+ ]
+}
