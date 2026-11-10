@@ -39,7 +39,9 @@ if __name__ == '__main__':
     os.makedirs(a.out, exist_ok=True); torch.set_num_threads(2)
     venv = SubprocVecEnv([make(a.task, a.seed * 100 + i) for i in range(a.envs)])
     model = PPO('MlpPolicy', venv, n_steps=256, batch_size=2048, n_epochs=5, gamma=0.99, gae_lambda=0.95, learning_rate=3e-4, clip_range=0.2,
-                ent_coef=0.0, policy_kwargs=dict(net_arch=dict(pi=[128, 128], vf=[128, 128]), activation_fn=torch.nn.Tanh, log_std_init=-1.5), seed=a.seed, verbose=1, device='cpu')
+                ent_coef=0.0, policy_kwargs=dict(net_arch=dict(pi=[128, 128], vf=[128, 128]), activation_fn=torch.nn.Tanh, log_std_init=-2.0), seed=a.seed, verbose=1, device='cpu')
+    with torch.no_grad():                      # start near 'hold the default pose' so PPO refines a stable behaviour instead of discovering one
+        model.policy.action_net.weight.mul_(0.1); model.policy.action_net.bias.zero_()
     t = time.time()
     model.learn(total_timesteps=a.steps, callback=Log(os.path.join(a.out, 'progress.csv')))
     print(f'trained {a.steps} steps in {time.time() - t:.0f} s ({a.steps / (time.time() - t):.0f} steps/s)')
