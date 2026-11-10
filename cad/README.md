@@ -13,7 +13,7 @@ Parametric, 3D-printable frame for a ~0.61 m, ~2.3 kg humanoid with 22 STS3215 s
 | MAX98357A I2S amp | **Real vendor CAD** | Adafruit_CAD_Parts `3006 MAX98357`, MIT, in `vendor/` |
 | 40 mm speaker | **Real vendor CAD** | Adafruit_CAD_Parts `3968 Speaker 40mm`, MIT, in `vendor/` |
 | Raspberry Pi 5 | **Real vendor CAD** (decimated visual mesh only in the viewer) | Raspberry Pi product portal STEP, MIT, fetched by `fetch_vendor.py` (77 MB, not stored here) |
-| 24 printed frame parts | **Generated** (CadQuery, this repo) | Designed here around the STS3215 STEP outline. Not verified against a physical servo yet. |
+| 27 printed parts (24 frame parts + torso front cover, battery door, head lid) | **Generated** (CadQuery, this repo) | Designed here around the STS3215 STEP outline. Not verified against a physical servo yet. |
 | Pi Camera Module 3, XIAO ESP32-S3, Pololu D24V50F5 buck | **Envelope** (size-only box) | Vendor STEPs exist but their license is not clear, so they are neither committed nor shown as CAD. Dimensions only. |
 | 3S LiPo, Waveshare bus adapters, I2S mic, e-stop, relay/fuse | **Envelope** | Assumed sizes, flagged in the viewer. Check your actual parts. |
 
@@ -24,7 +24,7 @@ Envelopes are drawn translucent grey-dashed in the viewer and are never labelled
 ```
 cad/
   lib.py            STS3215 frame constants, sleeve and horn-plate builders (CadQuery)
-  robot.py          the 24 parts: joints, links, pelvis, torso, neck, head
+  robot.py          the 27 parts: joints, links, pelvis, torso (with Pi 5 standoffs, battery bay, e-stop hole, cover bosses), neck, head, and three covers
   assembly.py       builds parts, servo placements, joint table
   electronics.py    electronics placement (real meshes + envelopes) and overlap check
   collider.py, tune.py, sweep.py   FCL collision checks and joint-limit tuning -> limits.json
@@ -54,11 +54,11 @@ Tested with CadQuery 2.8, Python 3.11 on Linux.
 
 ## What was checked (all in software)
 
-- All 24 parts build as one valid watertight solid each (STL watertight, ASCII).
-- Every part fits a 220 x 220 mm bed in its print orientation (largest: torso 80 x 181 x 180 mm). Overhang area is at most 8.8% of surface per part.
-- Wall thickness on flat faces: 1st percentile about 2.0 mm (designed 2.0 to 2.4 mm). Edge/ligament spots can be thinner; the sampled absolute minimum is lower, so read `print_report.json` and slice-preview thin areas.
+- All 27 parts build as one valid solid each and every STL is watertight (ASCII, 3-decimal coordinates).
+- Every part fits a 220 x 220 mm bed in its print orientation (largest: torso 180 x 181 x 80 mm). Overhang area is at most 11.7% of surface per part (forearm), so slice-preview the forearm and torso.
+- Wall thickness (1st percentile of sampled points): 1.2 to 3.0 mm depending on the part, see `print_report.json`. Designed walls are 2.0 to 2.4 mm. The new window cuts and fillets leave 1.2 to 1.4 mm ligaments on some limb parts (upper arm, head lid, hip links), which is 3 perimeters at a 0.4 mm nozzle. Slice-preview them.
 - Zero pose has no collisions (FCL, servo + printed parts + electronics). Each joint's safe range is the largest range with no collision with every other joint at zero. **Combined multi-joint motion is not swept.**
-- Electronics overlaps: two zero-depth contacts only (bus adapter B and BNO085 against the torso wall).
+- Electronics overlaps: touching contacts only (0.04 mm or less) between bus adapters, torso, BNO085 and the front cover. The covers are included in the check.
 - MuJoCo load and stand check passes (see `../sim/README.md`).
 
 ## Known gaps
@@ -69,8 +69,12 @@ Tested with CadQuery 2.8, Python 3.11 on Linux.
 4. **Sim actuator gains** (kp 20, kv 0.5, damping 0.05, armature 0.02, frictionloss 0.03) are starting values, not identified from hardware.
 5. **Joint limits** are conservative and single-joint only. Hip yaw and roll are narrow by design (legs 110 mm apart); arms cannot adduct past the torso.
 6. **Envelopes** (camera, XIAO, buck, battery, bus adapters, mic, e-stop) are sizes only. Replace them with real CAD once you have licensed models.
-7. No cable routing, connectors, battery cage or skin yet. Cable notches exist at servo tail ends only.
-8. Parts have no license file yet: add one that suits how you want to share the generated frame.
+7. **Cable routing is only notches and tie slots**: servo-tail notches, 3.2 x 1.6 mm cable-tie slots through the thigh, shin and torso side walls. There are no enclosed cable channels or strain-relief clips yet.
+8. **No bearings opposite the horn.** The STS3215 STEP has only a ~2 mm, Ø6 rear stub with a Ø2.4 hole, so a bearing there is not physically supported. It needs a fork bracket and a check on a physical servo. Not designed.
+9. **No limb shells.** The torso, head and three covers are enclosed. Arms and legs still show the servo through windows (see `DFM.md` for the clamshell plan).
+10. **Bus adapters and the Pololu buck are unmounted envelopes.** The Pi 5 (4 standoffs, M2 self-tapping), the XIAO (friction cradle on the front cover, no holes on the board) and the battery (two ribs and two straps) have mounts. The e-stop and XT60 charge port are cut into the printed parts but are envelopes (not CAD).
+11. Covers and battery door are fit-checked against the envelopes only. Heat-set insert pockets are 3.2 mm and need a test print.
+12. Parts have no license file yet: add one that suits how you want to share the generated frame.
 
 ## Licenses and attribution
 

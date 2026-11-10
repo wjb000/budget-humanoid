@@ -8,7 +8,7 @@ Open design for a ~0.61 m, ~2.3 kg, 22-DOF 3D-printed biped on Feetech STS3215 s
 
 ## Where things are
 - `site/`: the website (component map, interactive 3D viewer of the CAD assembly, DOF table, schematic, BOM, CAD status). No build step.
-- `cad/`: parametric CadQuery frame (24 printed parts), one STL + STEP each in `cad/stl`, `cad/step` (already in print orientation), `cad/PRINT_GUIDE.md`, vendor CAD in `cad/vendor` with licenses, `cad/README.md`.
+- `cad/`: parametric CadQuery frame (27 printed parts: 24 frame parts + front cover, battery door, head lid), `cad/DFM.md` (injection-molding notes per part), one STL + STEP each in `cad/stl`, `cad/step` (already in print orientation), `cad/PRINT_GUIDE.md`, vendor CAD in `cad/vendor` with licenses, `cad/README.md`.
 - `sim/`: `budget22.urdf`, `budget22.xml` (MuJoCo), `joint_map.csv` (servo IDs), `check_mujoco.py` (load + stand check), Isaac Lab notes in `sim/README.md`.
 - `tools_gen_data.py`: regenerates `site/assets/data.js` (BOM, pins, DOF table).
 - `.github/workflows/pages.yml`: deploys `site/` to GitHub Pages on push to main (Pages source must be *GitHub Actions*).
