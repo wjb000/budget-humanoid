@@ -1,6 +1,6 @@
 # Budget-19: dirt-cheap 19-DOF humanoid
 
-Open design for a ~0.61 m, ~2.2 kg, 19-DOF 3D-printed biped on Feetech STS3215 servos with a Raspberry Pi 5 + XIAO ESP32-S3. Includes a parametric printable frame, vendor CAD for the parts that have redistributable models, and URDF/MuJoCo files.
+Open design for a ~0.61 m, ~2.2 kg, 19-DOF 3D-printed biped on Feetech STS3215 servos (STS3250 on hip pitch and knee) with a Raspberry Pi 5 + XIAO ESP32-S3. Includes a parametric printable frame, vendor CAD for the parts that have redistributable models, and URDF/MuJoCo files.
 
 **Live site:** https://wjb000.github.io/budget-humanoid/
 

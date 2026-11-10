@@ -61,7 +61,7 @@ The horn hole pattern, case-screw positions and cable-slot position were **measu
 
 ## 3. Hardware (not printed)
 
-- 19 x Feetech STS3215 servos (the CAD and sim use the STS3215 outline for every joint, see "Known gaps" in `cad/README.md`)
+- 15 x Feetech STS3215 (30 kg.cm) and 4 x Feetech STS3250 (50 kg.cm) servos. The STS3250 goes on hip pitch (IDs 3, 9) and knee (IDs 4, 10). Both are 45.2 x 24.7 x 35 mm with the same 25T horn, so the pods are the same; the STS3250 mounting holes were not checked against a physical unit, so run the sleeve coupon with an STS3250 too.
 - 4 x M2 screws per servo for the sleeve (case holes), self-tapping into the servo case, length about 8 to 10 mm (confirm with the sleeve coupon)
 - 4 x M3 screws per servo for the horn plate (the plate holes are counterbored from the outside), length about 8 mm. Confirm against your servo's horn.
 - **Fasteners are M2 and M3 only.**
@@ -82,7 +82,7 @@ The horn hole pattern, case-screw positions and cable-slot position were **measu
 2. Fit servos in sleeves (screws into the case holes), horn plate on each horn.
 3. Press the 8 M2 heat-set inserts into the torso bosses (soldering iron, 220 C for PLA). Mount the Pi on its standoffs, the battery between the ribs, then close the battery door and the front cover.
 4. Build each leg from the foot up (foot, ankle link, shin, thigh, hip roll link, hip yaw link), arms from the hand down, then the torso (it includes the pelvis) and the head (it includes the neck bracket).
-5. Run servo ID setup (`sim/joint_map.csv` has the ID, name, direction and limit for each joint) **before** closing the sleeves, since servos must be daisy-chained with IDs 1 to 22.
+5. Run servo ID setup (`sim/joint_map.csv` has the ID, name, direction and limit for each joint) **before** closing the sleeves, since servos must be daisy-chained with IDs 1 to 19.
 5. Zero pose: all servos at their mid position (2048 counts) is the URDF/MJCF zero pose. Mount horns at that position.
 
 ## 5. Safe joint ranges
