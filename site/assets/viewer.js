@@ -31,7 +31,7 @@ Object.values(G).forEach(g=>root.add(g));
 G.envelope.visible=false;
 const picks=[];
 const KIND={real:['REAL vendor CAD','#3fb950'],modeled:['MODELLED from datasheet dimensions (see spec for what is approximate)','#a371f7'],generated:['GENERATED in this repo (parametric CadQuery)','#58a6ff'],envelope:['ENVELOPE: size-only box, not CAD','#d29922']};
-const BUILD='v3-droid';   // bump with every model export so browsers never mix a new page with an old model/caption
+const BUILD='v4-droid';   // bump with every model export so browsers never mix a new page with an old model/caption
 const COLS={accent:0xc8742a,cover:0xe6e1d2,printed:0x4a5059,servo:0x1f2227,compute:0x2f7de1,power:0xf0861a,sensor:0x22b36a};
 const creased=new Map(),edgesCache=new Map();
 function smooth(g){if(!creased.has(g)){const c=toCreasedNormals(g.index?g.toNonIndexed():g,THREE.MathUtils.degToRad(35));creased.set(g,c)}return creased.get(g)}
@@ -48,7 +48,7 @@ Promise.all([fetch('assets/robot_info.json?v='+BUILD,{cache:'no-cache'}).then(x=
     const col=meta.show?(/E-stop/.test(meta.name)?0xd62828:0xf2c200):(meta.color?new THREE.Color(meta.color):(COLS[meta.group]||0xcccccc));
     const g=env?m.geometry:smooth(m.geometry);
     const mat=env?new THREE.MeshStandardMaterial({color:col,transparent:true,opacity:.35,roughness:.8,depthWrite:false})
-      :new THREE.MeshStandardMaterial({color:col,roughness:(meta.group==='printed'||meta.group==='cover')?.42:.4,metalness:meta.group==='servo'?.35:.05});
+      :new THREE.MeshStandardMaterial({color:(meta.caps&&g.attributes.color)?0xffffff:col,vertexColors:!!(meta.caps&&g.attributes.color),roughness:(meta.group==='printed'||meta.group==='cover')?.42:.4,metalness:meta.group==='servo'?.35:.05});
     const mesh=new THREE.Mesh(g,mat);wm.decompose(mesh.position,mesh.quaternion,mesh.scale);
     mesh.castShadow=!env;mesh.receiveShadow=!env;mesh.userData=meta;grp.add(mesh);picks.push(mesh);
     // crisp outlines make plates, pockets and bosses readable

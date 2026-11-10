@@ -114,14 +114,14 @@ flowchart LR
 <tr><td>Sim-to-real package</td><td style="color:#58a6ff">Generated + hand-written</td><td>STS3215/STS3250 actuator model (torque-speed curve, supply sag, latency, dead band), domain randomisation, Gymnasium + MuJoCo stand/walk env, PPO baseline, servo system-ID script, numpy policy export, Pi 5 runtime and ESP32 bridge firmware: <a href="https://github.com/wjb000/budget-humanoid/tree/main/sim">/sim</a>, <a href="https://github.com/wjb000/budget-humanoid/tree/main/deploy">/deploy</a>. Run in simulation only; firmware not compiled; nothing run on hardware</td></tr>
 </table></div>
 <p class="sub" style="margin-top:12px"><b>Downloads (repo):</b> <a href="https://github.com/wjb000/budget-humanoid/tree/main/cad/stl">STL</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/tree/main/cad/step">STEP</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/budget19.urdf">URDF</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/budget19.xml">MJCF</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/joint_map.csv">joint map (servo IDs)</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/README.md">CAD README</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/DFM.md">DFM (injection-molding notes per part)</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/PRINT_GUIDE.md">print guide + hardware list (M2/M3 only)</a></p>
-<div class="warn"><b>Known gaps:</b> no bearing opposite the servo horn (the STS3215 rear stub cannot carry one); cable routing is notches and tie slots, not channels; not printed or fit-tested (horn, case-screw and cable-slot positions come from the STEP, not a physical servo); the STS3250 uses the STS3215 STEP as its shape and its mounting holes were not checked; masses are estimates; sim actuator gains are starting values; joint limits were swept one joint at a time; arms, torso and head have no collision geometry in sim yet; the e-stop price is an estimate for a generic unit. Full list in <code>cad/README.md</code>.</div>
+<div class="warn"><b>Known gaps:</b> no bearing opposite the servo horn (the STS3215 rear stub cannot carry one); cable routing is notches and the neck collar slot, not channels; not printed or fit-tested (horn, case-screw and cable-slot positions come from the STEP, not a physical servo); the STS3250 uses the STS3215 STEP as its shape and its mounting holes were not checked; masses are estimates; sim actuator gains are starting values; joint limits were swept one joint at a time; arms, torso and head have no collision geometry in sim yet; the e-stop price is an estimate for a generic unit. Full list in <code>cad/README.md</code>.</div>
 </section>
 
 <section id="build"><h2>Build and print guide</h2>
 <p class="lead">Print the two fit coupons first, then the 23 parts (every STL is already in print orientation; the torso needs about 220&nbsp;mm of Z). Full guide with settings, per-part table, fasteners and assembly order: <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/PRINT_GUIDE.md">cad/PRINT_GUIDE.md</a>.</p>
 <ol class="sub">
 <li><b>Fit coupons</b> (<code>python cad/fit_coupon.py</code>, under an hour): a real servo must drop into the sleeve coupon and sit on the horn plate coupon. Do this with an STS3250 as well as an STS3215.</li>
-<li><b>Print</b> PLA+ or PETG, 0.4 mm nozzle, 0.2 mm layers, 4 perimeters; PETG for feet, ankle and shin. About 640 g of filament at the estimated fill. One STL per part, left and right are separate files.</li>
+<li><b>Print</b> PLA+ or PETG, 0.4 mm nozzle, 0.2 mm layers, 4 perimeters; PETG for feet, ankle and shin. About 750 g of filament at the estimated fill. One STL per part, left and right are separate files.</li>
 <li><b>Servos:</b> set IDs 1 to 19 one at a time on the bench (<a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/joint_map.csv">joint map</a>), then fit each servo in its pod (4 x M2 self-tapping) and a horn plate on each horn (4 x M3), horns at the mid position.</li>
 <li><b>Torso:</b> 8 M2 heat-set inserts, Pi 5 on its standoffs, battery between the ribs, bus adapters on the front cover, e-stop in the top plate, then the front cover and battery door.</li>
 <li><b>Limbs and head</b> from the foot and hand up; daisy-chain the servos on two buses (legs, upper body).</li>
@@ -130,7 +130,7 @@ flowchart LR
 <section id="sources"><h2>Sources</h2><p class="sub">Servo: <a href="https://www.dfrobot.com/product-2962.html">DFRobot ST3215</a> &middot; <a href="https://shop.babsco.com/feetech-sts3250-50kg-heavy-duty-smart-servo">BABSCO STS3250</a> &middot; Pi 5 pricing: <a href="https://www.raspberrypi.com/news/price-increases-for-2gb-raspberry-pi-4-and-raspberry-pi-5/">Raspberry Pi news</a> &middot; sim: <a href="https://github.com/mujocolab/mjlab">mjlab</a>, <a href="https://github.com/google-deepmind/mujoco_playground">MuJoCo Playground</a>, <a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a></p></section>
 <footer>Budget-19 &middot; design study, no warranty. Hobby use; verify fit, torque and power before building. Component CAD belongs to its vendors under the licenses listed above.</footer>
 
-<script src="assets/data.js?v=v3-droid"></script>
+<script src="assets/data.js?v=v4-droid"></script>
 <script>
 const money=n=>'$'+n.toFixed(2);
 const CATC={compute:'#1f6fe0',power:'#e8710a',sense:'#1a9a55',act:'#7b3fe4',frame:'#5b6773',up:'#d62728'};
@@ -155,6 +155,6 @@ import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.mi
 mermaid.initialize({startOnLoad:true,theme:'neutral'});
 </script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
-<script type="module" src="assets/viewer.js?v=v3-droid"></script>
+<script type="module" src="assets/viewer.js?v=v4-droid"></script>
 </body>
 </html>
