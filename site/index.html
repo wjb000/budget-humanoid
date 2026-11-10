@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Budget-22: dirt-cheap 22-DOF humanoid</title>
-<meta name="description" content="Open design for a ~0.5 m, 22-DOF, ~$791 humanoid on Feetech ST3215 servos: component map, schematic, BOM, 3D viewer, CAD.">
+<meta name="description" content="Open design for a ~0.61 m, 22-DOF, ~$791 humanoid on Feetech ST3215 servos: component map, schematic, BOM, 3D viewer, CAD.">
 <style>
 :root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--tx:#e6edf3;--mut:#9aa7b4;--acc:#58a6ff;--grn:#3fb950;--org:#f0883e;--red:#f85149;--pur:#a371f7}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -40,9 +40,9 @@ code{background:#1f2630;padding:1px 6px;border-radius:5px}footer{max-width:1200p
 <body>
 <header>
   <h1>Budget-22 humanoid</h1>
-  <p class="lead">A dirt-cheap but capable 22-DOF biped: about 0.5 m tall, about 2.2 kg, Feetech ST3215 12&nbsp;V serial-bus servos, Raspberry Pi 5 brain, ESP32-S3 real-time core. Everything here is an open design: component map, 3D viewer, electrical schematic, BOM, and CAD for 3D printing and sim-to-real.</p>
+  <p class="lead">A dirt-cheap but capable 22-DOF biped: about 0.61 m tall, about 2.3 kg (CAD estimate), Feetech ST3215 12&nbsp;V serial-bus servos, Raspberry Pi 5 brain, ESP32-S3 real-time core. Everything here is an open design: component map, 3D viewer, electrical schematic, BOM, and CAD for 3D printing and sim-to-real.</p>
   <div class="grid m4" id="metrics" style="margin-top:18px"></div>
-  <div class="warn"><b>Status:</b> design study built from published precedents (K2, Open Duck Mini v2, Zeroth-01). Nobody has built this exact 22-DOF robot yet: mass, torque margins and walking speed are engineering estimates. The 3D viewer below is a <b>phase 1 envelope view</b> (dimensionally approximate boxes at approximate positions). Real CAD, URDF/MJCF and a print guide follow in <code>/cad</code> and <code>/sim</code>; see the CAD status section.</div>
+  <div class="warn"><b>Status:</b> design study built from published precedents (K2, Open Duck Mini v2, Zeroth-01). <b>Nobody has built this exact 22-DOF robot yet</b>: the printable frame has been checked in software only (watertight meshes, bed fit, collision sweep, a MuJoCo stand test), <b>not printed or assembled</b>, and mass, torque margins and walking speed are estimates. The 3D viewer shows which parts are real vendor CAD, which are generated in this repo, and which are size-only envelopes. See <a href="#cad">CAD status</a> and the <a href="https://github.com/wjb000/budget-humanoid/tree/main/cad">/cad</a> and <a href="https://github.com/wjb000/budget-humanoid/tree/main/sim">/sim</a> folders.</div>
 </header>
 <nav><div><a href="#map">Component map</a><a href="#viewer-s">3D viewer</a><a href="#dof">DOF + servo IDs</a><a href="#schematic">Schematic</a><a href="#bom">BOM</a><a href="#refs">Reference designs</a><a href="#cad">CAD status</a><a href="#sources">Sources</a></div></nav>
 
@@ -51,10 +51,10 @@ code{background:#1f2630;padding:1px 6px;border-radius:5px}footer{max-width:1200p
 <div class="map"><div class="mapimg" id="mapimg"><img id="robotimg" alt="Illustration of the small 3D-printed servo humanoid"></div><div class="list" id="complist"></div></div>
 <p class="sub">The illustration is an AI-generated concept image used only as a backdrop for pin placement; it is not the CAD model.</p></section>
 
-<section id="viewer-s"><h2>Interactive 3D viewer <span class="tag">phase 1: envelopes</span></h2>
-<p class="lead">Drag to orbit, scroll to zoom, hover a part for its name, spec and price. Servo boxes use the real ST3215 envelope (45.2 &times; 24.7 &times; 35 mm). Other parts are datasheet-size envelopes and are not vendor CAD. The real-CAD assembly replaces this view in phase 2.</p>
-<div style="margin:8px 0" class="legend"><button class="on" data-g="servo">Servos</button> <button class="on" data-g="compute">Compute</button> <button class="on" data-g="power">Power</button> <button class="on" data-g="sensor">Sensors/audio</button> <button class="on" data-g="frame">Frame outline</button></div>
-<div id="viewer"><div id="tip">Hover a part</div></div></section>
+<section id="viewer-s"><h2>Interactive 3D viewer <span class="tag">CAD assembly</span></h2>
+<p class="lead">Drag to orbit, scroll to zoom, hover a part for its name, spec and source. <span style="color:#3fb950">Real vendor CAD</span>: the 22 STS3215 servos, BNO085 IMU, MAX98357 amp, speaker and Raspberry Pi 5 (decimated visual meshes). <span style="color:#58a6ff">Generated</span>: the 24 printed parts (parametric CadQuery in <code>/cad</code>). <span style="color:#d29922">Dashed translucent boxes are envelopes</span>: size-only stand-ins (camera, ESP32, buck converter, battery, bus adapters, mic, e-stop), not CAD.</p>
+<div style="margin:8px 0" class="legend"><button class="on" data-g="frame">Printed frame</button> <button class="on" data-g="servo">Servos</button> <button class="on" data-g="compute">Compute</button> <button class="on" data-g="power">Power</button> <button class="on" data-g="sensor">Sensors/audio</button></div>
+<div id="viewer"><div id="tip">Loading...</div></div></section>
 
 <section id="dof"><h2>Degrees of freedom and servo IDs</h2>
 <p class="lead">22 servos on two half-duplex 1&nbsp;Mbps TTL buses. Bus A = legs (IDs 1&ndash;12), bus B = arms, grippers, neck (IDs 13&ndash;22). Joint names in the simulation files will match these IDs.</p>
@@ -102,18 +102,20 @@ flowchart LR
 <div class="warn"><b>The Zeroth lesson:</b> K-Scale found STS3215 too slow for the legs of a ~2.8 kg robot and moved to STS3250. Keep mass near 2.2 kg and treat STS3250 on hip pitch and knees as the planned upgrade (+$180.36). STS3250 is rated 6&ndash;12 V, so a full 3S pack (12.6 V) is slightly over: limit charge to 4.1 V/cell or add a 12 V regulator.</div></section>
 
 <section id="cad"><h2>CAD, print and sim status</h2>
+<p class="lead">Honest status: the frame and sim files are <b>generated and software-checked, not yet printed or run on hardware</b>. Print the two fit coupons first.</p>
 <div class="tw"><table>
-<tr><th>Item</th><th>Status</th><th>Source / license</th></tr>
-<tr><td>Feetech STS3215 servo</td><td>Real STEP found</td><td><a href="https://github.com/TheRobotStudio/SO-ARM100/blob/main/STEP/SO100/STS3215_03a.step">SO-ARM100 <code>STS3215_03a.step</code></a>, Apache-2.0</td></tr>
-<tr><td>Raspberry Pi 5</td><td>Real STEP found</td><td><a href="https://pip.raspberrypi.com/categories/892-raspberry-pi-5">Raspberry Pi product portal</a>, MIT (per bundled LICENSE.txt)</td></tr>
-<tr><td>Pi Camera Module 3</td><td>Real STEP found</td><td><a href="https://datasheets.raspberrypi.com/camera/camera-module-3-step.zip">datasheets.raspberrypi.com</a></td></tr>
-<tr><td>Adafruit BNO085, MAX98357A</td><td>Real STEP found</td><td><a href="https://github.com/adafruit/Adafruit_CAD_Parts">Adafruit_CAD_Parts</a>, MIT</td></tr>
-<tr><td>Seeed XIAO ESP32-S3</td><td>Real STEP found</td><td><a href="https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/">Seeed wiki 3D model</a></td></tr>
-<tr><td>Pololu D24V50F5 buck</td><td>Real STEP found</td><td><a href="https://www.pololu.com/product/2851/resources">Pololu resources</a></td></tr>
-<tr><td>LiPo, Waveshare adapter, mic, speaker, e-stop</td><td>Envelope only</td><td>Sizes from listings/datasheets where published; battery size is assumed. Will be marked as envelopes.</td></tr>
-<tr><td>Printed frame, brackets, links</td><td>Phase 2: parametric CadQuery, one STL per part, FDM-checked</td><td>Generated in this repo</td></tr>
-<tr><td>URDF + MuJoCo MJCF (mass, inertia, STS3215 limits)</td><td>Phase 2</td><td>Generated in this repo</td></tr>
-</table></div></section>
+<tr><th>Item</th><th>Kind in the model</th><th>Source / license</th></tr>
+<tr><td>Feetech STS3215 servo (22)</td><td style="color:#3fb950">Real vendor CAD</td><td><a href="https://github.com/TheRobotStudio/SO-ARM100/blob/main/STEP/SO100/STS3215_03a.step">SO-ARM100 <code>STS3215_03a.step</code></a>, Apache-2.0. Copy in <code>cad/vendor/</code></td></tr>
+<tr><td>Adafruit BNO085 IMU, MAX98357A amp, 40 mm speaker</td><td style="color:#3fb950">Real vendor CAD</td><td><a href="https://github.com/adafruit/Adafruit_CAD_Parts">Adafruit_CAD_Parts</a>, MIT. Copies in <code>cad/vendor/</code></td></tr>
+<tr><td>Raspberry Pi 5</td><td style="color:#3fb950">Real vendor CAD (decimated visual mesh)</td><td><a href="https://pip.raspberrypi.com/categories/892-raspberry-pi-5">Raspberry Pi product portal</a>, MIT. Fetched by <code>cad/fetch_vendor.py</code>, not stored in the repo (77 MB)</td></tr>
+<tr><td>Pi Camera Module 3, Seeed XIAO ESP32-S3, Pololu D24V50F5</td><td style="color:#d29922">Envelope</td><td>Vendor STEP files exist, but their license is unclear, so they are not committed or shown as CAD. Only the dimensions are used.</td></tr>
+<tr><td>3S LiPo, Waveshare bus adapters, I&sup2;S mic, e-stop, relay/fuse</td><td style="color:#d29922">Envelope</td><td>Assumed sizes (battery size not verified). Check your actual parts.</td></tr>
+<tr><td>24 printed parts: pelvis, torso, neck, head, 12 leg parts, 8 arm parts</td><td style="color:#58a6ff">Generated, parametric</td><td><code>cad/*.py</code> (CadQuery). One STL + STEP per part in <code>cad/stl</code>, <code>cad/step</code>. 220&times;220 mm bed, already in print orientation. <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/PRINT_GUIDE.md">Print guide</a></td></tr>
+<tr><td>URDF + MuJoCo MJCF</td><td style="color:#58a6ff">Generated</td><td><code>sim/budget22.urdf</code>, <code>sim/budget22.xml</code>: mass, inertia, 22 actuators (STS3215 limits), IMU + camera sites. MuJoCo stand check passes (kp 20): <a href="https://github.com/wjb000/budget-humanoid/tree/main/sim">/sim</a>, includes Isaac Lab notes</td></tr>
+</table></div>
+<p class="sub" style="margin-top:12px"><b>Downloads (repo):</b> <a href="https://github.com/wjb000/budget-humanoid/tree/main/cad/stl">STL</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/tree/main/cad/step">STEP</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/budget22.urdf">URDF</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/budget22.xml">MJCF</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/sim/joint_map.csv">joint map (servo IDs)</a> &middot; <a href="https://github.com/wjb000/budget-humanoid/blob/main/cad/README.md">CAD README</a></p>
+<div class="warn"><b>Known gaps:</b> not printed or fit-tested (horn, case-screw and cable-slot positions come from the STEP, not a physical servo); the model treats every joint as an STS3215 although the upgrade tier uses 4 STS3250; masses are estimates; sim actuator gains are starting values; joint limits were swept one joint at a time; arms, torso and head have no collision geometry in sim yet. Full list in <code>cad/README.md</code>.</div>
+</section>
 
 <section id="sources"><h2>Sources</h2><p class="sub">Servo: <a href="https://www.dfrobot.com/product-2962.html">DFRobot ST3215</a> &middot; <a href="https://shop.babsco.com/feetech-sts3250-50kg-heavy-duty-smart-servo">BABSCO STS3250</a> &middot; Pi 5 pricing: <a href="https://www.raspberrypi.com/news/price-increases-for-2gb-raspberry-pi-4-and-raspberry-pi-5/">Raspberry Pi news</a> &middot; sim: <a href="https://github.com/mujocolab/mjlab">mjlab</a>, <a href="https://github.com/google-deepmind/mujoco_playground">MuJoCo Playground</a>, <a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a> &middot; <a href="https://github.com/huggingface/lerobot">LeRobot</a></p></section>
 <footer>Budget-22 &middot; design study, no warranty. Hobby use; verify fit, torque and power before building. Component CAD belongs to its vendors under the licenses listed above.</footer>
