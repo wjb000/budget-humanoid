@@ -13,10 +13,25 @@ FW = 34.0                   # front opening half-width (y)
 WZ0, WZ1 = Z_BASE + 6.0, TORSO_TOP - 6.0     # opening z range (364.5 .. 494)
 BAT_Y0, BAT_Y1 = 8.5, 43.5  # battery bay (3S 2200 mAh assumed 105 x 35 x 25 mm), y range
 BY0, BY1 = 7.8, 44.2        # battery door opening (y)
-COVER_PTS_F = [(-43.0, Z_BASE + 10.0), (43.0, Z_BASE + 10.0), (-43.0, TORSO_TOP - 6.5), (43.0, TORSO_TOP - 6.5)]
-COVER_PTS_B = [(4.0, Z_BASE + 10.0), (46.8, Z_BASE + 10.0), (4.0, TORSO_TOP - 6.5), (46.8, TORSO_TOP - 6.5)]
+COVER_PTS_F = [(-40.0, Z_BASE + 10.0), (40.0, Z_BASE + 10.0), (-40.0, TORSO_TOP - 8.0), (40.0, TORSO_TOP - 8.0)]
+COVER_PTS_B = [(4.0, Z_BASE + 10.0), (46.8, Z_BASE + 10.0), (4.0, TORSO_TOP - 8.0), (46.8, TORSO_TOP - 8.0)]
 ESTOP_X, ESTOP_Y = -30.0, 36.0          # e-stop axis on the torso top plate
 COVER_HOST = {'torso_front_cover': 'base', 'battery_door': 'base', 'head_lid': 'head'}
+
+def rbox(b, r, top=None, vsel='|Z'):
+    """rounded box: vertical corner radius r, optional top-edge fillet"""
+    wp = cqbox(b).edges(vsel).fillet(r)
+    if top:
+        wp = wp.faces('>Z').edges().fillet(top)
+    return wp
+
+def ring_groove(b, r, depth=0.8, width=1.2):
+    """thin shell-shaped cutter that scribes a panel line around a rounded box of outline b (z centre = mean of b z)"""
+    x0, x1, y0, y1, z0, z1 = b
+    zc = 0.5 * (z0 + z1)
+    A = rbox((x0 - 1.0, x1 + 1.0, y0 - 1.0, y1 + 1.0, zc - width / 2, zc + width / 2), r + 1.0)
+    B = rbox((x0 + depth, x1 - depth, y0 + depth, y1 - depth, zc - width, zc + width), max(r - depth, 0.5))
+    return A.cut(B)
 
 class Side:
     def __init__(self, sg):
@@ -62,8 +77,8 @@ def build_side(sd, ids):
     # foot (child of ankle roll)
     foot = Part(n('foot'))
     foot.plate(s_ar, -15, 15, -15, 15)
-    foot.add(sd.b(XAR + GAP, XAR + GAP + PT, Yc - 15, Yc + 15, 0, 42))          # upright plate
-    foot.add(sd.b(-50, 72, Yc - 28, Yc + 28, 0, 4), r=14.0, sel='|Z')                              # sole
+    foot.addshape(cqbox(sd.b(XAR + GAP, XAR + GAP + PT, Yc - 15, Yc + 15, 0, 40)).faces('>Z').edges('|X').fillet(14.5))   # upright plate, top is a half-round that blends into the hub disc
+    foot.addshape(cqbox(sd.b(-50, 72, Yc - 28, Yc + 28, 0, 4)).edges('|Z').fillet(14.0).faces('>Z').edges().fillet(1.6))  # sole, softened top edge
     for yy in (-14, 14):                                                         # gussets (3 mm) from sole to plate
         foot.add(sd.b(XAR + GAP, XAR + 28, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4 + 0.0))
         foot.add(sd.b(XAR + GAP, XAR + GAP + PT + 22, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4))
@@ -73,12 +88,14 @@ def build_side(sd, ids):
     al = Part(n('ankle_link'))
     al.sleeve(s_ar)
     al.plate(s_ap, -15, 15, -15, 15)
-    al.add(sd.b(-15, 15, YA + GAP, YA + GAP + PT, Zar + 37.0, Zap + 15))        # hub to sleeve top (overlap)
+    al.add(sd.b(-15, 15, YA + GAP, YA + GAP + PT, Zar + 37.0, Zap), r=6.0, sel='|Y')   # hub to sleeve top (overlap), ends in the hub disc
     # shin: knee hub + strip + ankle-pitch sleeve
     sh = Part(n('shin'))
     sh.plate(s_k, -15, 15, -15, 15)
     sh.sleeve(s_ap)
-    sh.add(sd.b(-15, 15, shin_out, shin_in, Zap + 35, Zk + 15))
+    sh.add(sd.b(-15, 15, shin_out, shin_in, Zap + 35, Zk), r=6.0, sel='|Y')
+    for fx in (-15.0, 12.6):                                  # v3: 2.4 mm edge flanges turn the strip into a U-channel leg shell (printed flat, no supports)
+        sh.add(sd.b(fx, fx + 2.4, shin_out - 9.0, shin_in, Zap + 41.0, Zk - 6.0), r=1.0)
     for zc in (128.0, 145.0):
         for xc in (-8.0, 8.0):
             sh.cutbox(sd.b(xc - 1.6, xc + 1.6, shin_out - 1, shin_in + 1, zc - 0.8, zc + 0.8))
@@ -86,7 +103,9 @@ def build_side(sd, ids):
     th = Part(n('thigh'))
     th.plate(s_hp, -15, 15, -15, 15)
     th.sleeve(s_k)
-    th.add(sd.b(-15, 15, plate_out, plate_in, Zk + 35, Zh + 15))
+    th.add(sd.b(-15, 15, plate_out, plate_in, Zk + 35, Zh), r=6.0, sel='|Y')
+    for fx, fd in ((-15.0, 9.0), (12.6, 4.5)):                                 # front flange is shallower: it swings toward the forearm on hip yaw
+        th.add(sd.b(fx, fx + 2.4, plate_out - fd, plate_in, Zk + 41.0, Zh - 6.0), r=1.0)
     for zc in (225.0, 245.0):                                                      # cable-tie slot pairs (3.2 x 1.6 mm) through the strip
         for xc in (-8.0, 8.0):
             th.cutbox(sd.b(xc - 1.6, xc + 1.6, plate_out - 1, plate_in + 1, zc - 0.8, zc + 0.8))
@@ -137,18 +156,18 @@ def build_side(sd, ids):
     # a strip down the torso side, a bridge to the elbow plane, and the elbow sleeve
     ua = Part(n('upper_arm'))
     ua.plate(s_sp, -15, 15, -15, 15)
-    ua.add(sd.b(Xr - 15, Xr - 3.6, ys - GAP - PT, ys - GAP, Zr + 12, Zs + 15))
+    ua.add(sd.b(Xr - 15, Xr - 3.6, ys - GAP - PT, ys - GAP, Zr + 12, Zs + 15), r=4.5, sel='|Y')
     ua.add(sd.b(Xr - 15, Xr + GAP + PT, ys - GAP - PT, ys - GAP, Zr - 12, Zr + 14))      # joins the shoulder strip to the elbow-plane plate
     ua.sleeve(s_el)
     ua.add(sd.b(Xr + GAP, Xr + GAP + PT, Ye - 41.5, Ye - 3, Ze - 12.9, Zr + 11))
     fa = Part(n('forearm'))
     fa.plate(s_el, -12, 12, -12, 12)
     fa.sleeve(s_gr)
-    fa.add(sd.b(Xe - 12, Xe + 12, Ye + GAP, Ye + GAP + PT, Zg - 37.9, Ze + 12))
+    fa.add(sd.b(Xe - 12, Xe + 12, Ye + GAP, Ye + GAP + PT, Zg - 37.9, Ze), r=5.0, sel='|Y')
     fa.add(sd.b(Xe + 14, Xe + 22, Yg + 3, Yg + 41.5 + 0.5, Zg - 75, Zg - 30))      # fixed jaw
     fi = Part(n('finger'))
     fi.plate(s_gr, -12, 12, -12, 12)
-    fi.add(sd.b(Xe - 12, Xe + 4, Yg - GAP - PT, Yg - GAP, Zg - 75, Zg + 12))
+    fi.add(sd.b(Xe - 12, Xe + 4, Yg - GAP - PT, Yg - GAP, Zg - 75, Zg + 12), r=5.0, sel='|Y')
     fi.add(sd.b(Xe - 6, Xe + 4, Yg - GAP - PT, Yg + 25, Zg - 75, Zg - 55))
     P.update({p.name: p for p in (ua, fa, fi)})
     for s in (s_sp, s_el, s_gr):
@@ -180,8 +199,15 @@ def build_all():
     tor.add((-52.5, -27.5, -18.0, 18.0, 320.0, Z_BASE))
     tor.cutbox((-49.9, -30.1, -14.7, 14.7, 323.0, 355.5))
     x0, x1 = TORSO_X; y0, y1 = TORSO_Y
-    tor.add((x0, x1, y0, y1, Z_BASE, TORSO_TOP), r=5.0)        # rounded vertical corners (r 5 outside, r 2.6 inside = uniform 2.4 wall)
-    tor.cutround((x0 + WALL, x1 - WALL, y0 + WALL, y1 - WALL, Z_BASE + PT, TORSO_TOP - PT), 5.0 - WALL, '|Z')
+    TR = 6.5                                                    # v3 sculpted torso: R6.5 vertical corners (R4.1 inside = uniform 2.4 wall), R5 shoulder-top edge
+    tor.addshape(rbox((x0, x1, y0, y1, Z_BASE, TORSO_TOP), TR, top=5.0))
+    tor.cutround((x0 + WALL, x1 - WALL, y0 + WALL, y1 - WALL, Z_BASE + PT, TORSO_TOP - PT), TR - WALL, '|Z')
+    # v3 pelvis skirt: the torso walls continue down to the hip sleeves (open at the bed side, the floor above rests on the walls, no supports)
+    sk = rbox((x0, x1, y0, y1, 320.0, Z_BASE + 1.0), TR).cut(cqbox((x0 + WALL, x1 - WALL, y0 + WALL, y1 - WALL, 319.0, Z_BASE + 0.01)).edges('|Z').fillet(TR - WALL))
+    tor.addshape(sk)
+    # panel lines (0.8 deep, 1.2 wide): skirt seam, belt line below the shoulder pods
+    for zl in (Z_BASE, 421.0):
+        tor.cut(ring_groove((x0, x1, y0, y1, zl - 0.6, zl + 0.6), TR))
     # front opening (= access to Pi, XIAO, bus adapters, and the battery path) closed by torso_front_cover
     tor.cutbox((x1 - WALL - 1, x1 + 1, -FW, FW, WZ0, WZ1))
     # back opening for the battery bay, closed by battery_door
@@ -196,7 +222,7 @@ def build_all():
         tor.add((x1 - WALL - 4.5, x1 - WALL + 0.5, yy - 3.2, yy + 3.2, zz - 3.2, zz + 3.2), r=0.8)
         tor.insert_hole((x1 + 0.01, yy, zz), (-1, 0, 0), 6.5)
     for (yy, zz) in COVER_PTS_B:
-        tor.add((x0 + WALL - 0.5, x0 + WALL + 4.5, yy - 3.2, yy + 3.2, zz - 3.2, zz + 3.2), r=0.8)
+        tor.add((x0 + WALL - 0.5, x0 + WALL + 4.5, yy - 3.2, min(yy + 3.2, 49.0), zz - 3.2, zz + 3.2), r=0.8)
         tor.insert_hole((x0 - 0.01, yy, zz), (1, 0, 0), 6.5)
     # Pi 5 standoffs on inside of back wall: board 85(z) x 56(y); holes 58x49 pattern, 3.5 from corner
     pi_y0, pi_z0 = -47.0, Z_BASE + 14
@@ -224,7 +250,7 @@ def build_all():
 
     # ---- torso front cover (chest panel; also the access door to Pi / XIAO / bus adapters / battery path) ----
     fc = Part('torso_front_cover')
-    fc.add((x1, x1 + 2.4, -46.0, 46.0, Z_BASE + 4.0, TORSO_TOP - 4.0), r=4.0, sel='|X')
+    fc.addshape(cqbox((x1, x1 + 2.4, -46.0, 46.0, Z_BASE + 4.0, TORSO_TOP - 5.0)).edges('|X').fillet(5.0).faces('>X').edges().chamfer(0.9))
     fc.add((x1 - WALL, x1, -FW + 0.4, FW - 0.4, WZ0 + 0.4, WZ1 - 0.4))
     for (yy, zz) in COVER_PTS_F:
         fc.screw_hole((x1 + 2.4 + 0.01, yy, zz), (-1, 0, 0), 2.5)
@@ -233,6 +259,7 @@ def build_all():
             for dy in (-14.0, 14.0):
                 fc.add((11.7, x1 - WALL + 0.1, -31.0 + dy - 2.6, -31.0 + dy + 2.6, zc + dz - 2.6, zc + dz + 2.6), r=0.8)
                 fc.cut(cqcyl((11.6, -31.0 + dy, zc + dz), (1, 0, 0), 0.85, 7.0))
+            fc.add((13.4, x1 - WALL + 0.1, -47.6, -33.0, zc + dz - 2.6, zc + dz + 2.6), r=0.8)     # v3: tie the outer boss row to the cover insert (they were floating islands in v2)
     for dy in (-8.0, -4.0, 0.0, 4.0, 8.0):                                      # speaker grille (speaker centre y=-13, z=388)
         fc.cutbox((x1 - WALL - 0.1, x1 + 2.5, -13.0 + dy - 1.1, -13.0 + dy + 1.1, 376.0, 400.0))
     for xz in (14.2, 34.2):                                                     # XIAO ESP32-S3 cradle (board has no mounting holes): two rails + two lips
@@ -243,7 +270,7 @@ def build_all():
         fc.cutbox((x1 + 2.4 - 0.6, x1 + 2.5, -43.0, 43.0, zc - 0.5, zc + 0.5))
     # ---- battery door (back, with XT60 charge-port cutout) ----
     bd = Part('battery_door')
-    bd.add((x0 - 2.4, x0, 0.5, 48.5, Z_BASE + 4.0, TORSO_TOP - 4.0), r=4.0, sel='|X')
+    bd.addshape(cqbox((x0 - 2.4, x0, 0.5, 49.5, Z_BASE + 4.0, TORSO_TOP - 5.0)).edges('|X').fillet(4.5).faces('<X').edges().chamfer(0.9))
     bd.add((x0, x0 + WALL, BY0 + 0.4, BY1 - 0.4, WZ0 + 0.4, WZ1 - 0.4))
     for (yy, zz) in COVER_PTS_B:
         bd.screw_hole((x0 - 2.4 - 0.01, yy, zz), (1, 0, 0), 2.5)
@@ -253,20 +280,29 @@ def build_all():
     hd = Part('head')
     hd.plate(s_ny, -15, 15, -15, 15)
     Znp = 566.5
-    hd.add((XN - 15.0, XN + 36.0, -17.0, 17.0, s_ny.S[2] + GAP + PT - 0.5, Znp + 8.0), r=6.0, sel='|Z')    # riser
-    hd.add((XN + 12.7, XN + 36.0, -17.0, 17.0, Znp - 6, Znp + 37.9), r=9.0, sel='|Z')
-    hd.cutbox((XN + 18.0, XN + 33.6, -14.6, 14.6, Znp - 3.6, Znp + 40))        # camera pod cavity (open top)
+    HX0, HX1, HY = XN - 14.0, XN + 36.0, 19.0
+    HZ0, HZ1 = s_ny.S[2] + GAP + PT - 0.5, Znp + 37.9
+    ZEYE = Znp + 20.0
+    # v3: one continuous rounded head box (R8 corners) instead of riser + pod; open at the top, closed by the head lid
+    hd.addshape(rbox((HX0, HX1, -HY, HY, HZ0, HZ1), 8.0))
+    hd.cutbox((XN - 9.0, XN + 33.6, -14.6, 14.6, Znp - 3.6, Znp + 40))         # one open chamber: camera at the front wall, cables behind it
     hd.cutbox((XN - 8.5, XN + 8.5, -8.5, 8.5, s_ny.S[2] + GAP + PT, Znp + 40))   # screw/cable shaft from the lid down to the neck horn screws
-    hd.cutbox((XN + 7.0, XN + 20.0, -4, 4, Znp + 5, Znp + 30))                 # cable passage between shaft and camera pod
-    hd.cut(cqcyl((XN + 30, 0, Znp + 20), (1, 0, 0), 5.0, 10))                  # lens hole
-    # head lid (closes the camera pod; two M2 self-tapping screws into the thick front wall)
+    # eye: raised bezel ring, lens bore, engraved ring, and two side "ear" discs
+    hd.addshape(cqcyl((XN + 36.0 - 0.5, 0, ZEYE), (1, 0, 0), 10.0, 3.0))
+    hd.cut(cqcyl((XN + 28.0, 0, ZEYE), (1, 0, 0), 5.0, 14.0))                  # lens hole
+    hd.cut(cqcyl((XN + 38.5 - 0.8, 0, ZEYE), (1, 0, 0), 8.0, 1.0).cut(cqcyl((XN + 38.5 - 0.8, 0, ZEYE), (1, 0, 0), 7.0, 1.0)))
+    for sy_ in (-1, 1):
+        hd.addshape(cqcyl((XN + 14.0, sy_ * (HY - 0.5), ZEYE - 2.0), (0, sy_, 0), 7.5, 3.0))
+    for zl in (Znp + 3.0, Znp + 33.0):                                          # panel lines
+        hd.cut(ring_groove((HX0, HX1, -HY, HY, zl - 0.6, zl + 0.6), 8.0, depth=0.7, width=1.0))
+    # head lid (closes the chamber; four M2 self-tapping screws into the back and side walls)
+    HSCREWS = [(XN - 11.5, -8.0), (XN - 11.5, 8.0), (XN + 12.0, -16.8), (XN + 12.0, 16.8)]
     hl = Part('head_lid')
-    hl.add((XN - 10.0, XN + 36.0, -17.0, 17.0, Znp + 37.9, Znp + 40.3), r=3.5, sel='|Z')
-    hl.add((XN + 18.3, XN + 33.3, -14.3, 14.3, Znp + 34.9, Znp + 37.9))
-    hl.add((XN - 8.2, XN + 8.2, -8.2, 8.2, Znp + 34.9, Znp + 37.9))
-    for yy in (-8.0, 8.0):
-        hl.screw_hole((XN + 15.35, yy, Znp + 40.3 + 0.01), (0, 0, -1), 2.5)
-        hd.cut(cqcyl((XN + 15.35, yy, Znp + 37.9 + 0.01), (0, 0, -1), 0.9, 9.0))
+    hl.addshape(rbox((HX0, HX1, -HY, HY, HZ1, HZ1 + 5.0), 8.0, top=2.4))
+    hl.add((XN - 8.6, XN + 33.2, -14.2, 14.2, HZ1 - 3.0, HZ1))
+    for (xx, yy) in HSCREWS:
+        hl.screw_hole((xx, yy, HZ1 + 5.0 + 0.01), (0, 0, -1), 6.0)
+        hd.cut(cqcyl((xx, yy, HZ1 + 0.01), (0, 0, -1), 0.9, 9.0))
     P.update({'torso': tor, 'head': hd, 'torso_front_cover': fc, 'battery_door': bd, 'head_lid': hl})
     SV['neck_yaw'] = s_ny
     J += [dict(name='neck_yaw', id=19, servo=s_ny, parent='base', child='head', lim=(-1.2, 1.2))]

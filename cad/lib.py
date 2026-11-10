@@ -61,6 +61,9 @@ class Part:
     def add(self, b, r=None, sel=None):
         """b = (x0,x1,y0,y1,z0,z1). r/sel: fillet radius and edge selector for this box (default: FILLET on all edges)"""
         self.adds.append((tuple(b), r, sel))
+    def addshape(self, wp):
+        """add a ready-made CadQuery Workplane (sculpted shell, fillets already applied)"""
+        self.adds.append(wp)
     def cut(self, shape):
         self.cuts.append(shape)
     def cutbox(self, b):
@@ -79,7 +82,9 @@ class Part:
         """Printed sleeve that carries servo sv (body inboard of its horn plane)."""
         self.servos.append(sv)
         lb = sv.lbox
-        self.add(lb(SRV_X0 - CLR - WALL, SRV_X1 + CLR + WALL, -(SRV_HY + CLR + WALL), SRV_HY + CLR + WALL, -41.5, -3.0))
+        ax = int(np.argmax(np.abs(sv.a)))
+        # v3: pod corners parallel to the servo axis are rounded (R 5.0 outside; the pocket corner keeps >= 1.1 mm wall)
+        self.add(lb(SRV_X0 - CLR - WALL, SRV_X1 + CLR + WALL, -(SRV_HY + CLR + WALL), SRV_HY + CLR + WALL, -41.5, -3.0), r=self.POD_R, sel=('|X', '|Y', '|Z')[ax])
         # pocket (open to horn side)
         self.cutbox(lb(SRV_X0 - CLR, SRV_X1 + CLR, -(SRV_HY + CLR), SRV_HY + CLR, -34.9, 3.0))
         # rear disc / shaft end recess d21
@@ -106,7 +111,10 @@ class Part:
                 self.cut(cqcyl(sv.w(p[0], p[1], -1), sv.a, 1.7, GAP + PT + 2))
                 self.cut(cqcyl(sv.w(p[0], p[1], GAP + 2.0), sv.a, 2.9, 3.0))
     FILLET = 2.5
+    POD_R = 5.0
     def _round(self, item):
+        if not isinstance(item, tuple):
+            return item
         b, r0, sel = item
         x0, x1, y0, y1, z0, z1 = b
         m = min(x1 - x0, y1 - y0, z1 - z0)
