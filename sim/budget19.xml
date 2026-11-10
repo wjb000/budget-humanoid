@@ -40,7 +40,7 @@
     <geom name="floor" type="plane" size="3 3 0.1" material="grid" contype="1" conaffinity="1" group="0"/>
     <body name="base" pos="0 0 0.002">
       <freejoint name="root"/>
-      <inertial pos="-0.0253616 0.00419247 0.419329" mass="0.94786" fullinertia="0.00451673 0.00331675 0.0019244 -1.81215e-05 -0.000163946 -8.45215e-05"/>
+      <inertial pos="-0.0252239 0.00410612 0.417594" mass="0.96712" fullinertia="0.00466521 0.00346417 0.00197303 -1.69188e-05 -0.000152799 -9.10889e-05"/>
       <geom type="mesh" mesh="base" material="printed"/>
       <geom name="r_hip_yaw_servo" type="mesh" mesh="sts3215" pos="-0.04 -0.0425 0.3357" quat="0 -0.707107 0.707107 0" material="servo"/>
       <geom name="l_hip_yaw_servo" type="mesh" mesh="sts3215" pos="-0.04 0.0425 0.3357" quat="0 0.707107 0.707107 0" material="servo"/>
@@ -61,33 +61,33 @@
       <geom type="box" pos="-0.0558 0.026 0.482" size="0.009 0.008 0.00405" rgba="0.91 0.44 0.04 1"/>
       <site name="imu" pos="-0.01 0 0.3648" size="0.004" rgba="0 1 0 1"/>
       <body name="r_hip_yaw_link" pos="-0.04 -0.055 0.317">
-        <joint name="r_hip_yaw" type="hinge" axis="0 0 -1" range="-0.56 0.28"/>
-        <inertial pos="-0.00806627 -9.37233e-08 -0.0285626" mass="0.0744608" fullinertia="2.00528e-05 2.36382e-05 1.31103e-05 4.08884e-12 -3.77135e-07 9.26862e-11"/>
+        <joint name="r_hip_yaw" type="hinge" axis="0 0 -1" range="-0.56 0.2"/>
+        <inertial pos="-0.00806334 -9.49343e-08 -0.0285556" mass="0.0743208" fullinertia="1.98649e-05 2.3533e-05 1.31226e-05 4.77761e-12 -3.73239e-07 9.41493e-11"/>
         <geom type="mesh" mesh="r_hip_yaw_link" material="printed"/>
         <geom name="r_hip_roll_servo" type="mesh" mesh="sts3215" pos="-0.0069 0 -0.0295" quat="0.707107 0 0.707107 -0" material="servo"/>
         <body name="r_hip_roll_link" pos="0.0118 0 -0.042">
           <joint name="r_hip_roll" type="hinge" axis="1 0 0" range="-0.28 0.22"/>
-          <inertial pos="0.0274706 0.00845775 -0.0122344" mass="0.0947349" fullinertia="2.7733e-05 2.45969e-05 1.72457e-05 -6.90101e-07 8.10175e-07 5.66989e-07"/>
+          <inertial pos="0.0274696 0.00845634 -0.0122285" mass="0.0945662" fullinertia="2.76148e-05 2.43936e-05 1.72496e-05 -6.88396e-07 8.12741e-07 5.73095e-07"/>
           <geom type="mesh" mesh="r_hip_roll_link" material="printed"/>
           <geom name="r_hip_pitch_servo" type="mesh" mesh="sts3215" pos="0.0282 0.0077 -0.0125" quat="0.5 0.5 -0.5 0.5" material="servo"/>
           <body name="r_thigh" pos="0.0282 -0.011 0">
-            <joint name="r_hip_pitch" type="hinge" axis="0 -1 0" range="-0.7 0.95"/>
-            <inertial pos="-9.57749e-08 -0.0205044 -0.0832845" mass="0.0980493" fullinertia="5.55358e-05 4.94175e-05 1.81454e-05 -1.79261e-11 9.45904e-11 -7.56953e-06"/>
+            <joint name="r_hip_pitch" type="hinge" axis="0 -1 0" range="-0.68 0.95"/>
+            <inertial pos="-5.90975e-05 -0.0203813 -0.0828322" mass="0.0989243" fullinertia="5.71942e-05 5.10615e-05 1.8504e-05 5.66943e-08 2.93869e-07 -8.02889e-06"/>
             <geom type="mesh" mesh="r_thigh" material="printed"/>
             <geom name="r_knee_servo" type="mesh" mesh="sts3215" pos="0 -0.0229 -0.0875" quat="-0.5 -0.5 -0.5 0.5" material="servo"/>
             <body name="r_shin" pos="0 -0.0416 -0.1">
               <joint name="r_knee" type="hinge" axis="0 -1 0" range="-1.9 0.09"/>
-              <inertial pos="9.01159e-08 0.0157412 -0.0796231" mass="0.0782843" fullinertia="4.76262e-05 4.25527e-05 1.51566e-05 -1.75133e-11 -6.6365e-11 6.84343e-06"/>
+              <inertial pos="8.87873e-08 0.015307 -0.0788845" mass="0.079485" fullinertia="5.06463e-05 4.49097e-05 1.62888e-05 -2.05263e-11 -6.11996e-11 8.34717e-06"/>
               <geom type="mesh" mesh="r_shin" material="printed"/>
               <geom name="r_ankle_pitch_servo" type="mesh" mesh="sts3215" pos="0 0.0187 -0.0845" quat="0.5 -0.5 0.5 0.5" material="servo"/>
               <body name="r_ankle_link" pos="0 0.0374 -0.097">
                 <joint name="r_ankle_pitch" type="hinge" axis="0 1 0" range="-0.76 0.76"/>
-                <inertial pos="0.00180522 0.0147915 -0.0391705" mass="0.0744393" fullinertia="2.23711e-05 2.55947e-05 1.31384e-05 -5.48728e-08 3.21918e-07 1.18327e-06"/>
+                <inertial pos="0.00181169 0.0148252 -0.0393151" mass="0.0740703" fullinertia="2.15756e-05 2.48843e-05 1.30778e-05 -5.02818e-08 3.07802e-07 1.04792e-06"/>
                 <geom type="mesh" mesh="r_ankle_link" material="printed"/>
                 <geom name="r_ankle_roll_servo" type="mesh" mesh="sts3215" pos="0.0033 0.0152 -0.0405" quat="0.707107 0 0.707107 -0" material="servo"/>
                 <body name="r_foot" pos="0.022 0.0152 -0.053">
                   <joint name="r_ankle_roll" type="hinge" axis="1 0 0" range="-0.33 0.33"/>
-                  <inertial pos="-0.00714943 5.62882e-09 -0.019169" mass="0.0251236" fullinertia="7.62969e-06 2.71473e-05 3.08391e-05 -1.81638e-12 -1.29761e-06 -3.49779e-12"/>
+                  <inertial pos="-0.00727144 2.09555e-10 -0.0196705" mass="0.0246069" fullinertia="7.08049e-06 2.6433e-05 3.04278e-05 -5.06969e-14 -1.17799e-06 -1.23365e-13"/>
                   <geom type="mesh" mesh="r_foot" material="printed"/>
                   <geom name="r_foot_sole" class="foot" type="box" pos="-0.011 0 -0.023" size="0.061 0.028 0.002"/>
                 </body>
@@ -98,49 +98,49 @@
       </body>
       <body name="r_upper_arm" pos="-0.0224 -0.0935 0.44">
         <joint name="r_shoulder_pitch" type="hinge" axis="0 -1 0" range="-1.9 1.9"/>
-        <inertial pos="0.0365492 -0.0168057 -0.0644206" mass="0.0808609" fullinertia="4.00975e-05 3.98327e-05 1.86644e-05 1.44132e-06 7.78728e-06 -2.64724e-06"/>
+        <inertial pos="0.0365333 -0.0168073 -0.0644255" mass="0.0807821" fullinertia="4.00035e-05 3.9669e-05 1.86652e-05 1.43521e-06 7.76777e-06 -2.63396e-06"/>
         <geom type="mesh" mesh="r_upper_arm" material="printed"/>
         <geom name="r_elbow_servo" type="mesh" mesh="sts3215" pos="0.0389 -0.0159 -0.0685" quat="0.5 -0.5 0.5 0.5" material="servo"/>
         <body name="r_forearm" pos="0.0389 0.0028 -0.081">
           <joint name="r_elbow" type="hinge" axis="0 1 0" range="-1.42 1.42"/>
-          <inertial pos="0.00210103 -0.0162136 -0.0692675" mass="0.085495" fullinertia="5.05429e-05 4.77464e-05 1.81051e-05 -2.36352e-07 6.73396e-06 -2.4373e-06"/>
+          <inertial pos="0.00211592 -0.0162431 -0.069389" mass="0.0852393" fullinertia="4.96203e-05 4.67778e-05 1.80649e-05 -2.42222e-07 6.72735e-06 -2.26292e-06"/>
           <geom type="mesh" mesh="r_forearm" material="printed"/>
           <geom name="r_gripper_servo" type="mesh" mesh="sts3215" pos="0 -0.0187 -0.0665" quat="0.5 0.5 -0.5 0.5" material="servo"/>
           <body name="r_finger" pos="0 -0.0374 -0.054">
             <joint name="r_gripper" type="hinge" axis="0 -1 0" range="-0.47 0.11"/>
-            <inertial pos="-0.00215246 0.00458963 -0.0467527" mass="0.00771066" fullinertia="5.54869e-06 5.12918e-06 7.46861e-07 -5.95827e-08 3.45766e-08 9.34579e-07"/>
+            <inertial pos="-0.00215532 0.00455908 -0.0466922" mass="0.00774499" fullinertia="5.53691e-06 5.11775e-06 7.50722e-07 -5.97066e-08 3.40068e-08 9.37574e-07"/>
             <geom type="mesh" mesh="r_finger" material="printed"/>
           </body>
         </body>
       </body>
       <body name="l_hip_yaw_link" pos="-0.04 0.055 0.317">
-        <joint name="l_hip_yaw" type="hinge" axis="0 0 -1" range="-0.28 0.56"/>
-        <inertial pos="-0.00806627 -9.37109e-08 -0.0285626" mass="0.0744608" fullinertia="2.00528e-05 2.36382e-05 1.31103e-05 4.08137e-12 -3.77135e-07 9.26606e-11"/>
+        <joint name="l_hip_yaw" type="hinge" axis="0 0 -1" range="-0.2 0.56"/>
+        <inertial pos="-0.00806334 -9.49218e-08 -0.0285556" mass="0.0743208" fullinertia="1.98649e-05 2.3533e-05 1.31226e-05 4.77014e-12 -3.73239e-07 9.41238e-11"/>
         <geom type="mesh" mesh="l_hip_yaw_link" material="printed"/>
         <geom name="l_hip_roll_servo" type="mesh" mesh="sts3215" pos="-0.0069 0 -0.0295" quat="0.707107 0 0.707107 -0" material="servo"/>
         <body name="l_hip_roll_link" pos="0.0118 0 -0.042">
           <joint name="l_hip_roll" type="hinge" axis="1 0 0" range="-0.22 0.28"/>
-          <inertial pos="0.0274704 -0.00845775 -0.0122344" mass="0.0947349" fullinertia="2.7733e-05 2.45968e-05 1.72457e-05 6.90106e-07 8.09904e-07 -5.66991e-07"/>
+          <inertial pos="0.0274694 -0.00845634 -0.0122285" mass="0.0945662" fullinertia="2.76148e-05 2.43936e-05 1.72496e-05 6.884e-07 8.12471e-07 -5.73093e-07"/>
           <geom type="mesh" mesh="l_hip_roll_link" material="printed"/>
           <geom name="l_hip_pitch_servo" type="mesh" mesh="sts3215" pos="0.0282 -0.0077 -0.0125" quat="-0.5 0.5 0.5 0.5" material="servo"/>
           <body name="l_thigh" pos="0.0282 0.011 0">
-            <joint name="l_hip_pitch" type="hinge" axis="0 1 0" range="-0.95 0.7"/>
-            <inertial pos="9.5739e-08 0.0205044 -0.0832845" mass="0.0980493" fullinertia="5.55358e-05 4.94175e-05 1.81454e-05 -1.79974e-11 -9.45239e-11 7.56952e-06"/>
+            <joint name="l_hip_pitch" type="hinge" axis="0 1 0" range="-0.95 0.68"/>
+            <inertial pos="-5.89077e-05 0.0203813 -0.0828322" mass="0.0989243" fullinertia="5.71942e-05 5.10615e-05 1.8504e-05 -5.67325e-08 2.93688e-07 8.02889e-06"/>
             <geom type="mesh" mesh="l_thigh" material="printed"/>
             <geom name="l_knee_servo" type="mesh" mesh="sts3215" pos="0 0.0229 -0.0875" quat="0.5 -0.5 0.5 0.5" material="servo"/>
             <body name="l_shin" pos="0 0.0416 -0.1">
               <joint name="l_knee" type="hinge" axis="0 1 0" range="-0.09 1.9"/>
-              <inertial pos="-9.01609e-08 -0.0157412 -0.0796231" mass="0.0782843" fullinertia="4.76262e-05 4.25527e-05 1.51566e-05 -1.7444e-11 6.64291e-11 -6.84343e-06"/>
+              <inertial pos="-8.87873e-08 -0.015307 -0.0788845" mass="0.079485" fullinertia="5.06463e-05 4.49097e-05 1.62888e-05 -2.05263e-11 6.11996e-11 -8.34717e-06"/>
               <geom type="mesh" mesh="l_shin" material="printed"/>
               <geom name="l_ankle_pitch_servo" type="mesh" mesh="sts3215" pos="0 -0.0187 -0.0845" quat="-0.5 -0.5 -0.5 0.5" material="servo"/>
               <body name="l_ankle_link" pos="0 -0.0374 -0.097">
                 <joint name="l_ankle_pitch" type="hinge" axis="0 -1 0" range="-0.76 0.76"/>
-                <inertial pos="0.00180522 -0.0147917 -0.0391705" mass="0.0744393" fullinertia="2.23711e-05 2.55947e-05 1.31384e-05 5.48872e-08 3.21918e-07 -1.18308e-06"/>
+                <inertial pos="0.00181169 -0.0148253 -0.0393151" mass="0.0740703" fullinertia="2.15756e-05 2.48843e-05 1.30778e-05 5.02959e-08 3.07802e-07 -1.04774e-06"/>
                 <geom type="mesh" mesh="l_ankle_link" material="printed"/>
                 <geom name="l_ankle_roll_servo" type="mesh" mesh="sts3215" pos="0.0033 -0.0152 -0.0405" quat="0.707107 0 0.707107 -0" material="servo"/>
                 <body name="l_foot" pos="0.022 -0.0152 -0.053">
                   <joint name="l_ankle_roll" type="hinge" axis="1 0 0" range="-0.33 0.33"/>
-                  <inertial pos="-0.00714943 -5.98817e-09 -0.019169" mass="0.0251236" fullinertia="7.62969e-06 2.71473e-05 3.08391e-05 1.86442e-12 -1.29761e-06 3.79219e-12"/>
+                  <inertial pos="-0.00727144 2.0729e-10 -0.0196705" mass="0.0246069" fullinertia="7.08049e-06 2.6433e-05 3.04278e-05 -5.02474e-14 -1.17799e-06 -1.22004e-13"/>
                   <geom type="mesh" mesh="l_foot" material="printed"/>
                   <geom name="l_foot_sole" class="foot" type="box" pos="-0.011 0 -0.023" size="0.061 0.028 0.002"/>
                 </body>
@@ -151,24 +151,24 @@
       </body>
       <body name="l_upper_arm" pos="-0.0224 0.0935 0.44">
         <joint name="l_shoulder_pitch" type="hinge" axis="0 1 0" range="-1.9 1.9"/>
-        <inertial pos="0.036549 0.0168057 -0.0644206" mass="0.0808608" fullinertia="4.00974e-05 3.98326e-05 1.86643e-05 -1.44133e-06 7.78742e-06 2.64724e-06"/>
+        <inertial pos="0.0365332 0.0168073 -0.0644255" mass="0.0807821" fullinertia="4.00034e-05 3.96689e-05 1.86651e-05 -1.43521e-06 7.76791e-06 2.63395e-06"/>
         <geom type="mesh" mesh="l_upper_arm" material="printed"/>
         <geom name="l_elbow_servo" type="mesh" mesh="sts3215" pos="0.0389 0.0159 -0.0685" quat="-0.5 -0.5 -0.5 0.5" material="servo"/>
         <body name="l_forearm" pos="0.0389 -0.0028 -0.081">
           <joint name="l_elbow" type="hinge" axis="0 -1 0" range="-1.42 1.42"/>
-          <inertial pos="0.00210086 0.0162136 -0.0692675" mass="0.085495" fullinertia="5.05429e-05 4.77464e-05 1.81052e-05 2.36378e-07 6.7338e-06 2.4373e-06"/>
+          <inertial pos="0.00211576 0.0162431 -0.069389" mass="0.0852393" fullinertia="4.96203e-05 4.67779e-05 1.8065e-05 2.42249e-07 6.72719e-06 2.26292e-06"/>
           <geom type="mesh" mesh="l_forearm" material="printed"/>
           <geom name="l_gripper_servo" type="mesh" mesh="sts3215" pos="0 0.0187 -0.0665" quat="-0.5 0.5 0.5 0.5" material="servo"/>
           <body name="l_finger" pos="0 0.0374 -0.054">
             <joint name="l_gripper" type="hinge" axis="0 1 0" range="-0.11 0.47"/>
-            <inertial pos="-0.00215247 -0.00458962 -0.0467527" mass="0.00771066" fullinertia="5.54869e-06 5.12918e-06 7.4686e-07 5.95827e-08 3.45765e-08 -9.34579e-07"/>
+            <inertial pos="-0.00215532 -0.00455907 -0.0466922" mass="0.00774499" fullinertia="5.53691e-06 5.11775e-06 7.50721e-07 5.97066e-08 3.40069e-08 -9.37574e-07"/>
             <geom type="mesh" mesh="l_finger" material="printed"/>
           </body>
         </body>
       </body>
       <body name="head" pos="-0.04 0 0.5415">
         <joint name="neck_yaw" type="hinge" axis="0 0 1" range="-1.13 1.13"/>
-        <inertial pos="0.0135133 0.000317633 0.0269021" mass="0.0428167" fullinertia="1.88822e-05 2.31287e-05 1.30573e-05 -1.5622e-07 -2.27924e-06 -4.21321e-08"/>
+        <inertial pos="0.0119159 0.000243996 0.0331003" mass="0.0557385" fullinertia="3.24146e-05 3.69708e-05 2.0707e-05 -1.77942e-07 2.96164e-07 4.21647e-08"/>
         <geom type="mesh" mesh="head" material="printed"/>
         <geom type="box" pos="0.026 0 0.03785" size="0.00575 0.0125 0.01225" rgba="0.1 0.6 0.33 1"/>
         <geom type="box" pos="0.025 0.0136 0.03" size="0.00635 0.0008 0.004" rgba="0.1 0.6 0.33 1"/>
@@ -178,18 +178,18 @@
     </body>
   </worldbody>
   <actuator>
-    <position name="r_hip_yaw" joint="r_hip_yaw" ctrlrange="-0.56 0.28" forcerange="-2.94 2.94"/>  <!-- servo ID 1, STS3215 -->
+    <position name="r_hip_yaw" joint="r_hip_yaw" ctrlrange="-0.56 0.2" forcerange="-2.94 2.94"/>  <!-- servo ID 1, STS3215 -->
     <position name="r_hip_roll" joint="r_hip_roll" ctrlrange="-0.28 0.22" forcerange="-2.94 2.94"/>  <!-- servo ID 2, STS3215 -->
-    <position name="r_hip_pitch" joint="r_hip_pitch" ctrlrange="-0.7 0.95" forcerange="-4.9 4.9"/>  <!-- servo ID 3, STS3250 -->
+    <position name="r_hip_pitch" joint="r_hip_pitch" ctrlrange="-0.68 0.95" forcerange="-4.9 4.9"/>  <!-- servo ID 3, STS3250 -->
     <position name="r_knee" joint="r_knee" ctrlrange="-1.9 0.09" forcerange="-4.9 4.9"/>  <!-- servo ID 4, STS3250 -->
     <position name="r_ankle_pitch" joint="r_ankle_pitch" ctrlrange="-0.76 0.76" forcerange="-2.94 2.94"/>  <!-- servo ID 5, STS3215 -->
     <position name="r_ankle_roll" joint="r_ankle_roll" ctrlrange="-0.33 0.33" forcerange="-2.94 2.94"/>  <!-- servo ID 6, STS3215 -->
     <position name="r_shoulder_pitch" joint="r_shoulder_pitch" ctrlrange="-1.9 1.9" forcerange="-2.94 2.94"/>  <!-- servo ID 13, STS3215 -->
     <position name="r_elbow" joint="r_elbow" ctrlrange="-1.42 1.42" forcerange="-2.94 2.94"/>  <!-- servo ID 14, STS3215 -->
     <position name="r_gripper" joint="r_gripper" ctrlrange="-0.47 0.11" forcerange="-2.94 2.94"/>  <!-- servo ID 15, STS3215 -->
-    <position name="l_hip_yaw" joint="l_hip_yaw" ctrlrange="-0.28 0.56" forcerange="-2.94 2.94"/>  <!-- servo ID 7, STS3215 -->
+    <position name="l_hip_yaw" joint="l_hip_yaw" ctrlrange="-0.2 0.56" forcerange="-2.94 2.94"/>  <!-- servo ID 7, STS3215 -->
     <position name="l_hip_roll" joint="l_hip_roll" ctrlrange="-0.22 0.28" forcerange="-2.94 2.94"/>  <!-- servo ID 8, STS3215 -->
-    <position name="l_hip_pitch" joint="l_hip_pitch" ctrlrange="-0.95 0.7" forcerange="-4.9 4.9"/>  <!-- servo ID 9, STS3250 -->
+    <position name="l_hip_pitch" joint="l_hip_pitch" ctrlrange="-0.95 0.68" forcerange="-4.9 4.9"/>  <!-- servo ID 9, STS3250 -->
     <position name="l_knee" joint="l_knee" ctrlrange="-0.09 1.9" forcerange="-4.9 4.9"/>  <!-- servo ID 10, STS3250 -->
     <position name="l_ankle_pitch" joint="l_ankle_pitch" ctrlrange="-0.76 0.76" forcerange="-2.94 2.94"/>  <!-- servo ID 11, STS3215 -->
     <position name="l_ankle_roll" joint="l_ankle_roll" ctrlrange="-0.33 0.33" forcerange="-2.94 2.94"/>  <!-- servo ID 12, STS3215 -->

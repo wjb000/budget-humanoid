@@ -18,7 +18,7 @@
 | `train.py`, `export_policy.py`, `eval_policy.py` | PPO baseline (stable-baselines3), numpy export, evaluation vs a hold-pose baseline |
 | `sysid.py` | Servo system-ID: record protocol (hardware), fit, and a synthetic selftest |
 
-Units: meters, kilograms, radians. Zero pose = standing, arms down, legs straight. Link frames are world-aligned at the zero pose, with the origin on the joint shaft. Total mass 2.229 kg, COM about (-12, 2, 308) mm at the zero pose.
+Units: meters, kilograms, radians. Zero pose = standing, arms down, legs straight. Link frames are world-aligned at the zero pose, with the origin on the joint shaft. Total mass 2.262 kg, COM about (-12, 2, 310) mm at the zero pose.
 
 ## Check it
 
@@ -31,9 +31,9 @@ python -m mujoco.viewer --mjcf=sim/budget19.xml
 `check_mujoco.py` loads the MJCF, resets to the `stand` keyframe (all targets zero), steps 5 s, and reports center-of-mass sag, torso tilt, whether both foot soles are in contact, and actuator load as a fraction of the 2.94 N m servo stall torque. It exits non-zero if sag > 30 mm, tilt > 5 deg, or a foot loses contact. Result at the committed settings (kp 20, kv 0.5):
 
 ```
-model: 21 bodies, 20 joints (1 free), 19 actuators, total mass 2.229 kg
-after 5.0 s: COM z 0.308 m (start 0.310, max sag 2.8 mm), COM xy drift 4.6 mm
-torso tilt: final 1.56 deg, max 1.87 deg; both feet in contact: True
+model: 21 bodies, 20 joints (1 free), 19 actuators, total mass 2.262 kg
+after 5.0 s: COM z 0.309 m (start 0.312, max sag 2.8 mm), COM xy drift 4.8 mm
+torso tilt: final 1.61 deg, max 1.94 deg; both feet in contact: True
 RESULT: PASS - stands (position hold at zero pose)
 ```
 
