@@ -1,5 +1,6 @@
 {
 "part:r_foot": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_foot",
@@ -7,6 +8,7 @@
 "price": "filament"
 },
 "part:r_ankle_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_ankle_link",
@@ -14,6 +16,7 @@
 "price": "filament"
 },
 "part:r_shin": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_shin",
@@ -21,6 +24,7 @@
 "price": "filament"
 },
 "part:r_thigh": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_thigh",
@@ -28,6 +32,7 @@
 "price": "filament"
 },
 "part:r_hip_roll_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_hip_roll_link",
@@ -35,6 +40,7 @@
 "price": "filament"
 },
 "part:r_hip_yaw_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_hip_yaw_link",
@@ -42,6 +48,7 @@
 "price": "filament"
 },
 "part:r_upper_arm": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_upper_arm",
@@ -49,6 +56,7 @@
 "price": "filament"
 },
 "part:r_forearm": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_forearm",
@@ -56,6 +64,7 @@
 "price": "filament"
 },
 "part:r_finger": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: r_finger",
@@ -63,6 +72,7 @@
 "price": "filament"
 },
 "part:l_foot": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_foot",
@@ -70,6 +80,7 @@
 "price": "filament"
 },
 "part:l_ankle_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_ankle_link",
@@ -77,6 +88,7 @@
 "price": "filament"
 },
 "part:l_shin": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_shin",
@@ -84,6 +96,7 @@
 "price": "filament"
 },
 "part:l_thigh": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_thigh",
@@ -91,6 +104,7 @@
 "price": "filament"
 },
 "part:l_hip_roll_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_hip_roll_link",
@@ -98,6 +112,7 @@
 "price": "filament"
 },
 "part:l_hip_yaw_link": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_hip_yaw_link",
@@ -105,6 +120,7 @@
 "price": "filament"
 },
 "part:l_upper_arm": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_upper_arm",
@@ -112,6 +128,7 @@
 "price": "filament"
 },
 "part:l_forearm": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_forearm",
@@ -119,6 +136,7 @@
 "price": "filament"
 },
 "part:l_finger": {
+"color": "#3a3f47",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: l_finger",
@@ -126,6 +144,7 @@
 "price": "filament"
 },
 "part:torso": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: torso",
@@ -133,6 +152,7 @@
 "price": "filament"
 },
 "part:head": {
+"color": "#e9e6de",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: head",
@@ -140,6 +160,7 @@
 "price": "filament"
 },
 "part:torso_front_cover": {
+"color": "#e0702a",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: torso_front_cover",
@@ -147,6 +168,7 @@
 "price": "filament"
 },
 "part:battery_door": {
+"color": "#e0702a",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: battery_door",
@@ -154,6 +176,7 @@
 "price": "filament"
 },
 "part:head_lid": {
+"color": "#e0702a",
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: head_lid",
