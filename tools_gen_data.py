@@ -1,0 +1,59 @@
+import json
+B=lambda cat,part,unit,w,r,u,basis,src=None,href=None:dict(cat=cat,part=part,unit=unit,q=dict(walker=w,rec=r,upg=u),basis=basis,src=src,href=href)
+L,S,E="Listed on page","Search listing","Estimate"
+BOM=[
+B("Actuators","Feetech ST3215 12 V serial-bus servo (30 kg·cm, 55 g)",19.9,12,22,18,L,"DFRobot","https://www.dfrobot.com/product-2962.html"),
+B("Actuators","Feetech STS3250 12 V servo (50 kg·cm, 74.5 g): hip pitch + knee",64.99,0,0,4,L,"BABSCO","https://shop.babsco.com/feetech-sts3250-50kg-heavy-duty-smart-servo"),
+B("Compute","Raspberry Pi 5, 2 GB (vision, voice, high-level)",77.5,0,1,1,L,"Raspberry Pi","https://www.raspberrypi.com/products/raspberry-pi-5/"),
+B("Compute","Seeed XIAO ESP32-S3 (real-time controller)",7.9,1,1,1,S,"Seeed Studio","https://www.seeedstudio.com/XIAO-ESP32S3-p-5627.html"),
+B("Compute","microSD card 32 GB",8,0,1,1,E),
+B("Compute","Raspberry Pi 5 active cooler",5,0,1,1,E),
+B("Sensors & audio","Waveshare Bus Servo Adapter (A), TTL/UART mode",4.99,1,2,2,S,"Waveshare","https://www.waveshare.com/product/bus-servo-adapter-a.htm"),
+B("Sensors & audio","LSM6DS3 IMU breakout (walker tier, K2 builder's figure)",5,1,0,0,E,"K2 BOM","https://kapalikkhanal.github.io/K2/"),
+B("Sensors & audio","Adafruit BNO085 9-DOF IMU (fused orientation, I²C)",29.5,0,1,1,L,"Adafruit","https://www.adafruit.com/product/4754"),
+B("Sensors & audio","Raspberry Pi Camera Module 3 (from $25)",25,0,1,1,L,"Raspberry Pi","https://www.raspberrypi.com/products/camera-module-3/"),
+B("Sensors & audio","Pi 5 camera cable adapter",4,0,1,1,E),
+B("Sensors & audio","I²S MEMS microphone (SPH0645)",6.95,0,1,1,L,"Adafruit","https://www.adafruit.com/product/3421"),
+B("Sensors & audio","I²S 3 W amp (MAX98357A); out of stock at Adafruit when checked, any clone works",5.95,0,1,1,L,"Adafruit","https://www.adafruit.com/product/3006"),
+B("Sensors & audio","40 mm 4 Ω speaker; out of stock at Adafruit when checked",4.95,0,1,1,L,"Adafruit","https://www.adafruit.com/product/3968"),
+B("Power & safety","3S LiPo 11.1 V 2200 mAh 25C, XT60",19.99,1,1,1,L,"Monkey Hobby","https://www.monkeyhobby.com/volantexrc-2200mah-3s-11-1v-25c-lipo-battery-xt60-plug/"),
+B("Power & safety","Pololu D24V50F5 5 V / 5 A buck (Pi 5 rail)",32.95,0,1,1,L,"Pololu","https://www.pololu.com/product/2851"),
+B("Power & safety","Small 12 V to 5 V buck (ESP32 only, K2 builder's figure)",4,1,0,0,E,"K2 BOM","https://kapalikkhanal.github.io/K2/"),
+B("Power & safety","E-stop: latching NC mushroom button",7.5,1,1,1,L,"RobotShop","https://www.robotshop.com/products/emergency-stop-switch"),
+B("Power & safety","12 V automotive relay (30 A class) + MOSFET driver",8,1,1,1,E),
+B("Power & safety","Fuse holder + 30 A blade fuse",4,1,1,1,E),
+B("Power & safety","XT60 connectors, 14–16 AWG wire, terminal block",10,1,1,1,E),
+B("Power & safety","LiPo low-voltage alarm",4,1,1,1,E),
+B("Power & safety","3S balance charger (skip if you own one)",25,1,1,1,E),
+B("Structure & misc","PLA/PETG filament, about 1 kg (printer not included)",20,1,1,1,E),
+B("Structure & misc","Fasteners, heat-set inserts, small bearings",25,1,1,1,E),
+B("Structure & misc","3-pin servo cables and extensions",12,1,1,1,E),
+]
+M=lambda p:[[768-x,y] for x,y in p]
+def C(cat,name,spec,price,pos): return dict(cat=cat,name=name,spec=spec,price=price,pos=pos)
+COMPS=[
+C("sense","Camera (head)","Pi Camera Module 3: 12 MP, autofocus, CSI-2 to the Pi 5","$25",[[385,115]]),
+C("sense","Microphone","Adafruit I2S MEMS mic (SPH0645), I2S into the Pi 5","$6.95",[[322,118]]),
+C("act","Neck servos x2","Pan + tilt: 2x Feetech ST3215 (IDs 21-22)","2 x $19.90",[[385,198],[385,222]]),
+C("sense","Speaker + amp","MAX98357A 3 W I2S amp + 40 mm 4 ohm speaker","$5.95 + $4.95",[[325,288]]),
+C("compute","ESP32-S3 controller","Seeed XIAO ESP32-S3: real-time core for servo buses, IMU, e-stop watchdog","$7.90",[[355,360]]),
+C("power","Battery + fuse + relay","3S LiPo 2200 mAh, 30 A fuse, relay, low-voltage alarm","$19.99 + ~$16 est.",[[365,417]]),
+C("sense","IMU (torso centre)","Adafruit BNO085 9-DOF fused orientation, I2C to the ESP32","$29.50",[[385,462]]),
+C("up","Upgrade: STS3250 hips + knees","Swap hip pitch + knee on both legs to 50 kg.cm servos","+$180.36 for 4",[[460,546],[460,664],[308,546],[308,664]]),
+C("frame","3D-printed frame + brackets","PLA/PETG links, fasteners, heat-set inserts, bearings","~$45 est.",[[298,760]]),
+C("power","E-stop","Latching NC mushroom switch, cuts the power-relay coil with no software","$7.50",[[428,244]]),
+C("compute","Raspberry Pi 5 (chest)","2 GB: vision, voice, policy inference, Wi-Fi. Cooler, SD, cable est. $17","$77.50",[[420,292]]),
+C("power","5 V buck for the Pi","Pololu D24V50F5, 5 V / 5 A from the 3S pack, also feeds ESP32 and audio","$32.95",[[432,417]]),
+C("compute","Servo bus adapters x2","Waveshare Bus Servo Adapter (A), TTL mode: bus A legs, bus B arms + neck","2 x $4.99",[[420,360]]),
+C("act","Shoulder + elbow x3 per arm","6x ST3215: shoulder pitch, roll, elbow (IDs 13-15 / 17-19)","6 x $19.90",[[540,262],[540,322],[580,390]]+M([[540,262],[540,322],[580,390]])),
+C("act","Grippers x1 per hand","2x ST3215 driving simple two-finger claws (IDs 16, 20)","2 x $19.90",[[575,560]]+M([[575,560]])),
+C("act","Hip servos x3 per leg","6x ST3215: hip yaw, roll, pitch (IDs 1-3 / 7-9)","6 x $19.90",[[462,490],[462,520],[462,546]]+M([[462,490],[462,520],[462,546]])),
+C("act","Knee servo x1 per leg","2x ST3215 (IDs 4, 10)","2 x $19.90",[[470,664]]+M([[470,664]])),
+C("act","Ankle servos x2 per leg","4x ST3215: ankle pitch + roll (IDs 5-6 / 11-12)","4 x $19.90",[[480,830],[480,880]]+M([[480,830],[480,880]])),
+]
+DOF=[
+["Neck","Yaw","Z","21","–","ST3215"],["Neck","Pitch","Y","22","–","ST3215"],
+["Arm","Shoulder pitch","Y","13","17","ST3215"],["Arm","Shoulder roll","X","14","18","ST3215"],["Arm","Elbow pitch","Y","15","19","ST3215"],["Gripper","Open/close","–","16","20","ST3215"],
+["Leg","Hip yaw","Z","1","7","ST3215"],["Leg","Hip roll","X","2","8","ST3215"],["Leg","Hip pitch","Y","3","9","ST3215 (STS3250 upgrade)"],["Leg","Knee pitch","Y","4","10","ST3215 (STS3250 upgrade)"],["Leg","Ankle pitch","Y","5","11","ST3215"],["Leg","Ankle roll","X","6","12","ST3215"],
+]
+open('data.js','w').write("const BOM=%s;\nconst COMPS=%s;\nconst DOF=%s;\n"%tuple(json.dumps(x,ensure_ascii=False) for x in (BOM,COMPS,DOF)))
