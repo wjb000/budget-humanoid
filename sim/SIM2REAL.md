@@ -1,6 +1,6 @@
 # Sim-to-real package: what exists, what was run, what was not
 
-Budget-19 (19 DOF, 2.262 kg, STS3250 on hip pitch and knee, STS3215 elsewhere). Everything below was run in simulation or against software stand-ins on a Linux box. **Nothing has touched a servo, an ESP32, a Pi 5, or a printed part.**
+Budget-19 (19 DOF, 2.366 kg, STS3250 on hip pitch and knee, STS3215 elsewhere). Everything below was run in simulation or against software stand-ins on a Linux box. **Nothing has touched a servo, an ESP32, a Pi 5, or a printed part.**
 
 ## Pieces
 

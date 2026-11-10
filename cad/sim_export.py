@@ -144,8 +144,41 @@ def part_color(k):
     """v3 colour scheme: shells off-white, joint links and feet graphite, covers/lid orange"""
     n = k.split('_', 1)[1] if k[:2] in ('l_', 'r_') else k
     if n in ('torso_front_cover', 'battery_door', 'head_lid'): return ACCENT
-    if n in ('hip_yaw_link', 'hip_roll_link', 'ankle_link', 'foot', 'finger'): return JOINT
     return SHELL
+
+def lin(h):
+    """sRGB hex -> linear 0..255 (glTF vertex colours are linear)"""
+    v = np.array([int(h[i:i + 2], 16) for i in (1, 3, 5)]) / 255.0
+    return np.round((v ** 2.2) * 255).astype(np.uint8)
+
+def cap_split(m, p):
+    """split one part mesh into body (shell colour) and joint-cap faces (graphite): faces inside a horn-plate slab. Returns a mesh with linear vertex colours."""
+    V, F = np.array(m.vertices), np.array(m.faces)
+    def inreg(P_):
+        r = np.zeros(len(P_), bool)
+        for (sv, (x0, x1, y0, y1)) in p.caps:
+            d = P_ - sv.S
+            zl = d @ sv.a; xl = d @ sv.e1; yl = d @ sv.e2
+            r |= (zl > GAP - 0.05) & (zl < GAP + PT + 0.05) & (xl > x0 - 0.05) & (xl < x1 + 0.05) & (yl > y0 - 0.05) & (yl < y1 + 0.05)
+        return r
+    iv = inreg(V)[F]
+    straddle = iv.any(1) & ~iv.all(1)                    # faces cut by a colour boundary: refine them so the edge is crisp
+    if straddle.any():
+        v2, f2 = trimesh.remesh.subdivide_to_size(V, F[straddle], max_edge=3.0)
+        F = np.vstack([F[~straddle], f2]); V = v2                  # v2 starts with the original vertices
+    cen = V[F].mean(1)
+    dark = np.zeros(len(F), bool)
+    for (sv, (x0, x1, y0, y1)) in p.caps:
+        d = cen - sv.S
+        zl = d @ sv.a; xl = d @ sv.e1; yl = d @ sv.e2
+        dark |= (zl > GAP - 0.05) & (zl < GAP + PT + 0.05) & (xl > x0 - 0.05) & (xl < x1 + 0.05) & (yl > y0 - 0.05) & (yl < y1 + 0.05)
+    used = np.unique(F[dark])
+    remap = {int(v): len(V) + i for i, v in enumerate(used)}
+    V2 = np.vstack([V, V[used]]); F2 = F.copy()
+    F2[dark] = np.vectorize(lambda v: remap[int(v)])(F[dark]) if dark.any() else F[dark]
+    col = np.tile(np.append(lin(SHELL), 255), (len(V2), 1)).astype(np.uint8)
+    col[len(V):] = np.append(lin(JOINT), 255)
+    return trimesh.Trimesh(V2, F2, vertex_colors=col, process=False), int(dark.sum())
 
 def write_gltf(R, path):
     from pygltflib import GLTF2, BufferFormat
@@ -161,9 +194,12 @@ def write_gltf(R, path):
     for i, (k, p) in enumerate(P.items()):
         m = tess_to_mesh(R.get('solids', {}).get(k) or p.build(), 0.25, 0.5)
         pc = part_color(k)
-        col(m, hexrgba(pc))
+        if pc == SHELL and getattr(p, 'caps', None):
+            m, nd = cap_split(m, p)
+        else:
+            col(m, hexrgba(pc))
         sc.add_geometry(m, node_name=f'part:{k}', geom_name=f'part:{k}')
-        info[f'part:{k}'] = dict(color=pc, kind='generated', group='cover', name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.' + (' Cosmetic/protective shell: printed in halves, M2 screws.' if (hasattr(p, 'host') or k in ('torso_front_cover', 'battery_door', 'head_lid')) else ''), price='filament')
+        info[f'part:{k}'] = dict(color=pc, caps=bool(pc == SHELL and getattr(p, 'caps', None)), kind='generated', group='cover', name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.' + (' Cosmetic/protective shell: printed in halves, M2 screws.' if (hasattr(p, 'host') or k in ('torso_front_cover', 'battery_door', 'head_lid')) else ''), price='filament')
     sm = R['sm']; sm2 = sm.copy(); col(sm2, [40, 44, 52, 255])
     for lk, d in links.items():
         for sv in d['servos']:
