@@ -16,8 +16,8 @@
     317.0
    ],
    "lim": [
-    -0.51,
-    0.3
+    -0.56,
+    0.28
    ],
    "lim_nom": [
     -0.6,
@@ -148,7 +148,7 @@
    "name": "r_shoulder_pitch",
    "id": 13,
    "parent": "base",
-   "child": "r_shoulder_link",
+   "child": "r_upper_arm",
    "axis": [
     0.0,
     -1.0,
@@ -169,32 +169,8 @@
    ]
   },
   {
-   "name": "r_shoulder_roll",
-   "id": 14,
-   "parent": "r_shoulder_link",
-   "child": "r_upper_arm",
-   "axis": [
-    1.0,
-    0.0,
-    0.0
-   ],
-   "pos_mm": [
-    -0.14999999999999858,
-    -108.7,
-    412.0
-   ],
-   "lim": [
-    -1.13,
-    0.09
-   ],
-   "lim_nom": [
-    -1.2,
-    1.2
-   ]
-  },
-  {
    "name": "r_elbow",
-   "id": 15,
+   "id": 14,
    "parent": "r_upper_arm",
    "child": "r_forearm",
    "axis": [
@@ -218,7 +194,7 @@
   },
   {
    "name": "r_gripper",
-   "id": 16,
+   "id": 15,
    "parent": "r_forearm",
    "child": "r_finger",
    "axis": [
@@ -256,8 +232,8 @@
     317.0
    ],
    "lim": [
-    -0.3,
-    0.51
+    -0.28,
+    0.56
    ],
    "lim_nom": [
     -0.6,
@@ -386,9 +362,9 @@
   },
   {
    "name": "l_shoulder_pitch",
-   "id": 17,
+   "id": 16,
    "parent": "base",
-   "child": "l_shoulder_link",
+   "child": "l_upper_arm",
    "axis": [
     0.0,
     1.0,
@@ -409,32 +385,8 @@
    ]
   },
   {
-   "name": "l_shoulder_roll",
-   "id": 18,
-   "parent": "l_shoulder_link",
-   "child": "l_upper_arm",
-   "axis": [
-    1.0,
-    0.0,
-    0.0
-   ],
-   "pos_mm": [
-    -0.14999999999999858,
-    108.7,
-    412.0
-   ],
-   "lim": [
-    -0.09,
-    1.13
-   ],
-   "lim_nom": [
-    -1.2,
-    1.2
-   ]
-  },
-  {
    "name": "l_elbow",
-   "id": 19,
+   "id": 17,
    "parent": "l_upper_arm",
    "child": "l_forearm",
    "axis": [
@@ -458,7 +410,7 @@
   },
   {
    "name": "l_gripper",
-   "id": 20,
+   "id": 18,
    "parent": "l_forearm",
    "child": "l_finger",
    "axis": [
@@ -482,9 +434,9 @@
   },
   {
    "name": "neck_yaw",
-   "id": 21,
+   "id": 19,
    "parent": "base",
-   "child": "neck_bracket",
+   "child": "head",
    "axis": [
     0.0,
     0.0,
@@ -502,30 +454,6 @@
    "lim_nom": [
     -1.2,
     1.2
-   ]
-  },
-  {
-   "name": "neck_pitch",
-   "id": 22,
-   "parent": "neck_bracket",
-   "child": "head",
-   "axis": [
-    0.0,
-    -1.0,
-    0.0
-   ],
-   "pos_mm": [
-    -40.0,
-    -22.25,
-    566.5
-   ],
-   "lim": [
-    -0.33,
-    0.33
-   ],
-   "lim_nom": [
-    -0.35,
-    0.35
    ]
   }
  ]

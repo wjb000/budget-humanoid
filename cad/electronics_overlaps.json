@@ -1,1 +1,1 @@
-[["Waveshare bus adapter B (arms/neck)", "torso", -0.0], ["Adafruit BNO085 IMU", "torso", -0.0]]
+[["Pololu D24V50F5 5 V buck", "torso_front_cover", -0.0], ["Waveshare bus adapter A (legs)", "torso_front_cover", -0.0], ["Waveshare bus adapter A (legs)", "Waveshare bus adapter B (arms/neck)", -0.0], ["Waveshare bus adapter B (arms/neck)", "torso_front_cover", -0.0], ["Adafruit BNO085 IMU", "torso", -0.0], ["E-stop (16 mm unibody, NC, latching)", "torso", -0.0]]

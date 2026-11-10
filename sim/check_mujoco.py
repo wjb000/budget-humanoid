@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Load budget22.xml in MuJoCo and check the robot can stand (position-hold at the zero pose) for a few seconds.
+"""Load budget19.xml in MuJoCo and check the robot can stand (position-hold at the zero pose) for a few seconds.
 Usage: pip install mujoco numpy; python sim/check_mujoco.py [--seconds 5] [--kp 8 --kv 0.35] [--render out.png]"""
 import argparse, os, sys, numpy as np, mujoco
 
@@ -12,7 +12,7 @@ ap.add_argument('--render', default=None, help='write a PNG of the final pose (n
 a = ap.parse_args()
 
 here = os.path.dirname(os.path.abspath(__file__))
-m = mujoco.MjModel.from_xml_path(os.path.join(here, 'budget22.xml'))
+m = mujoco.MjModel.from_xml_path(os.path.join(here, 'budget19.xml'))
 d = mujoco.MjData(m)
 if a.kp is not None:
     m.actuator_gainprm[:, 0] = a.kp; m.actuator_biasprm[:, 1] = -a.kp
