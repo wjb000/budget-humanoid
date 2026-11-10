@@ -4,8 +4,8 @@
   <material name="printed"><color rgba="0.78 0.80 0.84 1"/></material>
   <material name="servo"><color rgba="0.17 0.18 0.21 1"/></material>
   <link name="base">
-    <inertial><origin xyz="-0.0260599 0.00490666 0.417548" rpy="0 0 0"/><mass value="0.884796"/>
-      <inertia ixx="0.00443033" ixy="-3.4746e-05" ixz="-0.00015141" iyy="0.00312697" iyz="-3.30424e-05" izz="0.00186689"/></inertial>
+    <inertial><origin xyz="-0.0255372 0.0038936 0.418509" rpy="0 0 0"/><mass value="0.929088"/>
+      <inertia ixx="0.00435522" ixy="-9.44036e-06" ixz="-0.000133053" iyy="0.00322277" iyz="-5.03883e-05" izz="0.00189189"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/base.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_hip_yaw_servo"><origin xyz="-0.04 -0.0425 0.3357" rpy="3.14159 0 -1.5708"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
     <visual name="l_hip_yaw_servo"><origin xyz="-0.04 0.0425 0.3357" rpy="3.14159 0 1.5708"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
@@ -13,161 +13,162 @@
     <visual name="l_shoulder_pitch_servo"><origin xyz="-0.0224 0.0748 0.4525" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
     <visual name="neck_yaw_servo"><origin xyz="-0.0275 0 0.5228" rpy="0 0 -3.14159"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
     <visual name="env_Raspberry_Pi_5"><origin xyz="-0.0457877 -0.0181767 0.416498"/><geometry><box size="0.0183011 0.0573984 0.0879215"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
-    <visual name="env_3S_LiPo_2200_mAh_assumed_size"><origin xyz="-0.02 0.032 0.4155"/><geometry><box size="0.025 0.035 0.105"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
+    <visual name="env_3S_LiPo_2200_mAh_assumed_size"><origin xyz="-0.02 0.026 0.4155"/><geometry><box size="0.025 0.035 0.105"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
     <visual name="env_Pololu_D24V50F5_buck"><origin xyz="0.0108 0.035 0.385"/><geometry><box size="0.0088 0.0203 0.0178"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
-    <visual name="env_Waveshare_bus_adapter_A_legs"><origin xyz="0.0112 -0.031 0.431"/><geometry><box size="0.008 0.033 0.042"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
-    <visual name="env_Waveshare_bus_adapter_B_arms_neck"><origin xyz="0.0112 -0.031 0.475"/><geometry><box size="0.008 0.033 0.042"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
+    <visual name="env_Waveshare_bus_adapter_A_legs"><origin xyz="0.0112 -0.031 0.424"/><geometry><box size="0.008 0.033 0.042"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
+    <visual name="env_Waveshare_bus_adapter_B_arms_neck"><origin xyz="0.0112 -0.031 0.466"/><geometry><box size="0.008 0.033 0.042"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
     <visual name="env_Seeed_XIAO_ESP32-S3"><origin xyz="0.0118 0.025 0.431"/><geometry><box size="0.0045 0.0178 0.0225"/></geometry><material name="m_compute"><color rgba="0.12 0.44 0.88 1"/></material></visual>
     <visual name="env_Relay_+_fuse_holder"><origin xyz="-0.025 -0.032 0.378"/><geometry><box size="0.02 0.02 0.03"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
-    <visual name="env_Adafruit_BNO085_IMU"><origin xyz="-0.01 0.000378344 0.363884"/><geometry><box size="0.0254 0.0221033 0.00276795"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
-    <visual name="env_40_mm_speaker"><origin xyz="0.00266165 -0.00777201 0.388053"/><geometry><box size="0.0250343 0.0397942 0.0399567"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
+    <visual name="env_Adafruit_BNO085_IMU"><origin xyz="-0.01 -0.00462166 0.363884"/><geometry><box size="0.0254 0.0221033 0.00276795"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
+    <visual name="env_40_mm_speaker"><origin xyz="0.00266165 -0.012772 0.388053"/><geometry><box size="0.0250343 0.0397942 0.0399567"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
     <visual name="env_MAX98357A_I2S_amp"><origin xyz="0.013774 -0.00250923 0.41999"/><geometry><box size="0.00234808 0.0174158 0.01778"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
     <visual name="env_E-stop_NC_latching_mushroom"><origin xyz="-0.05 0.03 0.509"/><geometry><box size="0.022 0.022 0.022"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
+    <visual name="env_XT60_panel_connector_charge_port"><origin xyz="-0.0664 0.026 0.482"/><geometry><box size="0.014 0.0158 0.008"/></geometry><material name="m_power"><color rgba="0.91 0.44 0.04 1"/></material></visual>
   </link>
   <link name="r_foot">
-    <inertial><origin xyz="-0.00718885 -5.59045e-19 -0.0191927" rpy="0 0 0"/><mass value="0.0256864"/>
-      <inertia ixx="8.00268e-06" ixy="3.90428e-22" ixz="-1.32387e-06" iyy="2.89231e-05" iyz="8.46593e-22" izz="3.28937e-05"/></inertial>
+    <inertial><origin xyz="-0.00720126 9.62033e-09 -0.0192215" rpy="0 0 0"/><mass value="0.025461"/>
+      <inertia ixx="7.84775e-06" ixy="-3.35838e-12" ixz="-1.30228e-06" iyy="2.8516e-05" iyz="-6.03611e-12" izz="3.24171e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_foot.obj"/></geometry><material name="printed"/></visual>
     <collision><origin xyz="-0.011 0 -0.023"/><geometry><box size="0.122 0.056 0.004"/></geometry></collision>
   </link>
   <link name="r_ankle_link">
-    <inertial><origin xyz="0.00178929 0.0147915 -0.0391683" rpy="0 0 0"/><mass value="0.0749108"/>
-      <inertia ixx="2.27145e-05" ixy="-5.47393e-08" ixz="3.27302e-07" iyy="2.59852e-05" iyz="1.19676e-06" izz="1.33543e-05"/></inertial>
+    <inertial><origin xyz="0.00173892 0.0147772 -0.0391145" rpy="0 0 0"/><mass value="0.0716172"/>
+      <inertia ixx="2.15647e-05" ixy="-5.26334e-08" ixz="3.1334e-07" iyy="2.51789e-05" iyz="1.17588e-06" izz="1.24353e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_ankle_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_ankle_roll_servo"><origin xyz="0.0033 0.0152 -0.0405" rpy="-0 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_shin">
-    <inertial><origin xyz="8.95146e-08 0.0157128 -0.0795737" rpy="0 0 0"/><mass value="0.0788391"/>
-      <inertia ixx="4.84128e-05" ixy="-1.76627e-11" ixz="-6.60637e-11" iyy="4.32822e-05" iyz="6.95999e-06" izz="1.54089e-05"/></inertial>
+    <inertial><origin xyz="9.34842e-08 0.0156254 -0.0794419" rpy="0 0 0"/><mass value="0.0754637"/>
+      <inertia ixx="4.70729e-05" ixy="-1.83299e-11" ixz="-6.5087e-11" iyy="4.16319e-05" iyz="6.78295e-06" izz="1.44326e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_shin.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_ankle_pitch_servo"><origin xyz="0 0.0187 -0.0845" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_thigh">
-    <inertial><origin xyz="-8.92115e-08 -0.0198499 -0.082262" rpy="0 0 0"/><mass value="0.079107"/>
-      <inertia ixx="5.07949e-05" ixy="-1.81067e-11" ixz="6.38643e-11" iyy="4.55921e-05" iyz="-7.41426e-06" izz="1.55214e-05"/></inertial>
+    <inertial><origin xyz="-9.32035e-08 -0.0197607 -0.0821222" rpy="0 0 0"/><mass value="0.0757287"/>
+      <inertia ixx="4.94032e-05" ixy="-1.8718e-11" ixz="6.28936e-11" iyy="4.38911e-05" iyz="-7.22724e-06" izz="1.45427e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_thigh.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_knee_servo"><origin xyz="0 -0.0229 -0.0875" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_hip_roll_link">
-    <inertial><origin xyz="0.027274 0.00870175 -0.0120797" rpy="0 0 0"/><mass value="0.0757271"/>
-      <inertia ixx="2.30106e-05" ixy="-7.15546e-07" ixz="8.10806e-07" iyy="2.06742e-05" iyz="5.49761e-07" izz="1.47293e-05"/></inertial>
+    <inertial><origin xyz="0.0272566 0.00873804 -0.0120851" rpy="0 0 0"/><mass value="0.0723837"/>
+      <inertia ixx="2.22739e-05" ixy="-7.01987e-07" ixz="7.91418e-07" iyy="1.95535e-05" iyz="5.38809e-07" izz="1.37714e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_hip_roll_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_hip_pitch_servo"><origin xyz="0.0282 0.0077 -0.0125" rpy="1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_hip_yaw_link">
-    <inertial><origin xyz="-0.00807984 -9.41727e-08 -0.0285631" rpy="0 0 0"/><mass value="0.0749395"/>
-      <inertia ixx="2.03572e-05" ixy="4.9075e-12" ixz="-3.81545e-07" iyy="2.39942e-05" iyz="9.42182e-11" izz="1.3333e-05"/></inertial>
+    <inertial><origin xyz="-0.00812013 -9.74093e-08 -0.0285167" rpy="0 0 0"/><mass value="0.0716465"/>
+      <inertia ixx="1.927e-05" ixy="4.46738e-12" ixz="-3.81434e-07" iyy="2.32481e-05" iyz="9.23637e-11" izz="1.24137e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_hip_yaw_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_hip_roll_servo"><origin xyz="-0.0069 0 -0.0295" rpy="-0 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_shoulder_link">
-    <inertial><origin xyz="0.00209633 -0.0147374 -0.0391498" rpy="0 0 0"/><mass value="0.0752312"/>
-      <inertia ixx="2.33174e-05" ixy="5.31199e-10" ixz="-1.57626e-07" iyy="2.66096e-05" iyz="-1.36137e-06" izz="1.34794e-05"/></inertial>
+    <inertial><origin xyz="0.00205031 -0.0147249 -0.0391316" rpy="0 0 0"/><mass value="0.071915"/>
+      <inertia ixx="2.21519e-05" ixy="-3.1714e-09" ixz="-1.60269e-07" iyy="2.57889e-05" iyz="-1.3334e-06" izz="1.25536e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_shoulder_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_shoulder_roll_servo"><origin xyz="0.00355 -0.0152 -0.0405" rpy="-3.14159 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_upper_arm">
-    <inertial><origin xyz="0.0157219 -0.00230164 -0.0391286" rpy="0 0 0"/><mass value="0.0773238"/>
-      <inertia ixx="2.68571e-05" ixy="-1.61641e-07" ixz="1.36677e-06" iyy="2.37794e-05" iyz="4.15887e-07" izz="1.44269e-05"/></inertial>
+    <inertial><origin xyz="0.0156859 -0.00236051 -0.0390756" rpy="0 0 0"/><mass value="0.0740397"/>
+      <inertia ixx="2.61174e-05" ixy="-1.63386e-07" ixz="1.34086e-06" iyy="2.26681e-05" iyz="4.00202e-07" izz="1.3525e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_upper_arm.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_elbow_servo"><origin xyz="0.01665 -0.0007 -0.0405" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_forearm">
-    <inertial><origin xyz="0.00213899 -0.0161992 -0.0693417" rpy="0 0 0"/><mass value="0.086213"/>
-      <inertia ixx="5.16459e-05" ixy="-2.40464e-07" ixz="6.91932e-06" iyy="4.8814e-05" iyz="-2.47053e-06" izz="1.84679e-05"/></inertial>
+    <inertial><origin xyz="0.00217271 -0.016124 -0.0693775" rpy="0 0 0"/><mass value="0.0826746"/>
+      <inertia ixx="5.00684e-05" ixy="-2.20258e-07" ixz="6.71421e-06" iyy="4.68837e-05" iyz="-2.44985e-06" izz="1.73767e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_forearm.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_gripper_servo"><origin xyz="0 -0.0187 -0.0665" rpy="1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_finger">
-    <inertial><origin xyz="-0.00194505 0.00463052 -0.0461422" rpy="0 0 0"/><mass value="0.00808932"/>
-      <inertia ixx="6.05236e-06" ixy="-5.15562e-08" ixz="-3.87278e-08" iyy="5.61874e-06" iyz="1.02004e-06" izz="8.18642e-07"/></inertial>
+    <inertial><origin xyz="-0.00195727 0.00448362 -0.0460171" rpy="0 0 0"/><mass value="0.00783482"/>
+      <inertia ixx="5.83012e-06" ixy="-4.95147e-08" ixz="-3.59121e-08" iyy="5.42265e-06" iyz="9.72521e-07" izz="7.70084e-07"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_finger.obj"/></geometry><material name="printed"/></visual>
   </link>
   <link name="l_foot">
-    <inertial><origin xyz="-0.00718885 -5.59045e-19 -0.0191927" rpy="0 0 0"/><mass value="0.0256864"/>
-      <inertia ixx="8.00268e-06" ixy="3.90428e-22" ixz="-1.32387e-06" iyy="2.89231e-05" iyz="8.46593e-22" izz="3.28937e-05"/></inertial>
+    <inertial><origin xyz="-0.00720126 -9.93684e-09 -0.0192215" rpy="0 0 0"/><mass value="0.025461"/>
+      <inertia ixx="7.84775e-06" ixy="3.42829e-12" ixz="-1.30228e-06" iyy="2.8516e-05" iyz="6.44714e-12" izz="3.24171e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_foot.obj"/></geometry><material name="printed"/></visual>
     <collision><origin xyz="-0.011 0 -0.023"/><geometry><box size="0.122 0.056 0.004"/></geometry></collision>
   </link>
   <link name="l_ankle_link">
-    <inertial><origin xyz="0.00178929 -0.0147917 -0.0391683" rpy="0 0 0"/><mass value="0.0749108"/>
-      <inertia ixx="2.27145e-05" ixy="5.47538e-08" ixz="3.27302e-07" iyy="2.59852e-05" iyz="-1.19657e-06" izz="1.33543e-05"/></inertial>
+    <inertial><origin xyz="0.00173892 -0.0147774 -0.0391145" rpy="0 0 0"/><mass value="0.0716172"/>
+      <inertia ixx="2.15647e-05" ixy="5.26487e-08" ixz="3.1334e-07" iyy="2.51789e-05" iyz="-1.1757e-06" izz="1.24353e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_ankle_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_ankle_roll_servo"><origin xyz="0.0033 -0.0152 -0.0405" rpy="-0 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_shin">
-    <inertial><origin xyz="-8.95146e-08 -0.0157128 -0.0795737" rpy="0 0 0"/><mass value="0.0788391"/>
-      <inertia ixx="4.84128e-05" ixy="-1.76627e-11" ixz="6.60637e-11" iyy="4.32822e-05" iyz="-6.95999e-06" izz="1.54089e-05"/></inertial>
+    <inertial><origin xyz="-9.35309e-08 -0.0156254 -0.0794419" rpy="0 0 0"/><mass value="0.0754636"/>
+      <inertia ixx="4.70729e-05" ixy="-1.8261e-11" ixz="6.51505e-11" iyy="4.16319e-05" iyz="-6.78295e-06" izz="1.44326e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_shin.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_ankle_pitch_servo"><origin xyz="0 -0.0187 -0.0845" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_thigh">
-    <inertial><origin xyz="8.92115e-08 0.0198499 -0.082262" rpy="0 0 0"/><mass value="0.079107"/>
-      <inertia ixx="5.07949e-05" ixy="-1.81067e-11" ixz="-6.38643e-11" iyy="4.55921e-05" iyz="7.41426e-06" izz="1.55214e-05"/></inertial>
+    <inertial><origin xyz="9.3157e-08 0.0197607 -0.0821222" rpy="0 0 0"/><mass value="0.0757287"/>
+      <inertia ixx="4.94032e-05" ixy="-1.87867e-11" ixz="-6.28313e-11" iyy="4.38911e-05" iyz="7.22724e-06" izz="1.45427e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_thigh.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_knee_servo"><origin xyz="0 0.0229 -0.0875" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_hip_roll_link">
-    <inertial><origin xyz="0.0272738 -0.00870175 -0.0120797" rpy="0 0 0"/><mass value="0.0757271"/>
-      <inertia ixx="2.30106e-05" ixy="7.15553e-07" ixz="8.10599e-07" iyy="2.06742e-05" iyz="-5.49761e-07" izz="1.47293e-05"/></inertial>
+    <inertial><origin xyz="0.0272564 -0.00873804 -0.0120851" rpy="0 0 0"/><mass value="0.0723837"/>
+      <inertia ixx="2.22739e-05" ixy="7.01995e-07" ixz="7.91213e-07" iyy="1.95534e-05" iyz="-5.38812e-07" izz="1.37714e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_hip_roll_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_hip_pitch_servo"><origin xyz="0.0282 -0.0077 -0.0125" rpy="-1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_hip_yaw_link">
-    <inertial><origin xyz="-0.00807984 -9.41727e-08 -0.0285631" rpy="0 0 0"/><mass value="0.0749395"/>
-      <inertia ixx="2.03572e-05" ixy="4.9075e-12" ixz="-3.81545e-07" iyy="2.39942e-05" iyz="9.42182e-11" izz="1.3333e-05"/></inertial>
+    <inertial><origin xyz="-0.00812013 -9.74094e-08 -0.0285167" rpy="0 0 0"/><mass value="0.0716465"/>
+      <inertia ixx="1.927e-05" ixy="4.46741e-12" ixz="-3.81434e-07" iyy="2.32481e-05" iyz="9.23638e-11" izz="1.24137e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_hip_yaw_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_hip_roll_servo"><origin xyz="-0.0069 0 -0.0295" rpy="-0 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_shoulder_link">
-    <inertial><origin xyz="0.00209633 0.0147376 -0.0391498" rpy="0 0 0"/><mass value="0.0752312"/>
-      <inertia ixx="2.33174e-05" ixy="-5.44879e-10" ixz="-1.57626e-07" iyy="2.66096e-05" iyz="1.36159e-06" izz="1.34794e-05"/></inertial>
+    <inertial><origin xyz="0.00205031 0.0147251 -0.0391316" rpy="0 0 0"/><mass value="0.071915"/>
+      <inertia ixx="2.21519e-05" ixy="3.15698e-09" ixz="-1.60269e-07" iyy="2.57889e-05" iyz="1.33362e-06" izz="1.25536e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_shoulder_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_shoulder_roll_servo"><origin xyz="0.00355 0.0152 -0.0405" rpy="-3.14159 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_upper_arm">
-    <inertial><origin xyz="0.0157217 0.00230164 -0.0391286" rpy="0 0 0"/><mass value="0.0773238"/>
-      <inertia ixx="2.68571e-05" ixy="1.61625e-07" ixz="1.36695e-06" iyy="2.37794e-05" iyz="-4.15887e-07" izz="1.44269e-05"/></inertial>
+    <inertial><origin xyz="0.0156857 0.00236051 -0.0390756" rpy="0 0 0"/><mass value="0.0740397"/>
+      <inertia ixx="2.61174e-05" ixy="1.63368e-07" ixz="1.34104e-06" iyy="2.26681e-05" iyz="-4.002e-07" izz="1.3525e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_upper_arm.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_elbow_servo"><origin xyz="0.01665 0.0007 -0.0405" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_forearm">
-    <inertial><origin xyz="0.00213883 0.0161992 -0.0693417" rpy="0 0 0"/><mass value="0.086213"/>
-      <inertia ixx="5.16459e-05" ixy="2.40493e-07" ixz="6.91916e-06" iyy="4.88141e-05" iyz="2.47053e-06" izz="1.8468e-05"/></inertial>
+    <inertial><origin xyz="0.00217253 0.016124 -0.0693775" rpy="0 0 0"/><mass value="0.0826746"/>
+      <inertia ixx="5.00684e-05" ixy="2.20285e-07" ixz="6.71405e-06" iyy="4.68838e-05" iyz="2.44985e-06" izz="1.73767e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_forearm.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_gripper_servo"><origin xyz="0 0.0187 -0.0665" rpy="-1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_finger">
-    <inertial><origin xyz="-0.00194505 -0.00463052 -0.0461422" rpy="0 0 0"/><mass value="0.00808932"/>
-      <inertia ixx="6.05236e-06" ixy="5.15562e-08" ixz="-3.87278e-08" iyy="5.61874e-06" iyz="-1.02004e-06" izz="8.18642e-07"/></inertial>
+    <inertial><origin xyz="-0.00195727 -0.00448359 -0.0460171" rpy="0 0 0"/><mass value="0.00783483"/>
+      <inertia ixx="5.83012e-06" ixy="4.95136e-08" ixz="-3.59121e-08" iyy="5.42265e-06" iyz="-9.72523e-07" izz="7.70086e-07"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_finger.obj"/></geometry><material name="printed"/></visual>
   </link>
   <link name="neck_bracket">
-    <inertial><origin xyz="-1.49826e-19 -0.0152713 0.01065" rpy="0 0 0"/><mass value="0.00650367"/>
-      <inertia ixx="2.02198e-06" ixy="-4.0892e-23" ixz="-1.61472e-23" iyy="1.48445e-06" iyz="5.04981e-07" izz="1.59689e-06"/></inertial>
+    <inertial><origin xyz="1.80022e-18 -0.0152869 0.0106204" rpy="0 0 0"/><mass value="0.00638137"/>
+      <inertia ixx="1.96534e-06" ixy="-1.15013e-23" ixz="3.80267e-23" iyy="1.43805e-06" iyz="4.92927e-07" izz="1.54611e-06"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/neck_bracket.obj"/></geometry><material name="printed"/></visual>
   </link>
   <link name="head">
-    <inertial><origin xyz="0.00403996 0.0206429 0.012953" rpy="0 0 0"/><mass value="0.0862309"/>
-      <inertia ixx="2.57332e-05" ixy="-8.9989e-07" ixz="-7.12427e-07" iyy="2.86014e-05" iyz="-1.08178e-07" izz="2.25339e-05"/></inertial>
+    <inertial><origin xyz="0.00467849 0.0207452 0.0136579" rpy="0 0 0"/><mass value="0.0849473"/>
+      <inertia ixx="2.6482e-05" ixy="-9.44733e-07" ixz="-1.86259e-06" iyy="2.96772e-05" iyz="-1.85041e-07" izz="2.25763e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/head.obj"/></geometry><material name="printed"/></visual>
     <visual name="neck_pitch_servo"><origin xyz="0 0.0187 0.0125" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
     <visual name="env_Pi_Camera_Module_3"><origin xyz="0.026 0.02225 0.02"/><geometry><box size="0.01025 0.025 0.02386"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
     <visual name="env_I2S_MEMS_mic"><origin xyz="0.025 0.03585 0.005"/><geometry><box size="0.0127 0.0016 0.008"/></geometry><material name="m_sensor"><color rgba="0.1 0.6 0.33 1"/></material></visual>
   </link>
   <link name="imu_link"/>
-  <joint name="imu_joint" type="fixed"><parent link="base"/><child link="imu_link"/><origin xyz="-0.01 0 0.3648"/></joint>
+  <joint name="imu_joint" type="fixed"><parent link="base"/><child link="imu_link"/><origin xyz="-0.01 -0.005 0.3648"/></joint>
   <link name="head_camera_link"/>
   <joint name="head_camera_joint" type="fixed"><parent link="head"/><child link="head_camera_link"/><origin xyz="0.031 0.02225 0.02"/></joint>
   <joint name="r_hip_yaw" type="revolute"><!-- servo ID 1 -->
     <parent link="base"/><child link="r_hip_yaw_link"/><origin xyz="-0.04 -0.055 0.317" rpy="0 0 0"/><axis xyz="0 0 -1"/>
-    <limit lower="-0.51" upper="0.28" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.51" upper="0.3" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_hip_roll" type="revolute"><!-- servo ID 2 -->
     <parent link="r_hip_yaw_link"/><child link="r_hip_roll_link"/><origin xyz="0.0118 0 -0.042" rpy="0 0 0"/><axis xyz="1 0 0"/>
-    <limit lower="-0.26" upper="0.22" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.28" upper="0.22" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_hip_pitch" type="revolute"><!-- servo ID 3 -->
     <parent link="r_hip_roll_link"/><child link="r_thigh"/><origin xyz="0.0282 -0.011 0" rpy="0 0 0"/><axis xyz="0 -1 0"/>
-    <limit lower="-0.66" upper="0.95" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.7" upper="0.95" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_knee" type="revolute"><!-- servo ID 4 -->
     <parent link="r_thigh"/><child link="r_shin"/><origin xyz="0 -0.0416 -0.1" rpy="0 0 0"/><axis xyz="0 -1 0"/>
     <limit lower="-0.09" upper="1.9" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
@@ -191,13 +192,13 @@
     <limit lower="-0.47" upper="0.11" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_hip_yaw" type="revolute"><!-- servo ID 7 -->
     <parent link="base"/><child link="l_hip_yaw_link"/><origin xyz="-0.04 0.055 0.317" rpy="0 0 0"/><axis xyz="0 0 -1"/>
-    <limit lower="-0.28" upper="0.51" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.3" upper="0.51" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_hip_roll" type="revolute"><!-- servo ID 8 -->
     <parent link="l_hip_yaw_link"/><child link="l_hip_roll_link"/><origin xyz="0.0118 0 -0.042" rpy="0 0 0"/><axis xyz="1 0 0"/>
-    <limit lower="-0.22" upper="0.26" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.22" upper="0.28" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_hip_pitch" type="revolute"><!-- servo ID 9 -->
     <parent link="l_hip_roll_link"/><child link="l_thigh"/><origin xyz="0.0282 0.011 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
-    <limit lower="-0.95" upper="0.66" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.95" upper="0.7" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_knee" type="revolute"><!-- servo ID 10 -->
     <parent link="l_thigh"/><child link="l_shin"/><origin xyz="0 0.0416 -0.1" rpy="0 0 0"/><axis xyz="0 1 0"/>
     <limit lower="-0.09" upper="1.9" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
