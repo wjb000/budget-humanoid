@@ -59,4 +59,5 @@ DOF=[
 ["Arm","Shoulder pitch","Y","13","17","ST3215"],["Arm","Shoulder roll","X","14","18","ST3215"],["Arm","Elbow pitch","Y","15","19","ST3215"],["Gripper","Open/close","–","16","20","ST3215"],
 ["Leg","Hip yaw","Z","1","7","ST3215"],["Leg","Hip roll","X","2","8","ST3215"],["Leg","Hip pitch","Y","3","9","ST3215 (STS3250 upgrade)"],["Leg","Knee pitch","Y","4","10","ST3215 (STS3250 upgrade)"],["Leg","Ankle pitch","Y","5","11","ST3215"],["Leg","Ankle roll","X","6","12","ST3215"],
 ]
-open('data.js','w').write("const BOM=%s;\nconst COMPS=%s;\nconst DOF=%s;\n"%tuple(json.dumps(x,ensure_ascii=False) for x in (BOM,COMPS,DOF)))
+for _r in BOM: _r['q'].pop('rec', None)      # two tiers only: walker (legs) and upg (full robot, STS3250 hips/knees)
+open('data.js','w').write("const BOM=%s;\nconst DOF=%s;\n"%tuple(json.dumps(x,ensure_ascii=False) for x in (BOM,DOF)))
