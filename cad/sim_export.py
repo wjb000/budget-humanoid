@@ -69,7 +69,7 @@ def write_sim(R):
         return x
     for lk in links: u += link_xml(lk)
     # imu + camera frames
-    u += ['  <link name="imu_link"/>', f'  <joint name="imu_joint" type="fixed"><parent link="base"/><child link="imu_link"/><origin xyz="{f(((-10.0, 0.0, Z_BASE + PT + 2.3) - origin["base"]) * 1e-3)}"/></joint>',
+    u += ['  <link name="imu_link"/>', f'  <joint name="imu_joint" type="fixed"><parent link="base"/><child link="imu_link"/><origin xyz="{f(((-10.0, -5.0, Z_BASE + PT + 2.3) - origin["base"]) * 1e-3)}"/></joint>',
           '  <link name="head_camera_link"/>']
     cam_o = (np.array([XN + 31.0, 0.0, 566.5 + 20.0]) - origin['head']) * 1e-3
     u += [f'  <joint name="head_camera_joint" type="fixed"><parent link="head"/><child link="head_camera_link"/><origin xyz="{f(cam_o)}"/></joint>']
@@ -153,7 +153,7 @@ def write_gltf(R, path):
         m = tess_to_mesh(R.get('solids', {}).get(k) or p.build(), 0.25, 0.5)
         col(m, hexrgba('#cfd6df'))
         sc.add_geometry(m, node_name=f'part:{k}', geom_name=f'part:{k}')
-        info[f'part:{k}'] = dict(kind='generated', group='printed', name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.', price='filament')
+        info[f'part:{k}'] = dict(kind='generated', group=('cover' if k in ('torso_front_cover', 'battery_door', 'head_lid') else 'printed'), name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.' + (' Snap/screw-on cover (M2 heat-set inserts).' if k in ('torso_front_cover', 'battery_door', 'head_lid') else ''), price='filament')
     sm = R['sm']; sm2 = sm.copy(); col(sm2, [40, 44, 52, 255])
     for lk, d in links.items():
         for sv in d['servos']:
@@ -164,7 +164,7 @@ def write_gltf(R, path):
         m = e['mesh'].copy(); col(m, hexrgba(CCX[e['cat']]))
         nm = f'env:{e["name"]}'
         sc.add_geometry(m, node_name=nm, geom_name=nm)
-        info[nm] = dict(kind=e['kind'], group=e['cat'], name=e['name'], spec=e['spec'], price=e['price'], src=e.get('src', ''))
+        info[nm] = dict(kind=e['kind'], group=e['cat'], name=e['name'], spec=e['spec'], price=e['price'], src=e.get('src', ''), show=bool(e.get('show', False)))
     glb = sc.export(file_type='glb')
     import tempfile; tmp = os.path.join(tempfile.gettempdir(), 'b22_robot.glb'); open(tmp, 'wb').write(glb)
     g = GLTF2().load(tmp); g.convert_buffers(BufferFormat.DATAURI); g.save(path)

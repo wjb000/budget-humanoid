@@ -65,15 +65,28 @@ def min_thickness(mesh, n=2500):
 def fast_ok(v):
     return v
 
+def write_stl_compact(mesh, path):
+    """ASCII STL with 3-decimal coordinates (1 micron): about 3x smaller than trimesh's full-precision text, same geometry."""
+    mesh = trimesh.Trimesh(np.round(mesh.vertices, 3), mesh.faces, process=False); mesh.merge_vertices()
+    mesh.update_faces(mesh.nondegenerate_faces()); mesh.remove_unreferenced_vertices()
+    v = mesh.vertices; n = mesh.face_normals
+    out = ['solid part']
+    for f, nn in zip(mesh.faces, n):
+        out.append('facet normal %.3f %.3f %.3f\nouter loop' % tuple(nn))
+        for i in f: out.append('vertex %.3f %.3f %.3f' % tuple(v[i]))
+        out.append('endloop\nendfacet')
+    out.append('endsolid part')
+    open(path, 'w').write('\n'.join(out) + '\n')
+
 def export_parts(P, solids, meshes, step_dir, stl_dir):
     report = {}
     for k, p in P.items():
         sh = solids[k]
         cq.exporters.export(cq.Workplane().add(sh), os.path.join(step_dir, f'{k}.step'))
-        fine = tess_to_mesh(sh, 0.05, 0.25)
+        fine = tess_to_mesh(sh, 0.08, 0.4)
         o = orient(fine)
         pm = o.pop('mesh')
-        pm.export(os.path.join(stl_dir, f'{k}.stl'), file_type='stl_ascii')
+        write_stl_compact(pm, os.path.join(stl_dir, f'{k}.stl'))
         thick = min_thickness(fine)
         vol = float(sh.Volume())
         report[k] = dict(up=o['up'], overhang_pct=o['overhang_pct'], overhang_mm2=o['overhang_mm2'], bed_contact_mm2=o['bed_contact_mm2'],
@@ -140,7 +153,7 @@ def main():
     def bvh(m):
         b = fcl.BVHModel(); b.beginModel(len(m.vertices), len(m.faces)); b.addSubModel(m.vertices, m.faces); b.endModel(); return fcl.CollisionObject(b)
     obj = [(e['name'], e['link'], bvh(e['mesh'])) for e in E]
-    base_objs = [('torso', bvh(meshes['torso'])), ('head', bvh(meshes['head'])), ('pelvis', bvh(meshes['pelvis']))]
+    base_objs = [(k, bvh(meshes[k])) for k in ('torso', 'head', 'pelvis', 'torso_front_cover', 'battery_door', 'head_lid')]
     bad = []
     for i in range(len(obj)):
         for nm, o in base_objs:

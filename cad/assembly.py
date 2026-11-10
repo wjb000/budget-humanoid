@@ -9,8 +9,10 @@ STEP_SERVO = os.environ.get('STS3215_STEP', os.path.join(HERE_, 'vendor', 'STS32
 
 def tess_to_mesh(shape, tol=0.1, ang=0.3):
     v, f = shape.tessellate(tol, ang)
-    m = trimesh.Trimesh(np.array([[p.x, p.y, p.z] for p in v]), np.array(f), process=True)
+    m = trimesh.Trimesh(np.array([[p.x, p.y, p.z] for p in v]), np.array(f), process=False)
     m.merge_vertices()
+    m.update_faces(m.nondegenerate_faces())      # zero-area slivers from fillet/union faces would leave open edges
+    m.remove_unreferenced_vertices()
     return m
 
 _servo_mesh = None
@@ -32,13 +34,12 @@ def build_parts():
 
 def link_table(P, J):
     """link name -> dict(parts=[...], servos=[Servo...]); base link = pelvis+torso"""
-    links = {'base': dict(parts=['pelvis', 'torso'], servos=[])}
+    host = lambda k: COVER_HOST.get(k, 'base' if k in ('pelvis', 'torso') else k)
+    links = {'base': dict(parts=[], servos=[])}
     for k, p in P.items():
-        if k in ('pelvis', 'torso'):
-            continue
-        links[k] = dict(parts=[k], servos=[])
-    for k, p in P.items():
-        lk = 'base' if k in ('pelvis', 'torso') else k
+        lk = host(k)
+        links.setdefault(lk, dict(parts=[], servos=[]))
+        links[lk]['parts'].append(k)
         links[lk]['servos'] += p.servos
     return links
 
