@@ -111,7 +111,8 @@ def build_side(sd, ids):
         dict(name=n('hip_yaw'), id=ids['hip_yaw'], servo=s_hy, parent='base', child=hy.name, lim=(-0.6, 0.6)),
         dict(name=n('hip_roll'), id=ids['hip_roll'], servo=s_hr, parent=hy.name, child=hr.name, lim=(-0.5, 0.5)),
         dict(name=n('hip_pitch'), id=ids['hip_pitch'], servo=s_hp, parent=hr.name, child=th.name, lim=(-1.0, 1.0)),
-        dict(name=n('knee'), id=ids['knee'], servo=s_k, parent=th.name, child=sh.name, lim=(-0.1, 2.0)),
+        dict(name=n('knee'), id=ids['knee'], servo=s_k, parent=th.name, child=sh.name,
+             lim=((-0.1, 2.0) if sd.sg > 0 else (-2.0, 0.1))),  # +flexion: right axis is authored -y, left is the y-flipped copy, so limits mirror
         dict(name=n('ankle_pitch'), id=ids['ankle_pitch'], servo=s_ap, parent=sh.name, child=al.name, lim=(-0.8, 0.8)),
         dict(name=n('ankle_roll'), id=ids['ankle_roll'], servo=s_ar, parent=al.name, child=foot.name, lim=(-0.35, 0.35)),
     ]
@@ -155,7 +156,8 @@ def build_side(sd, ids):
     J += [
         dict(name=n('shoulder_pitch'), id=ids['sh_pitch'], servo=s_sp, parent='base', child=ua.name, lim=(-2.0, 2.0)),
         dict(name=n('elbow'), id=ids['elbow'], servo=s_el, parent=ua.name, child=fa.name, lim=(-1.5, 1.5)),
-        dict(name=n('gripper'), id=ids['gripper'], servo=s_gr, parent=fa.name, child=fi.name, lim=(-0.5, 0.2)),
+        dict(name=n('gripper'), id=ids['gripper'], servo=s_gr, parent=fa.name, child=fi.name,
+             lim=((-0.2, 0.5) if sd.sg > 0 else (-0.5, 0.2))),  # left joint axis is the y-flipped copy, so its limits mirror
     ]
     return P, SV, J
 

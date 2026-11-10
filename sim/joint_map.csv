@@ -2,7 +2,7 @@ servo_id,joint,parent_link,child_link,axis_x,axis_y,axis_z,lower_rad,upper_rad,n
 1,r_hip_yaw,base,r_hip_yaw_link,0,0,-1,-0.56,0.28,-0.6,0.6,-40.0,-55.0,317.0
 2,r_hip_roll,r_hip_yaw_link,r_hip_roll_link,1,0,0,-0.28,0.22,-0.5,0.5,-28.2,-55.0,275.0
 3,r_hip_pitch,r_hip_roll_link,r_thigh,0,-1,0,-0.7,0.95,-1.0,1.0,0.0,-66.0,275.0
-4,r_knee,r_thigh,r_shin,0,-1,0,-0.09,1.9,-0.1,2.0,0.0,-107.6,175.0
+4,r_knee,r_thigh,r_shin,0,-1,0,-1.9,0.09,-2.0,0.1,0.0,-107.6,175.0
 5,r_ankle_pitch,r_shin,r_ankle_link,0,1,0,-0.76,0.76,-0.8,0.8,0.0,-70.2,78.0
 6,r_ankle_roll,r_ankle_link,r_foot,1,0,0,-0.33,0.33,-0.35,0.35,22.0,-55.0,25.0
 7,l_hip_yaw,base,l_hip_yaw_link,0,0,-1,-0.28,0.56,-0.6,0.6,-40.0,55.0,317.0
@@ -16,5 +16,5 @@ servo_id,joint,parent_link,child_link,axis_x,axis_y,axis_z,lower_rad,upper_rad,n
 15,r_gripper,r_forearm,r_finger,0,-1,0,-0.47,0.11,-0.5,0.2,16.5,-128.1,305.0
 16,l_shoulder_pitch,base,l_upper_arm,0,1,0,-1.9,1.9,-2.0,2.0,-22.4,93.5,440.0
 17,l_elbow,l_upper_arm,l_forearm,0,-1,0,-1.42,1.42,-1.5,1.5,16.5,90.7,359.0
-18,l_gripper,l_forearm,l_finger,0,1,0,-0.11,0.18,-0.5,0.2,16.5,128.1,305.0
+18,l_gripper,l_forearm,l_finger,0,1,0,-0.11,0.47,-0.2,0.5,16.5,128.1,305.0
 19,neck_yaw,base,head,0,0,1,-1.13,1.13,-1.2,1.2,-40.0,0.0,541.5
