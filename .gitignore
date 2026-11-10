@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+cad/.cache/
+cad/vendor_fetched/

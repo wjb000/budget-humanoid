@@ -1,23 +1,27 @@
 # Budget-22: dirt-cheap 22-DOF humanoid
 
-Open design study for a ~0.5 m, ~2.2 kg, 22-DOF biped on Feetech ST3215 servos with a Raspberry Pi 5 + XIAO ESP32-S3.
+Open design for a ~0.61 m, ~2.3 kg, 22-DOF 3D-printed biped on Feetech STS3215 servos with a Raspberry Pi 5 + XIAO ESP32-S3. Includes a parametric printable frame, vendor CAD for the parts that have redistributable models, and URDF/MuJoCo files.
 
-**Live site:** https://wjb000.github.io/budget-humanoid/ (needs Pages source set to *GitHub Actions*, see below)
+**Live site:** https://wjb000.github.io/budget-humanoid/
 
-Site contains: component map, interactive 3D viewer, DOF/servo-ID table, electrical schematic (Mermaid), full BOM (~$791 recommended tier, price basis labelled per line), reference designs and CAD status.
+> Status: software-verified only. The frame has **not been printed or assembled**; sim gains are starting values. See `cad/README.md` ("What is real" and "Known gaps").
 
-## Status
-- Phase 1 (this commit): site, BOM, schematic, envelope 3D viewer.
-- Phase 2 (next): real vendor CAD (licenses credited), parametric CadQuery frame with STEP + STL per part, FDM print guide, URDF + MuJoCo MJCF with mass/inertia and STS3215 actuator parameters, Isaac Lab notes.
+## Where things are
+- `site/`: the website (component map, interactive 3D viewer of the CAD assembly, DOF table, schematic, BOM, CAD status). No build step.
+- `cad/`: parametric CadQuery frame (24 printed parts), one STL + STEP each in `cad/stl`, `cad/step` (already in print orientation), `cad/PRINT_GUIDE.md`, vendor CAD in `cad/vendor` with licenses, `cad/README.md`.
+- `sim/`: `budget22.urdf`, `budget22.xml` (MuJoCo), `joint_map.csv` (servo IDs), `check_mujoco.py` (load + stand check), Isaac Lab notes in `sim/README.md`.
+- `tools_gen_data.py`: regenerates `site/assets/data.js` (BOM, pins, DOF table).
+- `.github/workflows/pages.yml`: deploys `site/` to GitHub Pages on push to main (Pages source must be *GitHub Actions*).
 
-The 3D viewer is **not** vendor CAD: it uses datasheet-size envelope boxes (ST3215 45.2 x 24.7 x 35 mm) at approximate positions.
+## Quick start
+```bash
+pip install mujoco numpy && python sim/check_mujoco.py        # stand check, no CAD tools needed
+pip install cadquery trimesh numpy python-fcl rtree fast-simplification
+python cad/fetch_vendor.py && python cad/vendor_meshes.py && python cad/sim_export.py   # rebuild everything
+python cad/fit_coupon.py                                      # print these two small parts first
+```
 
-## Enabling GitHub Pages
-Repo **Settings > Pages > Build and deployment > Source: GitHub Actions**, then re-run the "Deploy site to GitHub Pages" workflow (Actions tab) or push any commit.
-
-## Layout
-- `site/` static site (no build step)
-- `tools_gen_data.py` regenerates `site/assets/data.js` (BOM, component pins, DOF table)
-- `.github/workflows/pages.yml` deploys `site/`
+## Licenses
+Vendor CAD stays under its own license (Apache-2.0 STS3215, MIT Adafruit, MIT Raspberry Pi); see `cad/vendor/` and `cad/README.md`. No license has been chosen yet for the generated frame, sim files and site: add one before sharing widely.
 
 Design study, no warranty. Verify fit, torque and power before building.
