@@ -1,168 +1,140 @@
 {
 "part:r_foot": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_foot",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_ankle_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_ankle_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_shin": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_shin",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_thigh": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_thigh",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_hip_roll_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_hip_roll_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_hip_yaw_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_hip_yaw_link",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
-"price": "filament"
-},
-"part:r_shoulder_link": {
-"kind": "generated",
-"group": "printed",
-"name": "Printed part: r_shoulder_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_upper_arm": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_upper_arm",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_forearm": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_forearm",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:r_finger": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: r_finger",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_foot": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_foot",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_ankle_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_ankle_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_shin": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_shin",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_thigh": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_thigh",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_hip_roll_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_hip_roll_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_hip_yaw_link": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_hip_yaw_link",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
-"price": "filament"
-},
-"part:l_shoulder_link": {
-"kind": "generated",
-"group": "printed",
-"name": "Printed part: l_shoulder_link",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_upper_arm": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_upper_arm",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_forearm": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_forearm",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:l_finger": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: l_finger",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
-"price": "filament"
-},
-"part:pelvis": {
-"kind": "generated",
-"group": "printed",
-"name": "Printed part: pelvis",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:torso": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: torso",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
-"price": "filament"
-},
-"part:neck_bracket": {
-"kind": "generated",
-"group": "printed",
-"name": "Printed part: neck_bracket",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
 "part:head": {
 "kind": "generated",
-"group": "printed",
+"group": "cover",
 "name": "Printed part: head",
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
@@ -171,21 +143,21 @@
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: torso_front_cover",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Cosmetic/protective shell: printed in halves, M2 screws.",
 "price": "filament"
 },
 "part:battery_door": {
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: battery_door",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Cosmetic/protective shell: printed in halves, M2 screws.",
 "price": "filament"
 },
 "part:head_lid": {
 "kind": "generated",
 "group": "cover",
 "name": "Printed part: head_lid",
-"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Cosmetic/protective shell: printed in halves, M2 screws.",
 "price": "filament"
 },
 "servo:r_hip_yaw": {
@@ -212,7 +184,7 @@
 "servo:l_shoulder_pitch": {
 "kind": "real",
 "group": "servo",
-"name": "Servo ID 17: l_shoulder_pitch",
+"name": "Servo ID 16: l_shoulder_pitch",
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
@@ -258,24 +230,17 @@
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
-"servo:r_shoulder_roll": {
-"kind": "real",
-"group": "servo",
-"name": "Servo ID 14: r_shoulder_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
-},
 "servo:r_elbow": {
 "kind": "real",
 "group": "servo",
-"name": "Servo ID 15: r_elbow",
+"name": "Servo ID 14: r_elbow",
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_gripper": {
 "kind": "real",
 "group": "servo",
-"name": "Servo ID 16: r_gripper",
+"name": "Servo ID 15: r_gripper",
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
@@ -314,31 +279,17 @@
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
-"servo:l_shoulder_roll": {
-"kind": "real",
-"group": "servo",
-"name": "Servo ID 18: l_shoulder_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
-},
 "servo:l_elbow": {
 "kind": "real",
 "group": "servo",
-"name": "Servo ID 19: l_elbow",
+"name": "Servo ID 17: l_elbow",
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_gripper": {
 "kind": "real",
 "group": "servo",
-"name": "Servo ID 20: l_gripper",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
-},
-"servo:neck_pitch": {
-"kind": "real",
-"group": "servo",
-"name": "Servo ID 22: neck_pitch",
+"name": "Servo ID 18: l_gripper",
 "spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
@@ -351,49 +302,49 @@
 "src": "Raspberry Pi Ltd product portal STEP (MIT)",
 "show": false
 },
-"env:3S LiPo 2200 mAh (assumed size)": {
-"kind": "envelope",
+"env:3S LiPo 2200 mAh (typical outline)": {
+"kind": "modeled",
 "group": "power",
-"name": "3S LiPo 2200 mAh (assumed size)",
-"spec": "Envelope 105 x 35 x 25 mm: size NOT verified, check your pack",
+"name": "3S LiPo 2200 mAh (typical outline)",
+"spec": "Modelled typical 105 x 35 x 25 mm hobby pack with lead stubs. The outline is typical, NOT from one product sheet: check your pack.",
 "price": "$19.99",
-"src": "listing weight/size varies",
+"src": "typical hobby 3S 2200 mAh",
 "show": false
 },
-"env:Pololu D24V50F5 buck": {
-"kind": "envelope",
+"env:Pololu D24V50F5 5 V buck": {
+"kind": "modeled",
 "group": "power",
-"name": "Pololu D24V50F5 buck",
-"spec": "Envelope 17.8 x 20.3 x 8.8 mm (from vendor STEP bbox; STEP license unknown, not redistributed)",
+"name": "Pololu D24V50F5 5 V buck",
+"spec": "Modelled: board 17.8 x 20.3, 8.8 mm tall, two 2.2 mm holes 13.5 x 16.0 apart (Pololu product 2851). Inductor and IC blocks approximate.",
 "price": "$32.95",
-"src": "Pololu",
+"src": "pololu.com/product/2851",
 "show": false
 },
 "env:Waveshare bus adapter A (legs)": {
-"kind": "envelope",
+"kind": "modeled",
 "group": "compute",
 "name": "Waveshare bus adapter A (legs)",
-"spec": "Envelope 42 x 33 x 8 mm assumed",
+"spec": "Modelled: 42 x 33 mm board, 4 x 2.5 mm holes on 37 x 28 mm (Waveshare). Connector bodies approximate.",
 "price": "$4.99",
-"src": "assumed",
+"src": "waveshare.com/product/bus-servo-adapter-a.htm",
 "show": false
 },
 "env:Waveshare bus adapter B (arms/neck)": {
-"kind": "envelope",
+"kind": "modeled",
 "group": "compute",
 "name": "Waveshare bus adapter B (arms/neck)",
-"spec": "Envelope 42 x 33 x 8 mm assumed",
+"spec": "Modelled: 42 x 33 mm board, 4 x 2.5 mm holes on 37 x 28 mm (Waveshare). Connector bodies approximate.",
 "price": "$4.99",
-"src": "assumed",
+"src": "waveshare.com/product/bus-servo-adapter-a.htm",
 "show": false
 },
 "env:Seeed XIAO ESP32-S3": {
-"kind": "envelope",
+"kind": "modeled",
 "group": "compute",
 "name": "Seeed XIAO ESP32-S3",
-"spec": "Envelope 22.5 x 17.8 x 4.5 mm (vendor STEP bbox; STEP license unknown, not redistributed)",
+"spec": "Modelled: 21 x 17.8 mm board, USB-C overhang to 22.5 mm, 4.5 mm high (Seeed outline). Component blocks approximate.",
 "price": "$7.90",
-"src": "Seeed",
+"src": "wiki.seeedstudio.com/xiao_esp32s3_getting_started",
 "show": false
 },
 "env:Relay + fuse holder": {
@@ -432,31 +383,31 @@
 "src": "Adafruit_CAD_Parts (MIT)",
 "show": false
 },
-"env:E-stop (NC latching mushroom)": {
-"kind": "envelope",
+"env:E-stop (16 mm unibody, NC, latching)": {
+"kind": "modeled",
 "group": "power",
-"name": "E-stop (NC latching mushroom)",
-"spec": "Envelope: 22.5 mm panel hole, ~22 mm tall body above plate",
-"price": "$7.50",
-"src": "assumed",
+"name": "E-stop (16 mm unibody, NC, latching)",
+"spec": "Modelled from IDEC X6/XA outline: dia 30 mushroom, 20.6 mm above the panel, 19.5 mm behind it, dia 16.2 hole with 1.7 mm anti-rotation key. Internal profile approximate. Price is an estimate for a generic unit, not the IDEC list price.",
+"price": "$7.50 est.",
+"src": "IDEC X6/XA unibody e-stop datasheets",
 "show": true
 },
 "env:XT60 panel connector (charge port)": {
-"kind": "envelope",
+"kind": "modeled",
 "group": "power",
 "name": "XT60 panel connector (charge port)",
-"spec": "Envelope; 15.8 x 8.2 mm cutout in battery_door. Cost-adding vs a loose pigtail; flagged in BOM.",
+"spec": "Modelled from Amass XT60 outline: 16.0 x 8.1 mm face, contacts 7.2 mm apart, dia 3.5 mm bullets; 15.8 x 8.2 mm cutout in battery_door. Cost-adding vs a loose pigtail; flagged in BOM.",
 "price": "$1.20",
-"src": "assumed",
+"src": "Amass XT60 drawing (hobbydex.com/rc/specs/connector/xt60)",
 "show": true
 },
 "env:Pi Camera Module 3": {
-"kind": "envelope",
+"kind": "modeled",
 "group": "sensor",
 "name": "Pi Camera Module 3",
-"spec": "Envelope 23.9 x 25 x 10.3 mm from vendor STEP bbox (STEP license unclear, not redistributed)",
+"spec": "Modelled from the Raspberry Pi mechanical drawing: 25 x 24 x 11.5 mm, 4 x dia 2.2 holes on 21 x 12.5 mm. Lens barrel diameter and position approximate; lens axis aligned to the head lens window.",
 "price": "$25",
-"src": "Raspberry Pi",
+"src": "Raspberry Pi camera module 3 product brief + drawing RP-008153",
 "show": false
 },
 "env:I2S MEMS mic": {
