@@ -139,6 +139,14 @@ def write_sim(R):
             a = j['servo'].a; S = j['servo'].S; ln = j.get('lim_nom', j['lim'])
             fh.write(f'{j["id"]},{j["name"]},{j["parent"]},{j["child"]},{a[0]:.0f},{a[1]:.0f},{a[2]:.0f},{j["lim"][0]},{j["lim"][1]},{ln[0]},{ln[1]},{S[0]:.1f},{S[1]:.1f},{S[2]:.1f},{servo_model(j["name"])},{SERVOS[servo_model(j["name"])]["stall"]},{SERVOS[servo_model(j["name"])]["rated"]},{SERVOS[servo_model(j["name"])]["noload"]}\n')
 
+SHELL, JOINT, ACCENT = '#e9e6de', '#3a3f47', '#e0702a'     # off-white shells, graphite joints/feet, orange accent
+def part_color(k):
+    """v3 colour scheme: shells off-white, joint links and feet graphite, covers/lid orange"""
+    n = k.split('_', 1)[1] if k[:2] in ('l_', 'r_') else k
+    if n in ('torso_front_cover', 'battery_door', 'head_lid'): return ACCENT
+    if n in ('hip_yaw_link', 'hip_roll_link', 'ankle_link', 'foot', 'finger'): return JOINT
+    return SHELL
+
 def write_gltf(R, path):
     from pygltflib import GLTF2, BufferFormat
     J, E, links, P = R['J'], R['E'], R['links'], R['P']
@@ -152,9 +160,10 @@ def write_gltf(R, path):
     meshes = R['meshes']
     for i, (k, p) in enumerate(P.items()):
         m = tess_to_mesh(R.get('solids', {}).get(k) or p.build(), 0.25, 0.5)
-        col(m, hexrgba('#cfd6df'))
+        pc = part_color(k)
+        col(m, hexrgba(pc))
         sc.add_geometry(m, node_name=f'part:{k}', geom_name=f'part:{k}')
-        info[f'part:{k}'] = dict(kind='generated', group='cover', name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.' + (' Cosmetic/protective shell: printed in halves, M2 screws.' if (hasattr(p, 'host') or k in ('torso_front_cover', 'battery_door', 'head_lid')) else ''), price='filament')
+        info[f'part:{k}'] = dict(color=pc, kind='generated', group='cover', name=f'Printed part: {k}', spec='Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.' + (' Cosmetic/protective shell: printed in halves, M2 screws.' if (hasattr(p, 'host') or k in ('torso_front_cover', 'battery_door', 'head_lid')) else ''), price='filament')
     sm = R['sm']; sm2 = sm.copy(); col(sm2, [40, 44, 52, 255])
     for lk, d in links.items():
         for sv in d['servos']:
