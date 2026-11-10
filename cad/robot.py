@@ -15,6 +15,7 @@ BAT_Y0, BAT_Y1 = 8.5, 43.5  # battery bay (3S 2200 mAh assumed 105 x 35 x 25 mm)
 BY0, BY1 = 7.8, 44.2        # battery door opening (y)
 COVER_PTS_F = [(-43.0, Z_BASE + 10.0), (43.0, Z_BASE + 10.0), (-43.0, TORSO_TOP - 6.5), (43.0, TORSO_TOP - 6.5)]
 COVER_PTS_B = [(4.0, Z_BASE + 10.0), (46.8, Z_BASE + 10.0), (4.0, TORSO_TOP - 6.5), (46.8, TORSO_TOP - 6.5)]
+ESTOP_X, ESTOP_Y = -30.0, 36.0          # e-stop axis on the torso top plate
 COVER_HOST = {'torso_front_cover': 'base', 'battery_door': 'base', 'head_lid': 'head'}
 
 class Side:
@@ -62,7 +63,7 @@ def build_side(sd, ids):
     foot = Part(n('foot'))
     foot.plate(s_ar, -15, 15, -15, 15)
     foot.add(sd.b(XAR + GAP, XAR + GAP + PT, Yc - 15, Yc + 15, 0, 42))          # upright plate
-    foot.add(sd.b(-50, 72, Yc - 28, Yc + 28, 0, 4))                              # sole
+    foot.add(sd.b(-50, 72, Yc - 28, Yc + 28, 0, 4), r=14.0, sel='|Z')                              # sole
     for yy in (-14, 14):                                                         # gussets (3 mm) from sole to plate
         foot.add(sd.b(XAR + GAP, XAR + 28, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4 + 0.0))
         foot.add(sd.b(XAR + GAP, XAR + GAP + PT + 22, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4))
@@ -121,7 +122,9 @@ def build_side(sd, ids):
     Xr = XT + 22.25
     Yr = ys - 15.2
     Zr = 412.0
-    s_sr = sd.servo(ids['sh_roll'], n('shoulder_roll'), (Xr, Yr, Zr), (1, 0, 0), (0, 0, -1))
+    Xr = XT + 22.25                     # (v1 shoulder-roll axis position, kept as a geometry reference for the rigid upper arm)
+    Yr = ys - 15.2
+    Zr = 412.0
     Xe = Xr + 16.65
     Ye = -90.7
     Ze = 359.0
@@ -129,12 +132,12 @@ def build_side(sd, ids):
     Zg = 305.0
     Yg = (Ye + GAP + PT) - 41.5 - 0.0     # gripper rear wall inner end at forearm plate
     s_gr = sd.servo(ids['gripper'], n('gripper'), (Xe, Yg, Zg), (0, -1, 0), (0, 0, -1))
-    sl = Part(n('shoulder_link'))
-    sl.plate(s_sp, -15, 15, -15, 15)
-    sl.sleeve(s_sr)
-    sl.add(sd.b(Xr - 15, Xr - 3.6, ys - GAP - PT, ys - GAP, Zr + 12, Zs + 15))
+    # v2: the shoulder link and upper arm are ONE printed part (no shoulder roll): hub disc on the shoulder-pitch horn,
+    # a strip down the torso side, a bridge to the elbow plane, and the elbow sleeve
     ua = Part(n('upper_arm'))
-    ua.plate(s_sr, -11, 11, -15, 15)
+    ua.plate(s_sp, -15, 15, -15, 15)
+    ua.add(sd.b(Xr - 15, Xr - 3.6, ys - GAP - PT, ys - GAP, Zr + 12, Zs + 15))
+    ua.add(sd.b(Xr - 15, Xr + GAP + PT, ys - GAP - PT, ys - GAP, Zr - 12, Zr + 14))      # joins the shoulder strip to the elbow-plane plate
     ua.sleeve(s_el)
     ua.add(sd.b(Xr + GAP, Xr + GAP + PT, Ye - 41.5, Ye - 3, Ze - 12.9, Zr + 11))
     fa = Part(n('forearm'))
@@ -146,37 +149,36 @@ def build_side(sd, ids):
     fi.plate(s_gr, -12, 12, -12, 12)
     fi.add(sd.b(Xe - 12, Xe + 4, Yg - GAP - PT, Yg - GAP, Zg - 75, Zg + 12))
     fi.add(sd.b(Xe - 6, Xe + 4, Yg - GAP - PT, Yg + 25, Zg - 75, Zg - 55))
-    P.update({p.name: p for p in (sl, ua, fa, fi)})
-    for s in (s_sp, s_sr, s_el, s_gr):
+    P.update({p.name: p for p in (ua, fa, fi)})
+    for s in (s_sp, s_el, s_gr):
         SV[s.name] = s
     J += [
-        dict(name=n('shoulder_pitch'), id=ids['sh_pitch'], servo=s_sp, parent='base', child=sl.name, lim=(-2.0, 2.0)),
-        dict(name=n('shoulder_roll'), id=ids['sh_roll'], servo=s_sr, parent=sl.name, child=ua.name, lim=(-1.2, 1.2)),
+        dict(name=n('shoulder_pitch'), id=ids['sh_pitch'], servo=s_sp, parent='base', child=ua.name, lim=(-2.0, 2.0)),
         dict(name=n('elbow'), id=ids['elbow'], servo=s_el, parent=ua.name, child=fa.name, lim=(-1.5, 1.5)),
         dict(name=n('gripper'), id=ids['gripper'], servo=s_gr, parent=fa.name, child=fi.name, lim=(-0.5, 0.2)),
     ]
     return P, SV, J
 
 def build_all():
-    R_ids = dict(hip_yaw=1, hip_roll=2, hip_pitch=3, knee=4, ankle_pitch=5, ankle_roll=6, sh_pitch=13, sh_roll=14, elbow=15, gripper=16)
-    L_ids = dict(hip_yaw=7, hip_roll=8, hip_pitch=9, knee=10, ankle_pitch=11, ankle_roll=12, sh_pitch=17, sh_roll=18, elbow=19, gripper=20)
+    R_ids = dict(hip_yaw=1, hip_roll=2, hip_pitch=3, knee=4, ankle_pitch=5, ankle_roll=6, sh_pitch=13, elbow=14, gripper=15)
+    L_ids = dict(hip_yaw=7, hip_roll=8, hip_pitch=9, knee=10, ankle_pitch=11, ankle_roll=12, sh_pitch=16, elbow=17, gripper=18)
     P, SV, J = {}, {}, []
     for sg, ids in ((-1, R_ids), (1, L_ids)):
         p, s, j = build_side(Side(sg), ids)
         P.update(p); SV.update(s); J += j
     # ---- pelvis: two yaw sleeves + crossbar ----
     Yc = 45.5
-    pel = Part('pelvis')
+    # ---- torso: tube + shoulder pitch sleeves + neck yaw sleeve ----
+    tor = Part('torso')
+    # v2: the pelvis (two hip-yaw sleeves + crossbar) is part of the torso print (one part, ~185 mm tall, fits a 220 mm bed)
     for sg in (-1, 1):
         sd = Side(sg)
         sy = [j['servo'] for j in J if j['name'] == f"{sd.sfx}_hip_yaw"][0]
-        pel.sleeve(sy)
-    pel.add((-52.5, -27.5, -18.0, 18.0, 320.0, Z_BASE))
-    pel.cutbox((-49.9, -30.1, -14.7, 14.7, 323.0, 355.5))
-    # ---- torso: tube + shoulder pitch sleeves + neck yaw sleeve ----
-    tor = Part('torso')
+        tor.sleeve(sy)
+    tor.add((-52.5, -27.5, -18.0, 18.0, 320.0, Z_BASE))
+    tor.cutbox((-49.9, -30.1, -14.7, 14.7, 323.0, 355.5))
     x0, x1 = TORSO_X; y0, y1 = TORSO_Y
-    tor.add((x0, x1, y0, y1, Z_BASE, TORSO_TOP), r=5.0, sel='|Z')        # rounded vertical corners (r 5 outside, r 2.6 inside = uniform 2.4 wall)
+    tor.add((x0, x1, y0, y1, Z_BASE, TORSO_TOP), r=5.0)        # rounded vertical corners (r 5 outside, r 2.6 inside = uniform 2.4 wall)
     tor.cutround((x0 + WALL, x1 - WALL, y0 + WALL, y1 - WALL, Z_BASE + PT, TORSO_TOP - PT), 5.0 - WALL, '|Z')
     # front opening (= access to Pi, XIAO, bus adapters, and the battery path) closed by torso_front_cover
     tor.cutbox((x1 - WALL - 1, x1 + 1, -FW, FW, WZ0, WZ1))
@@ -184,9 +186,9 @@ def build_all():
     tor.cutbox((x0 - 1, x0 + WALL + 1, BY0, BY1, WZ0, WZ1))
     # floor mounting holes to pelvis sleeve tops (M3 clearance) and cable passage
     tor.cutbox((-45, -25, -8, 8, Z_BASE - 1, Z_BASE + PT + 1))
-    # e-stop (22 mm panel hole + anti-rotation key) in top plate
-    tor.cut(cqcyl((-50, 30, TORSO_TOP - PT - 1), (0, 0, 1), 11.25, PT + 2))
-    tor.cutbox((-50 + 10.5, -50 + 12.8, 30 - 1.0, 30 + 1.0, TORSO_TOP - PT - 1, TORSO_TOP + 1))
+    # e-stop (16.2 mm panel hole + anti-rotation key) in top plate
+    tor.cut(cqcyl((ESTOP_X, ESTOP_Y, TORSO_TOP - PT - 1), (0, 0, 1), 8.2, PT + 2))                       # IDEC X6/XA dia 16.2 hole
+    tor.cutbox((ESTOP_X + 7.0, ESTOP_X + 8.95 + 0.2, ESTOP_Y - 1.5, ESTOP_Y + 1.5, TORSO_TOP - PT - 1, TORSO_TOP + 1))   # 1.7 mm anti-rotation key (17.9 across)
     # M2 heat-set insert bosses for the front cover (4) and battery door (4); holes drilled from outside
     for (yy, zz) in COVER_PTS_F:
         tor.add((x1 - WALL - 4.5, x1 - WALL + 0.5, yy - 3.2, yy + 3.2, zz - 3.2, zz + 3.2), r=0.8)
@@ -220,48 +222,52 @@ def build_all():
 
     # ---- torso front cover (chest panel; also the access door to Pi / XIAO / bus adapters / battery path) ----
     fc = Part('torso_front_cover')
-    fc.add((x1, x1 + 2.4, -46.0, 46.0, Z_BASE + 2.0, TORSO_TOP - 2.0), r=7.0, sel='|X')
+    fc.add((x1, x1 + 2.4, -46.0, 46.0, Z_BASE + 4.0, TORSO_TOP - 4.0), r=4.0, sel='|X')
     fc.add((x1 - WALL, x1, -FW + 0.4, FW - 0.4, WZ0 + 0.4, WZ1 - 0.4))
     for (yy, zz) in COVER_PTS_F:
         fc.screw_hole((x1 + 2.4 + 0.01, yy, zz), (-1, 0, 0), 2.5)
+    for zc in (424.0, 466.0):                                                   # bus adapter A/B: 4 M2 self-tapping bosses each (37 x 28 hole pattern), board hangs off the cover
+        for dz in (-18.5, 18.5):
+            for dy in (-14.0, 14.0):
+                fc.add((11.7, x1 - WALL + 0.1, -31.0 + dy - 2.6, -31.0 + dy + 2.6, zc + dz - 2.6, zc + dz + 2.6), r=0.8)
+                fc.cut(cqcyl((11.6, -31.0 + dy, zc + dz), (1, 0, 0), 0.85, 7.0))
     for dy in (-8.0, -4.0, 0.0, 4.0, 8.0):                                      # speaker grille (speaker centre y=-13, z=388)
         fc.cutbox((x1 - WALL - 0.1, x1 + 2.5, -13.0 + dy - 1.1, -13.0 + dy + 1.1, 376.0, 400.0))
     for xz in (14.2, 34.2):                                                     # XIAO ESP32-S3 cradle (board has no mounting holes): two rails + two lips
         fc.add((8.4, x1 - WALL + 0.1, xz, xz + 1.6, 417.5, 444.5), r=0.4)
     fc.add((8.4, x1 - WALL + 0.1, 14.2, 35.8, 417.5, 419.5), r=0.4)
     fc.add((8.4, x1 - WALL + 0.1, 14.2, 35.8, 442.5, 444.5), r=0.4)
+    for zc in (410.0, 452.0, 486.0):                                              # panel lines (0.6 mm deep, 1 mm wide)
+        fc.cutbox((x1 + 2.4 - 0.6, x1 + 2.5, -43.0, 43.0, zc - 0.5, zc + 0.5))
     # ---- battery door (back, with XT60 charge-port cutout) ----
     bd = Part('battery_door')
-    bd.add((x0 - 2.4, x0, 0.5, 48.5, Z_BASE + 2.0, TORSO_TOP - 2.0), r=6.0, sel='|X')
+    bd.add((x0 - 2.4, x0, 0.5, 48.5, Z_BASE + 4.0, TORSO_TOP - 4.0), r=4.0, sel='|X')
     bd.add((x0, x0 + WALL, BY0 + 0.4, BY1 - 0.4, WZ0 + 0.4, WZ1 - 0.4))
     for (yy, zz) in COVER_PTS_B:
         bd.screw_hole((x0 - 2.4 - 0.01, yy, zz), (1, 0, 0), 2.5)
     bd.cutbox((x0 - 2.5, x0 + WALL + 0.1, 26.0 - 8.1, 26.0 + 8.1, 482.0 - 4.1, 482.0 + 4.1))   # XT60 panel-mount charge/discharge port
     # ---- neck bracket (child of neck yaw, holds horn plate of neck pitch) ----
-    ypn = -22.25
-    Znp = 566.5
-    s_np = Servo(22, 'neck_pitch', (XN, ypn, Znp), (0, -1, 0), (0, 0, 1))
-    nb = Part('neck_bracket')
-    nb.plate(s_ny, -15, 15, -15, 30)   # local y' = -world y for this servo frame -> world y in [-30, 15]
-    nb.plate(s_np, -15, 15, -15, 15)
-    nb.add((XN - 15, XN + 15, ypn - GAP - PT, ypn - GAP, s_ny.S[2] + GAP + PT - 0.5, Znp + 15))
+    # v2: one neck joint (yaw). The neck bracket and the head are ONE printed part: hub disc on the yaw horn, a riser, the camera head
     hd = Part('head')
-    hd.sleeve(s_np)
-    hd.add((XN + 12.7, XN + 36.0, -17.0, 17.0, Znp - 6, Znp + 37.9))
+    hd.plate(s_ny, -15, 15, -15, 15)
+    Znp = 566.5
+    hd.add((XN - 15.0, XN + 36.0, -17.0, 17.0, s_ny.S[2] + GAP + PT - 0.5, Znp + 8.0), r=6.0, sel='|Z')    # riser
+    hd.add((XN + 12.7, XN + 36.0, -17.0, 17.0, Znp - 6, Znp + 37.9), r=9.0, sel='|Z')
     hd.cutbox((XN + 18.0, XN + 33.6, -14.6, 14.6, Znp - 3.6, Znp + 40))        # camera pod cavity (open top)
-    hd.cutbox((XN + 15.0, XN + 20.0, -4, 4, Znp + 10, Znp + 30))               # cable passage
+    hd.cutbox((XN - 8.5, XN + 8.5, -8.5, 8.5, s_ny.S[2] + GAP + PT, Znp + 40))   # screw/cable shaft from the lid down to the neck horn screws
+    hd.cutbox((XN + 7.0, XN + 20.0, -4, 4, Znp + 5, Znp + 30))                 # cable passage between shaft and camera pod
     hd.cut(cqcyl((XN + 30, 0, Znp + 20), (1, 0, 0), 5.0, 10))                  # lens hole
     # head lid (closes the camera pod; two M2 self-tapping screws into the thick front wall)
     hl = Part('head_lid')
-    hl.add((XN + 12.7, XN + 36.0, -17.0, 17.0, Znp + 37.9, Znp + 40.3), r=3.5, sel='|Z')
+    hl.add((XN - 10.0, XN + 36.0, -17.0, 17.0, Znp + 37.9, Znp + 40.3), r=3.5, sel='|Z')
     hl.add((XN + 18.3, XN + 33.3, -14.3, 14.3, Znp + 34.9, Znp + 37.9))
+    hl.add((XN - 8.2, XN + 8.2, -8.2, 8.2, Znp + 34.9, Znp + 37.9))
     for yy in (-8.0, 8.0):
         hl.screw_hole((XN + 15.35, yy, Znp + 40.3 + 0.01), (0, 0, -1), 2.5)
         hd.cut(cqcyl((XN + 15.35, yy, Znp + 37.9 + 0.01), (0, 0, -1), 0.9, 9.0))
-    P.update({'pelvis': pel, 'torso': tor, 'neck_bracket': nb, 'head': hd, 'torso_front_cover': fc, 'battery_door': bd, 'head_lid': hl})
-    SV['neck_yaw'] = s_ny; SV['neck_pitch'] = s_np
-    J += [dict(name='neck_yaw', id=21, servo=s_ny, parent='base', child='neck_bracket', lim=(-1.2, 1.2)),
-          dict(name='neck_pitch', id=22, servo=s_np, parent='neck_bracket', child='head', lim=(-0.35, 0.35))]
+    P.update({'torso': tor, 'head': hd, 'torso_front_cover': fc, 'battery_door': bd, 'head_lid': hl})
+    SV['neck_yaw'] = s_ny
+    J += [dict(name='neck_yaw', id=19, servo=s_ny, parent='base', child='head', lim=(-1.2, 1.2))]
     import json, os
     lf = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'limits.json')
     if os.path.exists(lf):
@@ -273,4 +279,4 @@ def build_all():
     return P, SV, J
 
 # which printed parts belong to the fixed base link
-BASE_PARTS = ['pelvis', 'torso', 'torso_front_cover', 'battery_door']
+BASE_PARTS = ['torso', 'torso_front_cover', 'battery_door']

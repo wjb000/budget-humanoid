@@ -97,7 +97,8 @@ class Part:
     def plate(self, sv, x0=-15, x1=15, y0=-15, y1=15, extra=None):
         """Horn plate on the output side of servo sv (this part is the moving child)."""
         lb = sv.lbox
-        self.add(lb(x0, x1, y0, y1, GAP, GAP + PT))
+        ax = int(np.argmax(np.abs(sv.a)))
+        self.add(lb(x0, x1, y0, y1, GAP, GAP + PT), r=99.0, sel=('|X', '|Y', '|Z')[ax])     # round hub disc (pod cap)
         self.cut(cqcyl(sv.w(0, 0, -1), sv.a, 4.0, GAP + PT + 2))
         for sx in (-1, 1):
             for sy in (-1, 1):
@@ -109,6 +110,9 @@ class Part:
         b, r0, sel = item
         x0, x1, y0, y1, z0, z1 = b
         m = min(x1 - x0, y1 - y0, z1 - z0)
+        if sel == '|Z': m = min(x1 - x0, y1 - y0)
+        elif sel == '|X': m = min(y1 - y0, z1 - z0)
+        elif sel == '|Y': m = min(x1 - x0, z1 - z0)
         wp = cqbox(b)
         r = min(r0 if r0 is not None else self.FILLET, 0.45 * m if r0 is not None else 0.3 * m)
         if r >= 0.6:
@@ -122,7 +126,7 @@ class Part:
         y0 = SRV_HY + CLR + 0.0; y1 = SRV_HY + CLR + WALL + 0.2
         ys = (y0, y1) if side > 0 else (-y1, -y0)
         return cqbox(lb(-28.0, 3.5, ys[0], ys[1], -31.0, -6.0))
-    def build(self, windows=True):
+    def build(self, windows=False):
         s = self._round(self.adds[0])
         for b in self.adds[1:]:
             s = s.union(self._round(b))
