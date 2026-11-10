@@ -57,13 +57,24 @@ def cqcyl(p, d, r, h):
 class Part:
     def __init__(self, name, group="printed"):
         self.name, self.group = name, group
-        self.adds, self.cuts, self.servos = [], [], []
-    def add(self, b):
-        self.adds.append(b)
+        self.adds, self.cuts, self.servos, self.windows = [], [], [], []
+    def add(self, b, r=None, sel=None):
+        """b = (x0,x1,y0,y1,z0,z1). r/sel: fillet radius and edge selector for this box (default: FILLET on all edges)"""
+        self.adds.append((tuple(b), r, sel))
     def cut(self, shape):
         self.cuts.append(shape)
     def cutbox(self, b):
         self.cuts.append(cqbox(b))
+    def cutround(self, b, r, sel='|Z'):
+        self.cuts.append(cqbox(b).edges(sel).fillet(r))
+    def insert_hole(self, p, d, depth=6.5):
+        """M2 heat-set insert pocket (3.2 mm dia) starting at point p going along unit vector d"""
+        self.cut(cqcyl(p, d, 1.6, depth))
+    def screw_hole(self, p, d, depth, csk=True):
+        """M2 clearance hole (2.4) with countersink, through a cover plate"""
+        self.cut(cqcyl(p, d, 1.2, depth))
+        if csk:
+            self.cut(cqcyl(p, d, 2.2, 1.2))
     def sleeve(self, sv):
         """Printed sleeve that carries servo sv (body inboard of its horn plane)."""
         self.servos.append(sv)
@@ -79,6 +90,8 @@ class Part:
         for (x, y) in CASE_HOLES:
             self.cut(cqcyl(sv.w(x, y, -42.0), sv.a, 1.2, 7.3))
             self.cut(cqcyl(sv.w(x, y, -42.0), sv.a, 2.2, 3.8))
+        # side windows expose the servo body (saves filament, lets the servo read in the model); built last, see build()
+        self.windows.append(sv)
         # cable notch in tail end wall
         self.cutbox(lb(SRV_X0 - CLR - WALL - 0.05, SRV_X0 - CLR + 0.01, -6, 6, -30, -2.0))
     def plate(self, sv, x0=-15, x1=15, y0=-15, y1=15, extra=None):
@@ -91,10 +104,38 @@ class Part:
                 p = (sx * HORN_PATTERN, sy * HORN_PATTERN)
                 self.cut(cqcyl(sv.w(p[0], p[1], -1), sv.a, 1.7, GAP + PT + 2))
                 self.cut(cqcyl(sv.w(p[0], p[1], GAP + 2.0), sv.a, 2.9, 3.0))
-    def build(self):
-        s = cqbox(self.adds[0])
+    FILLET = 2.5
+    def _round(self, item):
+        b, r0, sel = item
+        x0, x1, y0, y1, z0, z1 = b
+        m = min(x1 - x0, y1 - y0, z1 - z0)
+        wp = cqbox(b)
+        r = min(r0 if r0 is not None else self.FILLET, 0.45 * m if r0 is not None else 0.3 * m)
+        if r >= 0.6:
+            try:
+                wp = (wp.edges(sel) if sel else wp.edges()).fillet(r)
+            except Exception:
+                pass
+        return wp
+    def _window_boxes(self, sv, side):
+        lb = sv.lbox
+        y0 = SRV_HY + CLR + 0.0; y1 = SRV_HY + CLR + WALL + 0.2
+        ys = (y0, y1) if side > 0 else (-y1, -y0)
+        return cqbox(lb(-28.0, 3.5, ys[0], ys[1], -31.0, -6.0))
+    def build(self, windows=True):
+        s = self._round(self.adds[0])
         for b in self.adds[1:]:
-            s = s.union(cqbox(b))
+            s = s.union(self._round(b))
         for c in self.cuts:
             s = s.cut(c)
+        s = s.clean()
+        self.window_report = []
+        if windows:
+            for sv in self.windows:
+                for side in (1, -1):
+                    t = s.cut(self._window_boxes(sv, side))
+                    ok = len(t.val().Solids()) == len(s.val().Solids())
+                    self.window_report.append((sv.name, side, ok))
+                    if ok:
+                        s = t
         return s.val()
