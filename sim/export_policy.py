@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Export the PPO actor (deterministic mean action) to plain numpy so the Pi needs only numpy, not torch/SB3.
-python sim/export_policy.py runs/walk0/model.zip runs/walk0   ->  policy.npz + policy_meta.json"""
+python sim/export_policy.py runs/walk0/model.zip runs/walk0   ->  policy.npz + policy.json + policy_meta.json"""
 import json, os, sys
 import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +15,7 @@ def export(model_zip, out_dir):
     for i, (k,) in enumerate(keys):
         arrs[f'W{i}'] = sd[k + '.weight'].astype(np.float32); arrs[f'b{i}'] = sd[k + '.bias'].astype(np.float32)
     np.savez(os.path.join(out_dir, 'policy.npz'), **arrs)
+    json.dump({k: np.round(v, 6).tolist() for k, v in arrs.items()}, open(os.path.join(out_dir, 'policy.json'), 'w'))   # text copy (repos/Pi without npz)
     pose = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'default_pose.json')))
     jm = [l.strip().split(',') for l in open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'joint_map.csv'))][1:]
     ids = {r[1]: int(r[0]) for r in jm}

@@ -21,7 +21,9 @@ def rollout(env, policy, seed):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('run'); ap.add_argument('--task', default='walk'); ap.add_argument('--episodes', type=int, default=20)
     ap.add_argument('--no-dr', action='store_true'); ap.add_argument('--json', default=None); a = ap.parse_args()
-    z = np.load(os.path.join(a.run, 'policy.npz')); W = [z[f'W{i}'] for i in range(3)]; b = [z[f'b{i}'] for i in range(3)]
+    pn = os.path.join(a.run, 'policy.npz')
+    z = np.load(pn) if os.path.exists(pn) else {k: np.array(v, np.float32) for k, v in json.load(open(os.path.join(a.run, 'policy.json'))).items()}
+    W = [z[f'W{i}'] for i in range(3)]; b = [z[f'b{i}'] for i in range(3)]
     pol = lambda o: np.clip(W[2] @ np.tanh(W[1] @ np.tanh(W[0] @ o + b[0]) + b[1]) + b[2], -1, 1)
     res = {}
     for name, p in (('policy', pol), ('hold_default_pose', None)):

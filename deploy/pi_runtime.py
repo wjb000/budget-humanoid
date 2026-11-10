@@ -21,7 +21,9 @@ from actuator import RAD_PER_COUNT
 
 class Policy:
     def __init__(self, run_dir):
-        z = np.load(os.path.join(run_dir, 'policy.npz')); self.W = [z[f'W{i}'] for i in range(3)]; self.b = [z[f'b{i}'] for i in range(3)]
+        p = os.path.join(run_dir, 'policy.npz')
+        z = np.load(p) if os.path.exists(p) else {k: np.array(v, np.float32) for k, v in json.load(open(os.path.join(run_dir, 'policy.json'))).items()}
+        self.W = [z[f'W{i}'] for i in range(3)]; self.b = [z[f'b{i}'] for i in range(3)]
         self.meta = json.load(open(os.path.join(run_dir, 'policy_meta.json')))
         assert self.meta['obs_dim'] == O.OBS_DIM and self.meta['action_dim'] == O.N_JOINTS and abs(self.meta['action_scale'] - O.ACTION_SCALE) < 1e-9
         self.q_default = np.array(self.meta['default_pose']); self.lo = np.array(self.meta['joint_lo']); self.hi = np.array(self.meta['joint_hi'])
