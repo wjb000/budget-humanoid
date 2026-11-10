@@ -1,571 +1,637 @@
 {
  "r_foot": {
   "up": "+z",
-  "overhang_pct": 0.4,
-  "overhang_mm2": 78.9,
-  "bed_contact_mm2": 6832.0,
+  "overhang_pct": 1.6,
+  "overhang_mm2": 318.4,
+  "bed_contact_mm2": 6470.0,
   "print_extents_mm": [
    122.0,
    56.0,
    42.0
   ],
-  "volume_cm3": 34.5,
+  "volume_cm3": 34.2,
   "wall_min_est": {
    "p1": 2.98,
    "p5": 2.98,
    "min": 1.98
   },
-  "faces": 1584,
-  "mass_g_est": 25.7,
+  "faces": 4784,
+  "mass_g_est": 25.5,
   "servos": [],
-  "stl_bytes": 330281,
+  "stl_bytes": 701363,
   "watertight": true
  },
  "r_ankle_link": {
   "up": "+x",
-  "overhang_pct": 1.5,
-  "overhang_mm2": 249.8,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 5.0,
+  "overhang_mm2": 653.4,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    80.9,
    30.2,
    38.5
   ],
-  "volume_cm3": 21.4,
+  "volume_cm3": 17.0,
   "wall_min_est": {
-   "p1": 2.05,
-   "p5": 2.38,
-   "min": 1.33
+   "p1": 1.6,
+   "p5": 2.37,
+   "min": 0.02
   },
-  "faces": 3138,
-  "mass_g_est": 15.9,
+  "faces": 5722,
+  "mass_g_est": 12.6,
   "servos": [
    "r_ankle_roll"
   ],
-  "stl_bytes": 732879,
+  "stl_bytes": 851481,
   "watertight": true
  },
  "r_shin": {
   "up": "+y",
-  "overhang_pct": 0.6,
-  "overhang_mm2": 111.7,
-  "bed_contact_mm2": 3541.2,
+  "overhang_pct": 3.6,
+  "overhang_mm2": 580.2,
+  "bed_contact_mm2": 3060.0,
   "print_extents_mm": [
    30.2,
    124.9,
    38.5
   ],
-  "volume_cm3": 26.7,
+  "volume_cm3": 22.1,
   "wall_min_est": {
-   "p1": 2.0,
+   "p1": 1.65,
    "p5": 2.38,
-   "min": 1.98
+   "min": 0.15
   },
-  "faces": 3138,
-  "mass_g_est": 19.8,
+  "faces": 5504,
+  "mass_g_est": 16.5,
   "servos": [
    "r_ankle_pitch"
   ],
-  "stl_bytes": 739063,
+  "stl_bytes": 809627,
   "watertight": true
  },
  "r_thigh": {
   "up": "-y",
-  "overhang_pct": 0.2,
-  "overhang_mm2": 42.6,
-  "bed_contact_mm2": 3700.3,
+  "overhang_pct": 3.2,
+  "overhang_mm2": 515.2,
+  "bed_contact_mm2": 3213.0,
   "print_extents_mm": [
    30.2,
    127.9,
    38.5
   ],
-  "volume_cm3": 27.0,
+  "volume_cm3": 22.5,
   "wall_min_est": {
-   "p1": 1.98,
+   "p1": 1.58,
    "p5": 2.38,
-   "min": 0.83
+   "min": 0.34
   },
-  "faces": 3138,
-  "mass_g_est": 20.1,
+  "faces": 5530,
+  "mass_g_est": 16.7,
   "servos": [
    "r_knee"
   ],
-  "stl_bytes": 695134,
+  "stl_bytes": 801311,
   "watertight": true
  },
  "r_hip_roll_link": {
   "up": "-y",
-  "overhang_pct": 3.2,
-  "overhang_mm2": 510.2,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 6.9,
+  "overhang_mm2": 904.9,
+  "bed_contact_mm2": 1144.8,
   "print_extents_mm": [
    43.2,
    52.9,
    40.0
   ],
-  "volume_cm3": 22.5,
+  "volume_cm3": 18.0,
   "wall_min_est": {
-   "p1": 1.98,
-   "p5": 2.38,
-   "min": 0.36
+   "p1": 1.37,
+   "p5": 2.32,
+   "min": 0.25
   },
-  "faces": 3164,
-  "mass_g_est": 16.7,
+  "faces": 6398,
+  "mass_g_est": 13.4,
   "servos": [
    "r_hip_pitch"
   ],
-  "stl_bytes": 750417,
+  "stl_bytes": 947649,
   "watertight": true
  },
  "r_hip_yaw_link": {
   "up": "+x",
-  "overhang_pct": 1.6,
-  "overhang_mm2": 252.6,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 5.2,
+  "overhang_mm2": 661.7,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    54.8,
    30.2,
    44.7
   ],
-  "volume_cm3": 21.4,
+  "volume_cm3": 17.0,
   "wall_min_est": {
-   "p1": 1.98,
-   "p5": 2.38,
-   "min": 1.38
+   "p1": 1.38,
+   "p5": 2.18,
+   "min": 0.02
   },
-  "faces": 3190,
-  "mass_g_est": 15.9,
+  "faces": 6296,
+  "mass_g_est": 12.6,
   "servos": [
    "r_hip_roll"
   ],
-  "stl_bytes": 728562,
+  "stl_bytes": 958200,
   "watertight": true
  },
  "r_shoulder_link": {
   "up": "+x",
-  "overhang_pct": 1.5,
-  "overhang_mm2": 249.8,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 4.8,
+  "overhang_mm2": 652.2,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    80.9,
    30.2,
    38.5
   ],
-  "volume_cm3": 21.8,
+  "volume_cm3": 17.4,
   "wall_min_est": {
-   "p1": 2.38,
-   "p5": 2.38,
-   "min": 1.98
+   "p1": 1.36,
+   "p5": 2.3,
+   "min": 0.13
   },
-  "faces": 3146,
-  "mass_g_est": 16.2,
+  "faces": 6114,
+  "mass_g_est": 12.9,
   "servos": [
    "r_shoulder_roll"
   ],
-  "stl_bytes": 713056,
+  "stl_bytes": 933754,
   "watertight": true
  },
  "r_upper_arm": {
   "up": "+y",
-  "overhang_pct": 0.8,
-  "overhang_mm2": 129.4,
-  "bed_contact_mm2": 1651.6,
+  "overhang_pct": 3.6,
+  "overhang_mm2": 555.9,
+  "bed_contact_mm2": 1294.5,
   "print_extents_mm": [
    31.7,
    76.9,
    38.5
   ],
-  "volume_cm3": 24.6,
+  "volume_cm3": 20.2,
   "wall_min_est": {
-   "p1": 2.31,
-   "p5": 2.38,
-   "min": 1.96
+   "p1": 1.23,
+   "p5": 1.23,
+   "min": 0.2
   },
-  "faces": 3130,
-  "mass_g_est": 18.3,
+  "faces": 5536,
+  "mass_g_est": 15.0,
   "servos": [
    "r_elbow"
   ],
-  "stl_bytes": 763416,
+  "stl_bytes": 813091,
   "watertight": true
  },
  "r_forearm": {
   "up": "+z",
-  "overhang_pct": 8.8,
-  "overhang_mm2": 1878.9,
-  "bed_contact_mm2": 312.0,
+  "overhang_pct": 11.7,
+  "overhang_mm2": 2094.6,
+  "bed_contact_mm2": 135.7,
   "print_extents_mm": [
    37.1,
    39.0,
    141.0
   ],
-  "volume_cm3": 36.6,
+  "volume_cm3": 31.8,
   "wall_min_est": {
-   "p1": 2.38,
+   "p1": 1.98,
    "p5": 2.38,
-   "min": 1.98
+   "min": 0.1
   },
-  "faces": 3158,
-  "mass_g_est": 27.2,
+  "faces": 7086,
+  "mass_g_est": 23.7,
   "servos": [
    "r_gripper"
   ],
-  "stl_bytes": 729586,
+  "stl_bytes": 1045703,
   "watertight": true
  },
  "r_finger": {
   "up": "+y",
-  "overhang_pct": 1.2,
-  "overhang_mm2": 69.1,
-  "bed_contact_mm2": 1428.6,
+  "overhang_pct": 4.1,
+  "overhang_mm2": 220.7,
+  "bed_contact_mm2": 1206.5,
   "print_extents_mm": [
    24.0,
    87.0,
    29.1
   ],
-  "volume_cm3": 10.9,
+  "volume_cm3": 10.5,
   "wall_min_est": {
    "p1": 1.98,
    "p5": 3.98,
    "min": 1.98
   },
-  "faces": 1564,
-  "mass_g_est": 8.1,
+  "faces": 4088,
+  "mass_g_est": 7.8,
   "servos": [],
-  "stl_bytes": 369087,
+  "stl_bytes": 600526,
   "watertight": true
  },
  "l_foot": {
   "up": "+z",
-  "overhang_pct": 0.4,
-  "overhang_mm2": 78.9,
-  "bed_contact_mm2": 6832.0,
+  "overhang_pct": 1.6,
+  "overhang_mm2": 318.4,
+  "bed_contact_mm2": 6470.0,
   "print_extents_mm": [
    122.0,
    56.0,
    42.0
   ],
-  "volume_cm3": 34.5,
+  "volume_cm3": 34.2,
   "wall_min_est": {
-   "p1": 2.98,
+   "p1": 2.97,
    "p5": 2.98,
    "min": 1.98
   },
-  "faces": 1584,
-  "mass_g_est": 25.7,
+  "faces": 4784,
+  "mass_g_est": 25.5,
   "servos": [],
-  "stl_bytes": 325528,
+  "stl_bytes": 686996,
   "watertight": true
  },
  "l_ankle_link": {
   "up": "+x",
-  "overhang_pct": 1.5,
-  "overhang_mm2": 249.8,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 5.0,
+  "overhang_mm2": 653.4,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    80.9,
    30.2,
    38.5
   ],
-  "volume_cm3": 21.4,
+  "volume_cm3": 17.0,
   "wall_min_est": {
-   "p1": 2.05,
-   "p5": 2.38,
-   "min": 1.33
+   "p1": 1.6,
+   "p5": 2.37,
+   "min": 0.02
   },
-  "faces": 3138,
-  "mass_g_est": 15.9,
+  "faces": 5722,
+  "mass_g_est": 12.6,
   "servos": [
    "l_ankle_roll"
   ],
-  "stl_bytes": 725275,
+  "stl_bytes": 834621,
   "watertight": true
  },
  "l_shin": {
   "up": "-y",
-  "overhang_pct": 0.6,
-  "overhang_mm2": 111.7,
-  "bed_contact_mm2": 3541.2,
+  "overhang_pct": 3.6,
+  "overhang_mm2": 580.2,
+  "bed_contact_mm2": 3060.0,
   "print_extents_mm": [
    30.2,
    124.9,
    38.5
   ],
-  "volume_cm3": 26.7,
+  "volume_cm3": 22.1,
   "wall_min_est": {
-   "p1": 2.03,
+   "p1": 1.57,
    "p5": 2.38,
-   "min": 0.72
+   "min": 0.34
   },
-  "faces": 3138,
-  "mass_g_est": 19.8,
+  "faces": 5530,
+  "mass_g_est": 16.5,
   "servos": [
    "l_ankle_pitch"
   ],
-  "stl_bytes": 728159,
+  "stl_bytes": 797111,
   "watertight": true
  },
  "l_thigh": {
   "up": "+y",
-  "overhang_pct": 0.2,
-  "overhang_mm2": 42.6,
-  "bed_contact_mm2": 3700.3,
+  "overhang_pct": 3.2,
+  "overhang_mm2": 515.2,
+  "bed_contact_mm2": 3213.0,
   "print_extents_mm": [
    30.2,
    127.9,
    38.5
   ],
-  "volume_cm3": 27.0,
+  "volume_cm3": 22.5,
   "wall_min_est": {
-   "p1": 2.38,
+   "p1": 1.82,
    "p5": 2.38,
-   "min": 1.98
+   "min": 0.04
   },
-  "faces": 3138,
-  "mass_g_est": 20.1,
+  "faces": 5504,
+  "mass_g_est": 16.7,
   "servos": [
    "l_knee"
   ],
-  "stl_bytes": 705738,
+  "stl_bytes": 813832,
   "watertight": true
  },
  "l_hip_roll_link": {
   "up": "+y",
-  "overhang_pct": 3.2,
-  "overhang_mm2": 510.2,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 6.9,
+  "overhang_mm2": 905.0,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    43.2,
    52.9,
    40.0
   ],
-  "volume_cm3": 22.5,
+  "volume_cm3": 18.0,
   "wall_min_est": {
-   "p1": 1.98,
+   "p1": 1.53,
    "p5": 2.38,
-   "min": 0.4
+   "min": 0.19
   },
-  "faces": 3164,
-  "mass_g_est": 16.7,
+  "faces": 6414,
+  "mass_g_est": 13.4,
   "servos": [
    "l_hip_pitch"
   ],
-  "stl_bytes": 759746,
+  "stl_bytes": 969323,
   "watertight": true
  },
  "l_hip_yaw_link": {
   "up": "+x",
-  "overhang_pct": 1.6,
-  "overhang_mm2": 252.6,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 5.2,
+  "overhang_mm2": 661.7,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    54.8,
    30.2,
    44.7
   ],
-  "volume_cm3": 21.4,
+  "volume_cm3": 17.0,
   "wall_min_est": {
-   "p1": 1.98,
-   "p5": 2.38,
-   "min": 1.38
+   "p1": 1.37,
+   "p5": 2.13,
+   "min": 0.02
   },
-  "faces": 3190,
-  "mass_g_est": 15.9,
+  "faces": 6296,
+  "mass_g_est": 12.6,
   "servos": [
    "l_hip_roll"
   ],
-  "stl_bytes": 718990,
+  "stl_bytes": 939306,
   "watertight": true
  },
  "l_shoulder_link": {
   "up": "+x",
-  "overhang_pct": 1.5,
-  "overhang_mm2": 249.8,
-  "bed_contact_mm2": 1473.6,
+  "overhang_pct": 4.8,
+  "overhang_mm2": 652.2,
+  "bed_contact_mm2": 1144.7,
   "print_extents_mm": [
    80.9,
    30.2,
    38.5
   ],
-  "volume_cm3": 21.8,
+  "volume_cm3": 17.4,
   "wall_min_est": {
-   "p1": 2.38,
-   "p5": 2.38,
-   "min": 1.98
+   "p1": 1.72,
+   "p5": 2.37,
+   "min": 0.4
   },
-  "faces": 3146,
-  "mass_g_est": 16.2,
+  "faces": 6092,
+  "mass_g_est": 12.9,
   "servos": [
    "l_shoulder_roll"
   ],
-  "stl_bytes": 703098,
+  "stl_bytes": 911658,
   "watertight": true
  },
  "l_upper_arm": {
   "up": "-y",
-  "overhang_pct": 0.8,
-  "overhang_mm2": 129.4,
-  "bed_contact_mm2": 1651.6,
+  "overhang_pct": 3.6,
+  "overhang_mm2": 554.7,
+  "bed_contact_mm2": 1294.5,
   "print_extents_mm": [
    31.7,
    76.9,
    38.5
   ],
-  "volume_cm3": 24.6,
+  "volume_cm3": 20.2,
   "wall_min_est": {
-   "p1": 1.98,
-   "p5": 2.38,
-   "min": 1.26
+   "p1": 1.23,
+   "p5": 1.23,
+   "min": 0.22
   },
-  "faces": 3130,
-  "mass_g_est": 18.3,
+  "faces": 5540,
+  "mass_g_est": 15.0,
   "servos": [
    "l_elbow"
   ],
-  "stl_bytes": 753425,
+  "stl_bytes": 796961,
   "watertight": true
  },
  "l_forearm": {
   "up": "+z",
-  "overhang_pct": 8.8,
-  "overhang_mm2": 1878.9,
-  "bed_contact_mm2": 312.0,
+  "overhang_pct": 11.7,
+  "overhang_mm2": 2094.6,
+  "bed_contact_mm2": 135.7,
   "print_extents_mm": [
    37.1,
    39.0,
    141.0
   ],
-  "volume_cm3": 36.6,
+  "volume_cm3": 31.8,
   "wall_min_est": {
-   "p1": 2.38,
+   "p1": 1.96,
    "p5": 2.38,
-   "min": 1.98
+   "min": 0.39
   },
-  "faces": 3158,
-  "mass_g_est": 27.2,
+  "faces": 7084,
+  "mass_g_est": 23.7,
   "servos": [
    "l_gripper"
   ],
-  "stl_bytes": 720620,
+  "stl_bytes": 1025267,
   "watertight": true
  },
  "l_finger": {
   "up": "-y",
-  "overhang_pct": 1.2,
-  "overhang_mm2": 69.1,
-  "bed_contact_mm2": 1428.6,
+  "overhang_pct": 4.1,
+  "overhang_mm2": 216.3,
+  "bed_contact_mm2": 1204.0,
   "print_extents_mm": [
    24.0,
    87.0,
    29.1
   ],
-  "volume_cm3": 10.9,
+  "volume_cm3": 10.5,
   "wall_min_est": {
    "p1": 1.98,
    "p5": 3.98,
    "min": 1.98
   },
-  "faces": 1564,
-  "mass_g_est": 8.1,
+  "faces": 4086,
+  "mass_g_est": 7.8,
   "servos": [],
-  "stl_bytes": 365283,
+  "stl_bytes": 588539,
   "watertight": true
  },
  "pelvis": {
   "up": "-z",
-  "overhang_pct": 1.8,
-  "overhang_mm2": 667.3,
-  "bed_contact_mm2": 3802.1,
+  "overhang_pct": 5.6,
+  "overhang_mm2": 1680.1,
+  "bed_contact_mm2": 2945.9,
   "print_extents_mm": [
    30.2,
    135.8,
    38.5
   ],
-  "volume_cm3": 50.5,
+  "volume_cm3": 41.5,
   "wall_min_est": {
-   "p1": 2.33,
-   "p5": 2.38,
-   "min": 1.51
+   "p1": 1.68,
+   "p5": 2.33,
+   "min": 0.15
   },
-  "faces": 3216,
-  "mass_g_est": 37.5,
+  "faces": 7428,
+  "mass_g_est": 30.9,
   "servos": [
    "r_hip_yaw",
    "l_hip_yaw"
   ],
-  "stl_bytes": 764369,
+  "stl_bytes": 1089726,
   "watertight": true
  },
  "torso": {
-  "up": "+z",
-  "overhang_pct": 8.1,
-  "overhang_mm2": 11144.4,
-  "bed_contact_mm2": 7808.0,
+  "up": "+x",
+  "overhang_pct": 8.9,
+  "overhang_mm2": 11488.8,
+  "bed_contact_mm2": 8763.8,
   "print_extents_mm": [
-   80.0,
+   180.0,
    181.0,
-   180.0
+   80.0
   ],
-  "volume_cm3": 200.6,
+  "volume_cm3": 184.3,
   "wall_min_est": {
-   "p1": 2.38,
+   "p1": 2.04,
    "p5": 2.38,
-   "min": 1.81
+   "min": 0.35
   },
-  "faces": 5540,
-  "mass_g_est": 149.2,
+  "faces": 12066,
+  "mass_g_est": 137.1,
   "servos": [
    "r_shoulder_pitch",
    "l_shoulder_pitch",
    "neck_yaw"
   ],
-  "stl_bytes": 1193283,
+  "stl_bytes": 1819010,
   "watertight": true
  },
  "neck_bracket": {
   "up": "+z",
-  "overhang_pct": 1.3,
-  "overhang_mm2": 78.9,
-  "bed_contact_mm2": 1263.7,
+  "overhang_pct": 3.1,
+  "overhang_mm2": 178.2,
+  "bed_contact_mm2": 1113.7,
   "print_extents_mm": [
    30.0,
    45.0,
    39.9
   ],
-  "volume_cm3": 8.7,
+  "volume_cm3": 8.6,
   "wall_min_est": {
    "p1": 1.98,
-   "p5": 3.98,
+   "p5": 1.98,
    "min": 1.98
   },
-  "faces": 3092,
-  "mass_g_est": 6.5,
+  "faces": 5652,
+  "mass_g_est": 6.4,
   "servos": [],
-  "stl_bytes": 662245,
+  "stl_bytes": 830185,
   "watertight": true
  },
  "head": {
   "up": "+z",
-  "overhang_pct": 6.8,
-  "overhang_mm2": 1432.2,
-  "bed_contact_mm2": 1162.7,
+  "overhang_pct": 8.9,
+  "overhang_mm2": 1701.9,
+  "bed_contact_mm2": 901.4,
   "print_extents_mm": [
    51.1,
    38.5,
    50.8
   ],
-  "volume_cm3": 29.9,
+  "volume_cm3": 25.1,
   "wall_min_est": {
-   "p1": 2.28,
+   "p1": 1.37,
    "p5": 2.38,
-   "min": 2.28
+   "min": 0.08
   },
-  "faces": 1810,
-  "mass_g_est": 22.2,
+  "faces": 3276,
+  "mass_g_est": 18.6,
   "servos": [
    "neck_pitch"
   ],
-  "stl_bytes": 409491,
+  "stl_bytes": 480145,
+  "watertight": true
+ },
+ "torso_front_cover": {
+  "up": "-x",
+  "overhang_pct": 1.1,
+  "overhang_mm2": 328.4,
+  "bed_contact_mm2": 12324.4,
+  "print_extents_mm": [
+   137.5,
+   92.0,
+   11.6
+  ],
+  "volume_cm3": 50.8,
+  "wall_min_est": {
+   "p1": 1.58,
+   "p5": 1.78,
+   "min": 1.04
+  },
+  "faces": 3100,
+  "mass_g_est": 37.8,
+  "servos": [],
+  "stl_bytes": 451821,
+  "watertight": true
+ },
+ "battery_door": {
+  "up": "+x",
+  "overhang_pct": 1.6,
+  "overhang_mm2": 240.6,
+  "bed_contact_mm2": 6407.4,
+  "print_extents_mm": [
+   137.5,
+   48.0,
+   4.8
+  ],
+  "volume_cm3": 26.0,
+  "wall_min_est": {
+   "p1": 2.38,
+   "p5": 2.38,
+   "min": 0.62
+  },
+  "faces": 2880,
+  "mass_g_est": 19.4,
+  "servos": [],
+  "stl_bytes": 419891,
+  "watertight": true
+ },
+ "head_lid": {
+  "up": "+y",
+  "overhang_pct": 2.5,
+  "overhang_mm2": 55.8,
+  "bed_contact_mm2": 51.5,
+  "print_extents_mm": [
+   23.3,
+   5.4,
+   34.0
+  ],
+  "volume_cm3": 3.1,
+  "wall_min_est": {
+   "p1": 1.19,
+   "p5": 2.38,
+   "min": 0.44
+  },
+  "faces": 2244,
+  "mass_g_est": 2.3,
+  "servos": [],
+  "stl_bytes": 338661,
   "watertight": true
  }
 }
