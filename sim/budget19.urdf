@@ -44,14 +44,14 @@
     <visual name="r_ankle_pitch_servo"><origin xyz="0 0.0187 -0.0845" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_thigh">
-    <inertial><origin xyz="-8.98567e-08 -0.0198784 -0.0823139" rpy="0 0 0"/><mass value="0.0785493"/>
-      <inertia ixx="4.9971e-05" ixy="-1.78872e-11" ixz="6.42471e-11" iyy="4.48252e-05" iyz="-7.29183e-06" izz="1.52678e-05"/></inertial>
+    <inertial><origin xyz="-9.57749e-08 -0.0205044 -0.0832845" rpy="0 0 0"/><mass value="0.0980493"/>
+      <inertia ixx="5.55358e-05" ixy="-1.79261e-11" ixz="9.45904e-11" iyy="4.94175e-05" iyz="-7.56953e-06" izz="1.81454e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_thigh.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_knee_servo"><origin xyz="0 -0.0229 -0.0875" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="r_hip_roll_link">
-    <inertial><origin xyz="0.0272816 0.00868687 -0.0120863" rpy="0 0 0"/><mass value="0.0752349"/>
-      <inertia ixx="2.26678e-05" ixy="-7.05933e-07" ixz="7.99908e-07" iyy="2.03556e-05" iyz="5.41687e-07" izz="1.44906e-05"/></inertial>
+    <inertial><origin xyz="0.0274706 0.00845775 -0.0122344" rpy="0 0 0"/><mass value="0.0947349"/>
+      <inertia ixx="2.7733e-05" ixy="-6.90101e-07" ixz="8.10175e-07" iyy="2.45969e-05" iyz="5.66989e-07" izz="1.72457e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/r_hip_roll_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="r_hip_pitch_servo"><origin xyz="0.0282 0.0077 -0.0125" rpy="1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
@@ -97,14 +97,14 @@
     <visual name="l_ankle_pitch_servo"><origin xyz="0 -0.0187 -0.0845" rpy="1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_thigh">
-    <inertial><origin xyz="8.98119e-08 0.0198784 -0.0823139" rpy="0 0 0"/><mass value="0.0785493"/>
-      <inertia ixx="4.9971e-05" ixy="-1.79563e-11" ixz="-6.41841e-11" iyy="4.48252e-05" iyz="7.29183e-06" izz="1.52678e-05"/></inertial>
+    <inertial><origin xyz="9.5739e-08 0.0205044 -0.0832845" rpy="0 0 0"/><mass value="0.0980493"/>
+      <inertia ixx="5.55358e-05" ixy="-1.79974e-11" ixz="-9.45239e-11" iyy="4.94175e-05" iyz="7.56952e-06" izz="1.81454e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_thigh.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_knee_servo"><origin xyz="0 0.0229 -0.0875" rpy="-1.5708 1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
   <link name="l_hip_roll_link">
-    <inertial><origin xyz="0.0272814 -0.00868687 -0.0120863" rpy="0 0 0"/><mass value="0.0752349"/>
-      <inertia ixx="2.26678e-05" ixy="7.0594e-07" ixz="7.99703e-07" iyy="2.03556e-05" iyz="-5.4169e-07" izz="1.44906e-05"/></inertial>
+    <inertial><origin xyz="0.0274704 -0.00845775 -0.0122344" rpy="0 0 0"/><mass value="0.0947349"/>
+      <inertia ixx="2.7733e-05" ixy="6.90106e-07" ixz="8.09904e-07" iyy="2.45968e-05" iyz="-5.66991e-07" izz="1.72457e-05"/></inertial>
     <visual><origin xyz="0 0 0" rpy="0 0 0"/><geometry><mesh filename="meshes/l_hip_roll_link.obj"/></geometry><material name="printed"/></visual>
     <visual name="l_hip_pitch_servo"><origin xyz="0.0282 -0.0077 -0.0125" rpy="-1.5708 -1.5708 0"/><geometry><mesh filename="meshes/sts3215.obj"/></geometry><material name="servo"/></visual>
   </link>
@@ -150,10 +150,10 @@
     <limit lower="-0.28" upper="0.22" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_hip_pitch" type="revolute"><!-- servo ID 3 -->
     <parent link="r_hip_roll_link"/><child link="r_thigh"/><origin xyz="0.0282 -0.011 0" rpy="0 0 0"/><axis xyz="0 -1 0"/>
-    <limit lower="-0.7" upper="0.95" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.7" upper="0.95" effort="4.9" velocity="7.87"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_knee" type="revolute"><!-- servo ID 4 -->
     <parent link="r_thigh"/><child link="r_shin"/><origin xyz="0 -0.0416 -0.1" rpy="0 0 0"/><axis xyz="0 -1 0"/>
-    <limit lower="-1.9" upper="0.09" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-1.9" upper="0.09" effort="4.9" velocity="7.87"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="r_ankle_pitch" type="revolute"><!-- servo ID 5 -->
     <parent link="r_shin"/><child link="r_ankle_link"/><origin xyz="0 0.0374 -0.097" rpy="0 0 0"/><axis xyz="0 1 0"/>
     <limit lower="-0.76" upper="0.76" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
@@ -177,10 +177,10 @@
     <limit lower="-0.22" upper="0.28" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_hip_pitch" type="revolute"><!-- servo ID 9 -->
     <parent link="l_hip_roll_link"/><child link="l_thigh"/><origin xyz="0.0282 0.011 0" rpy="0 0 0"/><axis xyz="0 1 0"/>
-    <limit lower="-0.95" upper="0.7" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.95" upper="0.7" effort="4.9" velocity="7.87"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_knee" type="revolute"><!-- servo ID 10 -->
     <parent link="l_thigh"/><child link="l_shin"/><origin xyz="0 0.0416 -0.1" rpy="0 0 0"/><axis xyz="0 1 0"/>
-    <limit lower="-0.09" upper="1.9" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>
+    <limit lower="-0.09" upper="1.9" effort="4.9" velocity="7.87"/><dynamics damping="0.05" friction="0.03"/></joint>
   <joint name="l_ankle_pitch" type="revolute"><!-- servo ID 11 -->
     <parent link="l_shin"/><child link="l_ankle_link"/><origin xyz="0 -0.0374 -0.097" rpy="0 0 0"/><axis xyz="0 -1 0"/>
     <limit lower="-0.76" upper="0.76" effort="2.94" velocity="4.72"/><dynamics damping="0.05" friction="0.03"/></joint>

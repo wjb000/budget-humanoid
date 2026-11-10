@@ -67,12 +67,12 @@
         <geom name="r_hip_roll_servo" type="mesh" mesh="sts3215" pos="-0.0069 0 -0.0295" quat="0.707107 0 0.707107 -0" material="servo"/>
         <body name="r_hip_roll_link" pos="0.0118 0 -0.042">
           <joint name="r_hip_roll" type="hinge" axis="1 0 0" range="-0.28 0.22"/>
-          <inertial pos="0.0272816 0.00868687 -0.0120863" mass="0.0752349" fullinertia="2.26678e-05 2.03556e-05 1.44906e-05 -7.05933e-07 7.99908e-07 5.41687e-07"/>
+          <inertial pos="0.0274706 0.00845775 -0.0122344" mass="0.0947349" fullinertia="2.7733e-05 2.45969e-05 1.72457e-05 -6.90101e-07 8.10175e-07 5.66989e-07"/>
           <geom type="mesh" mesh="r_hip_roll_link" material="printed"/>
           <geom name="r_hip_pitch_servo" type="mesh" mesh="sts3215" pos="0.0282 0.0077 -0.0125" quat="0.5 0.5 -0.5 0.5" material="servo"/>
           <body name="r_thigh" pos="0.0282 -0.011 0">
             <joint name="r_hip_pitch" type="hinge" axis="0 -1 0" range="-0.7 0.95"/>
-            <inertial pos="-8.98567e-08 -0.0198784 -0.0823139" mass="0.0785493" fullinertia="4.9971e-05 4.48252e-05 1.52678e-05 -1.78872e-11 6.42471e-11 -7.29183e-06"/>
+            <inertial pos="-9.57749e-08 -0.0205044 -0.0832845" mass="0.0980493" fullinertia="5.55358e-05 4.94175e-05 1.81454e-05 -1.79261e-11 9.45904e-11 -7.56953e-06"/>
             <geom type="mesh" mesh="r_thigh" material="printed"/>
             <geom name="r_knee_servo" type="mesh" mesh="sts3215" pos="0 -0.0229 -0.0875" quat="-0.5 -0.5 -0.5 0.5" material="servo"/>
             <body name="r_shin" pos="0 -0.0416 -0.1">
@@ -120,12 +120,12 @@
         <geom name="l_hip_roll_servo" type="mesh" mesh="sts3215" pos="-0.0069 0 -0.0295" quat="0.707107 0 0.707107 -0" material="servo"/>
         <body name="l_hip_roll_link" pos="0.0118 0 -0.042">
           <joint name="l_hip_roll" type="hinge" axis="1 0 0" range="-0.22 0.28"/>
-          <inertial pos="0.0272814 -0.00868687 -0.0120863" mass="0.0752349" fullinertia="2.26678e-05 2.03556e-05 1.44906e-05 7.0594e-07 7.99703e-07 -5.4169e-07"/>
+          <inertial pos="0.0274704 -0.00845775 -0.0122344" mass="0.0947349" fullinertia="2.7733e-05 2.45968e-05 1.72457e-05 6.90106e-07 8.09904e-07 -5.66991e-07"/>
           <geom type="mesh" mesh="l_hip_roll_link" material="printed"/>
           <geom name="l_hip_pitch_servo" type="mesh" mesh="sts3215" pos="0.0282 -0.0077 -0.0125" quat="-0.5 0.5 0.5 0.5" material="servo"/>
           <body name="l_thigh" pos="0.0282 0.011 0">
             <joint name="l_hip_pitch" type="hinge" axis="0 1 0" range="-0.95 0.7"/>
-            <inertial pos="8.98119e-08 0.0198784 -0.0823139" mass="0.0785493" fullinertia="4.9971e-05 4.48252e-05 1.52678e-05 -1.79563e-11 -6.41841e-11 7.29183e-06"/>
+            <inertial pos="9.5739e-08 0.0205044 -0.0832845" mass="0.0980493" fullinertia="5.55358e-05 4.94175e-05 1.81454e-05 -1.79974e-11 -9.45239e-11 7.56952e-06"/>
             <geom type="mesh" mesh="l_thigh" material="printed"/>
             <geom name="l_knee_servo" type="mesh" mesh="sts3215" pos="0 0.0229 -0.0875" quat="0.5 -0.5 0.5 0.5" material="servo"/>
             <body name="l_shin" pos="0 0.0416 -0.1">
@@ -178,25 +178,25 @@
     </body>
   </worldbody>
   <actuator>
-    <position name="r_hip_yaw" joint="r_hip_yaw" ctrlrange="-0.56 0.28"/>  <!-- servo ID 1 -->
-    <position name="r_hip_roll" joint="r_hip_roll" ctrlrange="-0.28 0.22"/>  <!-- servo ID 2 -->
-    <position name="r_hip_pitch" joint="r_hip_pitch" ctrlrange="-0.7 0.95"/>  <!-- servo ID 3 -->
-    <position name="r_knee" joint="r_knee" ctrlrange="-1.9 0.09"/>  <!-- servo ID 4 -->
-    <position name="r_ankle_pitch" joint="r_ankle_pitch" ctrlrange="-0.76 0.76"/>  <!-- servo ID 5 -->
-    <position name="r_ankle_roll" joint="r_ankle_roll" ctrlrange="-0.33 0.33"/>  <!-- servo ID 6 -->
-    <position name="r_shoulder_pitch" joint="r_shoulder_pitch" ctrlrange="-1.9 1.9"/>  <!-- servo ID 13 -->
-    <position name="r_elbow" joint="r_elbow" ctrlrange="-1.42 1.42"/>  <!-- servo ID 14 -->
-    <position name="r_gripper" joint="r_gripper" ctrlrange="-0.47 0.11"/>  <!-- servo ID 15 -->
-    <position name="l_hip_yaw" joint="l_hip_yaw" ctrlrange="-0.28 0.56"/>  <!-- servo ID 7 -->
-    <position name="l_hip_roll" joint="l_hip_roll" ctrlrange="-0.22 0.28"/>  <!-- servo ID 8 -->
-    <position name="l_hip_pitch" joint="l_hip_pitch" ctrlrange="-0.95 0.7"/>  <!-- servo ID 9 -->
-    <position name="l_knee" joint="l_knee" ctrlrange="-0.09 1.9"/>  <!-- servo ID 10 -->
-    <position name="l_ankle_pitch" joint="l_ankle_pitch" ctrlrange="-0.76 0.76"/>  <!-- servo ID 11 -->
-    <position name="l_ankle_roll" joint="l_ankle_roll" ctrlrange="-0.33 0.33"/>  <!-- servo ID 12 -->
-    <position name="l_shoulder_pitch" joint="l_shoulder_pitch" ctrlrange="-1.9 1.9"/>  <!-- servo ID 16 -->
-    <position name="l_elbow" joint="l_elbow" ctrlrange="-1.42 1.42"/>  <!-- servo ID 17 -->
-    <position name="l_gripper" joint="l_gripper" ctrlrange="-0.11 0.47"/>  <!-- servo ID 18 -->
-    <position name="neck_yaw" joint="neck_yaw" ctrlrange="-1.13 1.13"/>  <!-- servo ID 19 -->
+    <position name="r_hip_yaw" joint="r_hip_yaw" ctrlrange="-0.56 0.28" forcerange="-2.94 2.94"/>  <!-- servo ID 1, STS3215 -->
+    <position name="r_hip_roll" joint="r_hip_roll" ctrlrange="-0.28 0.22" forcerange="-2.94 2.94"/>  <!-- servo ID 2, STS3215 -->
+    <position name="r_hip_pitch" joint="r_hip_pitch" ctrlrange="-0.7 0.95" forcerange="-4.9 4.9"/>  <!-- servo ID 3, STS3250 -->
+    <position name="r_knee" joint="r_knee" ctrlrange="-1.9 0.09" forcerange="-4.9 4.9"/>  <!-- servo ID 4, STS3250 -->
+    <position name="r_ankle_pitch" joint="r_ankle_pitch" ctrlrange="-0.76 0.76" forcerange="-2.94 2.94"/>  <!-- servo ID 5, STS3215 -->
+    <position name="r_ankle_roll" joint="r_ankle_roll" ctrlrange="-0.33 0.33" forcerange="-2.94 2.94"/>  <!-- servo ID 6, STS3215 -->
+    <position name="r_shoulder_pitch" joint="r_shoulder_pitch" ctrlrange="-1.9 1.9" forcerange="-2.94 2.94"/>  <!-- servo ID 13, STS3215 -->
+    <position name="r_elbow" joint="r_elbow" ctrlrange="-1.42 1.42" forcerange="-2.94 2.94"/>  <!-- servo ID 14, STS3215 -->
+    <position name="r_gripper" joint="r_gripper" ctrlrange="-0.47 0.11" forcerange="-2.94 2.94"/>  <!-- servo ID 15, STS3215 -->
+    <position name="l_hip_yaw" joint="l_hip_yaw" ctrlrange="-0.28 0.56" forcerange="-2.94 2.94"/>  <!-- servo ID 7, STS3215 -->
+    <position name="l_hip_roll" joint="l_hip_roll" ctrlrange="-0.22 0.28" forcerange="-2.94 2.94"/>  <!-- servo ID 8, STS3215 -->
+    <position name="l_hip_pitch" joint="l_hip_pitch" ctrlrange="-0.95 0.7" forcerange="-4.9 4.9"/>  <!-- servo ID 9, STS3250 -->
+    <position name="l_knee" joint="l_knee" ctrlrange="-0.09 1.9" forcerange="-4.9 4.9"/>  <!-- servo ID 10, STS3250 -->
+    <position name="l_ankle_pitch" joint="l_ankle_pitch" ctrlrange="-0.76 0.76" forcerange="-2.94 2.94"/>  <!-- servo ID 11, STS3215 -->
+    <position name="l_ankle_roll" joint="l_ankle_roll" ctrlrange="-0.33 0.33" forcerange="-2.94 2.94"/>  <!-- servo ID 12, STS3215 -->
+    <position name="l_shoulder_pitch" joint="l_shoulder_pitch" ctrlrange="-1.9 1.9" forcerange="-2.94 2.94"/>  <!-- servo ID 16, STS3215 -->
+    <position name="l_elbow" joint="l_elbow" ctrlrange="-1.42 1.42" forcerange="-2.94 2.94"/>  <!-- servo ID 17, STS3215 -->
+    <position name="l_gripper" joint="l_gripper" ctrlrange="-0.11 0.47" forcerange="-2.94 2.94"/>  <!-- servo ID 18, STS3215 -->
+    <position name="neck_yaw" joint="neck_yaw" ctrlrange="-1.13 1.13" forcerange="-2.94 2.94"/>  <!-- servo ID 19, STS3215 -->
   </actuator>
   <sensor>
     <framequat name="imu_quat" objtype="site" objname="imu"/>

@@ -78,7 +78,7 @@ def write_sim(R):
         off = (origin[j['child']] - origin[j['parent']]) * 1e-3
         u += [f'  <joint name="{j["name"]}" type="revolute"><!-- servo ID {j["id"]} -->',
               f'    <parent link="{j["parent"]}"/><child link="{j["child"]}"/><origin xyz="{f(off)}" rpy="0 0 0"/><axis xyz="{f(sv.a)}"/>',
-              f'    <limit lower="{lo}" upper="{hi}" effort="{STS_EFFORT}" velocity="{STS_VEL}"/><dynamics damping="{DAMP}" friction="{FRIC}"/></joint>']
+              f'    <limit lower="{lo}" upper="{hi}" effort="{SERVOS[servo_model(j['name'])]['stall']}" velocity="{SERVOS[servo_model(j['name'])]['noload']}"/><dynamics damping="{DAMP}" friction="{FRIC}"/></joint>']
     u.append('</robot>')
     open(os.path.join(simd, 'budget19.urdf'), 'w').write('\n'.join(u) + '\n')
     # ---------------- MJCF ----------------
@@ -125,7 +125,8 @@ def write_sim(R):
     m += body_xml('base', 2, (0, 0, 0.002), None)
     m += ['  </worldbody>', '  <actuator>']
     for j in J:
-        m.append(f'    <position name="{j["name"]}" joint="{j["name"]}" ctrlrange="{j["lim"][0]} {j["lim"][1]}"/>  <!-- servo ID {j["id"]} -->')
+        st = SERVOS[servo_model(j['name'])]['stall']
+        m.append(f'    <position name="{j["name"]}" joint="{j["name"]}" ctrlrange="{j["lim"][0]} {j["lim"][1]}" forcerange="-{st} {st}"/>  <!-- servo ID {j["id"]}, {servo_model(j["name"])} -->')
     m += ['  </actuator>', '  <sensor>', '    <framequat name="imu_quat" objtype="site" objname="imu"/>', '    <gyro name="imu_gyro" site="imu"/>', '    <accelerometer name="imu_acc" site="imu"/>',
           '  </sensor>']
     q0 = ['0 0 0.002', '1 0 0 0'] + ['0'] * len(J)
@@ -133,10 +134,10 @@ def write_sim(R):
     open(os.path.join(simd, 'budget19.xml'), 'w').write('\n'.join(m) + '\n')
     # joint map csv
     with open(os.path.join(simd, 'joint_map.csv'), 'w') as fh:
-        fh.write('servo_id,joint,parent_link,child_link,axis_x,axis_y,axis_z,lower_rad,upper_rad,nominal_lower,nominal_upper,shaft_x_mm,shaft_y_mm,shaft_z_mm\n')
+        fh.write('servo_id,joint,parent_link,child_link,axis_x,axis_y,axis_z,lower_rad,upper_rad,nominal_lower,nominal_upper,shaft_x_mm,shaft_y_mm,shaft_z_mm,servo_model,stall_nm,rated_nm,noload_rad_s\n')
         for j in sorted(J, key=lambda j: j['id']):
             a = j['servo'].a; S = j['servo'].S; ln = j.get('lim_nom', j['lim'])
-            fh.write(f'{j["id"]},{j["name"]},{j["parent"]},{j["child"]},{a[0]:.0f},{a[1]:.0f},{a[2]:.0f},{j["lim"][0]},{j["lim"][1]},{ln[0]},{ln[1]},{S[0]:.1f},{S[1]:.1f},{S[2]:.1f}\n')
+            fh.write(f'{j["id"]},{j["name"]},{j["parent"]},{j["child"]},{a[0]:.0f},{a[1]:.0f},{a[2]:.0f},{j["lim"][0]},{j["lim"][1]},{ln[0]},{ln[1]},{S[0]:.1f},{S[1]:.1f},{S[2]:.1f},{servo_model(j["name"])},{SERVOS[servo_model(j["name"])]["stall"]},{SERVOS[servo_model(j["name"])]["rated"]},{SERVOS[servo_model(j["name"])]["noload"]}\n')
 
 def write_gltf(R, path):
     from pygltflib import GLTF2, BufferFormat
@@ -158,7 +159,7 @@ def write_gltf(R, path):
     for lk, d in links.items():
         for sv in d['servos']:
             sc.add_geometry(sm2, node_name=f'servo:{sv.name}', geom_name='sts3215', transform=sv.step_to_world())
-            info[f'servo:{sv.name}'] = dict(kind='real', group='servo', name=f'Servo ID {sv.id}: {sv.name}', spec='Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.', price='$19.90')
+            info[f'servo:{sv.name}'] = (dict(kind='real', group='servo', name=f'Servo ID {sv.id}: {sv.name}', spec='Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.', price='$19.90') if servo_model(sv.name) == 'STS3215' else dict(kind='modeled', group='servo', name=f'Servo ID {sv.id}: {sv.name}', spec='Feetech STS3250, 50 kg.cm, 74.5 g, aluminium case. Same 45.2 x 24.7 x 35 mm outline as the STS3215, so the STS3215 STEP is used as its shape; the STS3250 mounting holes were not checked.', price='$64.99'))
     CCX = dict(compute='#1f6fe0', power='#e8710a', sensor='#1a9a55')
     for e in E:
         m = e['mesh'].copy(); col(m, hexrgba(CCX[e['cat']]))

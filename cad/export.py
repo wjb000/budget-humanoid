@@ -8,6 +8,15 @@ ROOT = os.path.dirname(HERE)
 PLA_DENSITY = 1.24e-6      # kg/mm^3
 FILL = 0.60                # effective solid fraction (2.4 mm walls + ~20% gyroid infill)
 SERVO_MASS = 0.055 + 0.004 # STS3215 55 g + 4 g screws/horn hardware (estimate)
+# One design, two servo models chosen per joint: STS3250 where leg torque demands it (hip pitch, knee), STS3215 everywhere else.
+# Datasheets: STS3215 12 V 30 kg.cm stall, 10 kg.cm rated, 0.222 s/60 deg, 55 g, 2.7 A stall. STS3250 12 V 50 kg.cm, 16 kg.cm rated, 0.133 s/60 deg, 74.5 g, 4.2 A stall.
+# Both are 45.2 x 24.7 x 35 mm with the same 25T horn; the STS3215 STEP is used as the shape of the STS3250 (its mounting holes were not checked).
+SERVOS = {'STS3215': dict(stall=2.94, rated=0.98, noload=4.72, mass_g=55.0, kt=1.09, price=19.90),
+          'STS3250': dict(stall=4.90, rated=1.57, noload=7.87, mass_g=74.5, kt=1.08, price=64.99)}
+def servo_model(joint_name):
+    return 'STS3250' if ('hip_pitch' in joint_name or 'knee' in joint_name) else 'STS3215'
+def servo_mass(joint_name):
+    return SERVOS[servo_model(joint_name)]['mass_g'] / 1000 + 0.004
 BED = (220.0, 220.0)
 DEC = os.path.join(HERE, '.cache')   # built by vendor_meshes.py
 
@@ -183,7 +192,7 @@ def main():
             items.append((m, vol * PLA_DENSITY * getattr(P[pn], 'fill', FILL)))
         for sv in d['servos']:
             m = sm.copy(); M = sv.step_to_world(); m.apply_transform(M); m.apply_translation(-o); m.apply_scale(1e-3)
-            items.append((m, SERVO_MASS))
+            items.append((m, servo_mass(sv.name)))
         for e in E:
             if e['link'] == lk or (e['link'] == 'head' and lk == 'head'):
                 m = e['mesh'].copy(); m.apply_translation(-o); m.apply_scale(1e-3)
@@ -196,7 +205,7 @@ def main():
     tot = sum(p['mass'] for p in props.values())
     allc = sum(np.array(p['com']) * p['mass'] + np.array(p['origin_mm']) * 1e-3 * p['mass'] for p in props.values()) / tot
     print('total mass %.3f kg  COM (m) %s' % (tot, np.round(allc, 4)))
-    json.dump(dict(total_mass_kg=tot, com_m=allc.tolist(), links=props, assumptions=dict(pla_density_g_cc=1.24, fill_factor=FILL, servo_mass_g=SERVO_MASS * 1000)),
+    json.dump(dict(total_mass_kg=tot, com_m=allc.tolist(), links=props, assumptions=dict(pla_density_g_cc=1.24, fill_factor=FILL, servo_mass_g=dict(STS3215=SERVOS['STS3215']['mass_g'] + 4, STS3250=SERVOS['STS3250']['mass_g'] + 4))),
               open(os.path.join(ROOT, 'sim', 'mass_properties.json'), 'w') if os.path.isdir(os.path.join(ROOT, 'sim')) else open(os.path.join(mkdir('sim'), 'mass_properties.json'), 'w'), indent=1)
     return dict(P=P, SV=SV, J=J, meshes=meshes, links=links, E=E, props=props, origin=origin, sm=sm, rep=rep, dec=dec)
 
