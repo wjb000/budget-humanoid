@@ -23,18 +23,21 @@ def servo_mesh(tol=0.15):
         _servo_mesh = tess_to_mesh(s, tol, 0.4)
     return _servo_mesh
 
-def build_parts():
+def build_parts(styling=False):
     P, SV, J = build_all()
     solids, meshes = {}, {}
     for k, p in P.items():
         s = p.build()
         solids[k] = s
         meshes[k] = tess_to_mesh(s)
+    if styling:
+        from shells import add_styling
+        add_styling(P, solids, meshes)
     return P, SV, J, solids, meshes
 
 def link_table(P, J):
     """link name -> dict(parts=[...], servos=[Servo...]); base link = pelvis+torso"""
-    host = lambda k: COVER_HOST.get(k, 'base' if k in ('pelvis', 'torso') else k)
+    host = lambda k: COVER_HOST.get(k) or getattr(P[k], 'host', None) or ('base' if k in ('pelvis', 'torso') else k)
     links = {'base': dict(parts=[], servos=[])}
     for k, p in P.items():
         lk = host(k)

@@ -91,7 +91,7 @@ def export_parts(P, solids, meshes, step_dir, stl_dir):
         vol = float(sh.Volume())
         report[k] = dict(up=o['up'], overhang_pct=o['overhang_pct'], overhang_mm2=o['overhang_mm2'], bed_contact_mm2=o['bed_contact_mm2'],
                          print_extents_mm=o['extents'], volume_cm3=round(vol / 1000, 1), wall_min_est=thick, faces=int(len(pm.faces)),
-                         mass_g_est=round(vol * PLA_DENSITY * FILL * 1000, 1), servos=[s.name for s in p.servos],
+                         mass_g_est=round(vol * PLA_DENSITY * getattr(p, 'fill', FILL) * 1000, 1), servos=[s.name for s in p.servos],
                          stl_bytes=os.path.getsize(os.path.join(stl_dir, f'{k}.stl')), watertight=bool(fine.is_watertight))
         print(f"{k:16s} up={o['up']} over={o['overhang_pct']:5.1f}% ext={o['extents']} wall p1={thick['p1']} mass={report[k]['mass_g_est']}g stl={report[k]['stl_bytes']//1024}KB wt={report[k]['watertight']}", flush=True)
     return report
@@ -153,7 +153,7 @@ def main():
     def bvh(m):
         b = fcl.BVHModel(); b.beginModel(len(m.vertices), len(m.faces)); b.addSubModel(m.vertices, m.faces); b.endModel(); return fcl.CollisionObject(b)
     obj = [(e['name'], e['link'], bvh(e['mesh'])) for e in E]
-    base_objs = [(k, bvh(meshes[k])) for k in ('torso', 'head', 'pelvis', 'torso_front_cover', 'battery_door', 'head_lid')]
+    base_objs = [(k, bvh(meshes[k])) for k in ('torso', 'head', 'torso_front_cover', 'battery_door', 'head_lid')]
     bad = []
     for i in range(len(obj)):
         for nm, o in base_objs:
@@ -180,7 +180,7 @@ def main():
         for pn in d['parts']:
             m = meshes[pn].copy(); m.apply_translation(-o); m.apply_scale(1e-3)
             vol = abs(m.volume) * 1e9  # mm3
-            items.append((m, vol * PLA_DENSITY * FILL))
+            items.append((m, vol * PLA_DENSITY * getattr(P[pn], 'fill', FILL)))
         for sv in d['servos']:
             m = sm.copy(); M = sv.step_to_world(); m.apply_transform(M); m.apply_translation(-o); m.apply_scale(1e-3)
             items.append((m, SERVO_MASS))
