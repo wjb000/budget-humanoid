@@ -33,6 +33,27 @@ def ring_groove(b, r, depth=0.8, width=1.2):
     B = rbox((x0 + depth, x1 - depth, y0 + depth, y1 - depth, zc - width, zc + width), max(r - depth, 0.5))
     return A.cut(B)
 
+def loft_shell(origin, xdir, normal, secs, wall=2.4, crest_fillet=2.5):
+    """Tapered shell grown from a base plane. secs = [(depth, cu, cv, W, H, r), ...] rounded-rectangle sections in the plane's (u, v) axes
+    at increasing depth along `normal`. Returns (outer, inner): the inner cutter is the outer offset by `wall` (the base plane is closed by the part's own plate)."""
+    pl = cq.Plane(origin=origin, xDir=xdir, normal=normal)
+    def mk(ss, dw, d_end_trim):
+        sk = []
+        for (d, cu, cv, W, H, r) in ss:
+            s_ = cq.Sketch().rect(max(W - 2 * dw, 1.0), max(H - 2 * dw, 1.0)).vertices().fillet(max(min(r - dw, (min(W, H) - 2 * dw) * 0.45), 0.4))
+            sk.append(s_.moved(cq.Location(cq.Vector(cu, cv, d - (d_end_trim if d == ss[-1][0] else 0)))))
+        return cq.Workplane(pl).placeSketch(*sk).loft(ruled=True)
+    outer = mk(secs, 0.0, 0.0)
+    try:
+        outer = outer.faces('>Z' if False else cq.selectors.DirectionMinMaxSelector(cq.Vector(*normal), True)).edges().fillet(crest_fillet)
+    except Exception:
+        pass
+    inner = mk(secs, wall, wall)
+    return outer, inner
+
+def mir(sd, wp):
+    return wp.mirror('XZ') if sd.sg > 0 else wp
+
 class Side:
     def __init__(self, sg):
         self.sg = sg                      # -1 right, +1 left
@@ -79,11 +100,13 @@ def build_side(sd, ids):
     foot.plate(s_ar, -15, 15, -15, 15)
     foot.addshape(cqbox(sd.b(XAR + GAP, XAR + GAP + PT, Yc - 15, Yc + 15, 0, 40)).faces('>Z').edges('|X').fillet(14.5))   # upright plate, top is a half-round that blends into the hub disc
     foot.addshape(cqbox(sd.b(-50, 72, Yc - 28, Yc + 28, 0, 4)).edges('|Z').fillet(14.0).faces('>Z').edges().fillet(1.6))  # sole, softened top edge
-    for yy in (-14, 14):                                                         # gussets (3 mm) from sole to plate
-        foot.add(sd.b(XAR + GAP, XAR + 28, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4 + 0.0))
-        foot.add(sd.b(XAR + GAP, XAR + GAP + PT + 22, Yc + yy - 1.5, Yc + yy + 1.5, 0, 4))
-    foot.add(sd.b(XAR + GAP, XAR + GAP + PT + 20, Yc - 15, Yc - 12, 0, 30))
-    foot.add(sd.b(XAR + GAP, XAR + GAP + PT + 20, Yc + 12, Yc + 15, 0, 30))
+    # v4 sculpted foot: two closed hollow shells on the sole replace the gussets and walls: a toe ramp from the upright plate (kept below the four horn screws so they stay reachable) to the toe tip and a heel wedge
+    # (printed sole-down; roofs slope 20-25 deg from horizontal, so they print as shallow bridged skins; the shells are closed against the plate and the sole)
+    XP = XAR + GAP + PT
+    for (x0_, nx, xd, secs) in ((XP - 0.5, (1, 0, 0), (0, 1, 0), [(0, 0, 10.0, 34.0, 12.0, 5.0), (22.0, 0, 8.5, 40.0, 9.0, 4.5), (44.0, 0, 7.0, 44.0, 6.0, 2.9)]),
+                                (-22.0, (-1, 0, 0), (0, -1, 0), [(0, 0, 14.0, 44.0, 20.0, 8.0), (24.0, 0, 7.5, 38.0, 7.0, 5.0)])):
+        o_, i_ = loft_shell((x0_, Yc, 0), xd, nx, secs, crest_fillet=2.0)
+        foot.addshape(mir(sd, o_)); foot.cut(mir(sd, i_))
     # ankle link: ankle pitch hub + roll sleeve
     al = Part(n('ankle_link'))
     al.sleeve(s_ar)
@@ -94,24 +117,20 @@ def build_side(sd, ids):
     sh.plate(s_k, -15, 15, -15, 15)
     sh.sleeve(s_ap)
     sh.add(sd.b(-15, 15, shin_out, shin_in, Zap + 35, Zk), r=6.0, sel='|Y')
-    for fx in (-15.0, 12.6):                                  # v3: 2.4 mm edge flanges turn the strip into a U-channel leg shell (printed flat, no supports)
-        sh.add(sd.b(fx, fx + 2.4, shin_out - 9.0, shin_in, Zap + 41.0, Zk - 6.0), r=1.0)
-    for zc in (128.0, 145.0):
-        for xc in (-8.0, 8.0):
-            sh.cutbox(sd.b(xc - 1.6, xc + 1.6, shin_out - 1, shin_in + 1, zc - 0.8, zc + 0.8))
+    # v4 shin shell: a closed tapered bulge on the outboard face (covers the strip and the ankle pod end), crest down on the bed, no supports
+    o_, i_ = loft_shell((0, shin_out, 0), (1, 0, 0), (0, -1, 0), [(0, 0, 112.0, 30.2, 86.0, 8.0), (13.0, 0, 108.0, 14.0, 62.0, 5.0)])
+    sh.addshape(mir(sd, o_)); sh.cut(mir(sd, i_))
     # thigh: hip pitch hub + strip + knee sleeve
     th = Part(n('thigh'))
     th.plate(s_hp, -15, 15, -15, 15)
     th.sleeve(s_k)
     th.add(sd.b(-15, 15, plate_out, plate_in, Zk + 35, Zh), r=6.0, sel='|Y')
-    for fx, fd in ((-15.0, 9.0), (12.6, 4.5)):                                 # front flange is shallower: it swings toward the forearm on hip yaw
-        th.add(sd.b(fx, fx + 2.4, plate_out - fd, plate_in, Zk + 41.0, Zh - 6.0), r=1.0)
-    for zc in (225.0, 245.0):                                                      # cable-tie slot pairs (3.2 x 1.6 mm) through the strip
-        for xc in (-8.0, 8.0):
-            th.cutbox(sd.b(xc - 1.6, xc + 1.6, plate_out - 1, plate_in + 1, zc - 0.8, zc + 0.8))
+    # v4 thigh shell: closed tapered bulge on the outboard face above the knee pod (the hand hangs right beside it, so it is only 13 mm deep)
+    o_, i_ = loft_shell((0, plate_out, 0), (1, 0, 0), (0, -1, 0), [(0, 0, 237.0, 30.2, 44.0, 8.0), (13.0, 0, 235.0, 14.0, 28.0, 5.0)])
+    th.addshape(mir(sd, o_)); th.cut(mir(sd, i_))
     # hip roll link: roll hub plate + bridge + pitch sleeve
     hr = Part(n('hip_roll_link'))
-    hr.plate(s_hr, -15, 15, -9.5, 9.5)
+    hr.plate(s_hr, -15, 15, -9.5, 9.5, cover=False)
     hr.sleeve(s_hp)
     xp0 = XR_h + GAP
     hr.add(sd.b(xp0, xp0 + PT, Yc - 9.5, Yc + 9.5, Zh - 15, Zh + 15))
@@ -160,6 +179,9 @@ def build_side(sd, ids):
     ua.add(sd.b(Xr - 15, Xr + GAP + PT, ys - GAP - PT, ys - GAP, Zr - 12, Zr + 14))      # joins the shoulder strip to the elbow-plane plate
     ua.sleeve(s_el)
     ua.add(sd.b(Xr + GAP, Xr + GAP + PT, Ye - 41.5, Ye - 3, Ze - 12.9, Zr + 11))
+    # v4 upper-arm shell: a closed tapered bulge on the back of the elbow plate (hides the plate edge chain from behind), printed plate-down, no supports
+    o_, i_ = loft_shell((Xr + GAP, 0, 0), (0, -1, 0), (-1, 0, 0), [(0, -(Ye - 22.25), 384.5, 38.0, 77.0, 9.0), (14.0, -(Ye - 22.25), 384.5, 22.0, 52.0, 6.0)])
+    ua.addshape(mir(sd, o_)); ua.cut(mir(sd, i_))
     fa = Part(n('forearm'))
     fa.plate(s_el, -12, 12, -12, 12)
     fa.sleeve(s_gr)
@@ -247,6 +269,11 @@ def build_all():
         tor.sleeve(sv)
     s_ny = Servo(21, 'neck_yaw', (XN, 0, TORSO_TOP + 41.5), (0, 0, 1), (1, 0, 0))
     tor.sleeve(s_ny)
+    # v4 neck collar: a rounded wall around the neck pod hides the pod and its cable notch; cables drop through a slot in the torso top plate
+    outer_c = cq.Workplane('XY').add(cqbox((-56.3, 6.0, -18.5, 18.5, TORSO_TOP - 1.0, TORSO_TOP + 40.0)).edges('|Z').fillet(8.0).val())
+    inner_c = cqbox((-53.9, 3.6, -16.1, 16.1, TORSO_TOP - 2.0, TORSO_TOP + 41.0)).edges('|Z').fillet(5.6)
+    tor.addshape(outer_c.cut(inner_c))
+    tor.cutbox((-1.0, 3.0, -6.0, 6.0, TORSO_TOP - PT - 1.0, TORSO_TOP))
 
     # ---- torso front cover (chest panel; also the access door to Pi / XIAO / bus adapters / battery path) ----
     fc = Part('torso_front_cover')
@@ -293,6 +320,13 @@ def build_all():
     hd.cut(cqcyl((XN + 38.5 - 0.8, 0, ZEYE), (1, 0, 0), 8.0, 1.0).cut(cqcyl((XN + 38.5 - 0.8, 0, ZEYE), (1, 0, 0), 7.0, 1.0)))
     for sy_ in (-1, 1):
         hd.addshape(cqcyl((XN + 14.0, sy_ * (HY - 0.5), ZEYE - 2.0), (0, sy_, 0), 7.5, 3.0))
+    # v4 head character: sloped brow hood over the eye, vent slots under it, cheek ring grooves round the ear discs
+    hd.addshape(cqbox((HX1 - 2.0, HX1 + 8.0, -14.5, 14.5, ZEYE + 11.0, ZEYE + 15.0)).edges('|Z').fillet(4.5))
+    hd.addshape(cqbox((HX1 - 2.0, HX1 + 2.0, -14.5, 14.5, ZEYE + 14.0, ZEYE + 17.0)).edges('|Z').fillet(1.9))
+    for yy in (-8.0, -4.0, 0.0, 4.0, 8.0):
+        hd.cut(cqbox((HX1 - 1.0, HX1 + 1.0, yy - 0.8, yy + 0.8, Znp + 6.0, Znp + 13.0)))
+    for sy_ in (-1, 1):
+        hd.cut(cqcyl((XN + 14.0, sy_ * (HY + 0.1), ZEYE - 2.0), (0, sy_, 0), 9.4, 0.9).cut(cqcyl((XN + 14.0, sy_ * (HY + 0.1), ZEYE - 2.0), (0, sy_, 0), 8.4, 0.9)))
     for zl in (Znp + 3.0, Znp + 33.0):                                          # panel lines
         hd.cut(ring_groove((HX0, HX1, -HY, HY, zl - 0.6, zl + 0.6), 8.0, depth=0.7, width=1.0))
     # head lid (closes the chamber; four M2 self-tapping screws into the back and side walls)
@@ -300,6 +334,8 @@ def build_all():
     hl = Part('head_lid')
     hl.addshape(rbox((HX0, HX1, -HY, HY, HZ1, HZ1 + 5.0), 8.0, top=2.4))
     hl.add((XN - 8.6, XN + 33.2, -14.2, 14.2, HZ1 - 3.0, HZ1))
+    hl.addshape(cqcyl((XN + 22.0, 0, HZ1 + 4.6), (0, 0, 1), 8.5, 5.0).faces('>Z').edges().fillet(2.0))   # radar dome
+    hl.addshape(cqcyl((XN - 4.0, 0, HZ1 + 4.6), (0, 0, 1), 1.5, 15.0))                                    # antenna stub
     for (xx, yy) in HSCREWS:
         hl.screw_hole((xx, yy, HZ1 + 5.0 + 0.01), (0, 0, -1), 6.0)
         hd.cut(cqcyl((xx, yy, HZ1 + 0.01), (0, 0, -1), 0.9, 9.0))
