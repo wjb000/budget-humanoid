@@ -1,0 +1,18 @@
+{
+ "policy": {
+  "episodes": 30,
+  "survived_frac": 0.8333333333333334,
+  "mean_len_s": 9.168,
+  "mean_forward_speed_m_s": 0.024734636168480813,
+  "mean_abs_speed_error_m_s": 0.09647861898766066,
+  "peak_rms_torque_frac_of_rated": 1.2698521494584927
+ },
+ "hold_default_pose": {
+  "episodes": 30,
+  "survived_frac": 1.0,
+  "mean_len_s": 10.0,
+  "mean_forward_speed_m_s": 0.0007465269404808593,
+  "mean_abs_speed_error_m_s": 0.10795020684910671,
+  "peak_rms_torque_frac_of_rated": 0.592306043746216
+ }
+}
