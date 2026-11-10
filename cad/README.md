@@ -8,7 +8,8 @@ Parametric, 3D-printable frame for a ~0.61 m, ~2.2 kg humanoid with 19 STS3215 s
 
 | Item | Kind | Source / license |
 |---|---|---|
-| 19 x Feetech STS3215 servo | **Real vendor CAD** | SO-ARM100 `STEP/SO100/STS3215_03a.step`, Apache-2.0, in `vendor/` |
+| 15 x Feetech STS3215 servo | **Real vendor CAD** | SO-ARM100 `STEP/SO100/STS3215_03a.step`, Apache-2.0, in `vendor/` |
+| 4 x Feetech STS3250 servo (hip pitch, knee) | **Modelled** | Same 45.2 x 24.7 x 35 mm outline as the STS3215 (Feetech datasheet), so the STS3215 STEP is used as its shape. Mass 74.5 g and 4.9 N m stall are in the sim; mounting holes not checked. |
 | BNO085 IMU board | **Real vendor CAD** | Adafruit_CAD_Parts `4754 BNO085 STEMMA QT`, MIT, in `vendor/` |
 | MAX98357A I2S amp | **Real vendor CAD** | Adafruit_CAD_Parts `3006 MAX98357`, MIT, in `vendor/` |
 | 40 mm speaker | **Real vendor CAD** | Adafruit_CAD_Parts `3968 Speaker 40mm`, MIT, in `vendor/` |
@@ -64,7 +65,7 @@ Tested with CadQuery 2.8, Python 3.11 on Linux.
 ## Known gaps
 
 1. **Not printed, not fit-tested.** Horn pattern, case-screw and cable-slot positions come from the STEP, not a physical servo. Print `fit_coupon_*` first.
-2. **STS3250 vs STS3215.** The BOM uses 4 higher-torque STS3250 on hip pitch and knee. CAD, mass and sim treat every joint as an STS3215 (outline, 55 g, 2.94 N m stall). Check the STS3250 outline and update `lib.py` and `sim_export.py`.
+2. **STS3250 on hip pitch and knee (4 servos).** Chosen from first-order torque estimates (single-leg stance about 0.95 N m at the knee in the ready pose, stand-with-push peaks 1.0 to 1.45 N m at hip pitch and knee in sim) and the K-Scale Zeroth-01 experience, not from a walking test on hardware. The STS3250 has the same outline, so the pods are unchanged, but its mounting holes were not checked. Hip roll peaks near 1.1 N m in the push test and is the next candidate if it overheats.
 3. **Masses are estimates** (PLA 1.24 g/cc x 0.6 fill, servo 55 g + 4 g hardware, electronics estimated). Weigh the real parts.
 4. **Sim actuator gains** (kp 20, kv 0.5, damping 0.05, armature 0.02, frictionloss 0.03) are starting values, not identified from hardware.
 5. **Joint limits** are conservative and single-joint only. Hip yaw and roll are narrow by design (legs 110 mm apart); arms cannot adduct past the torso.

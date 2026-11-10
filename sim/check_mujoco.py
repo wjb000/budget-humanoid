@@ -34,7 +34,7 @@ for i in range(steps):
         R = d.xmat[base].reshape(3, 3)
         tilts.append(np.degrees(np.arccos(np.clip(R[2, 2], -1, 1))))
         zs.append(com[2])
-        tq.append(np.abs(d.actuator_force) / 2.94)
+        tq.append(np.abs(d.actuator_force) / m.actuator_forcerange[:, 1])
 zs, tilts, tq = np.array(zs), np.array(tilts), np.array(tq)
 com1 = d.subtree_com[base]
 contacts = [(m.geom(c.geom1).name, m.geom(c.geom2).name) for c in d.contact[:d.ncon]]
@@ -47,9 +47,9 @@ names = [m.actuator(i).name for i in range(m.nu)]
 top = sorted(zip(worst, names), reverse=True)[:5]
 worst = worst / a.derate
 top = sorted(zip(worst, names), reverse=True)[:5]
-print(f'peak actuator load (fraction of 2.94 N m x {a.derate:g} usable torque):', ', '.join(f'{n} {w:.2f}' for w, n in top))
+print(f'peak actuator load (fraction of per-servo stall torque x {a.derate:g} usable):', ', '.join(f'{n} {w:.2f}' for w, n in top))
 sat = [n for w, n in zip(worst, names) if w > 0.8]
-print('upgrade candidates (peak load > 0.8, failure-guided upgrade rule; confirm across seeds and motions before buying STS3250):', ', '.join(sat) if sat else 'none in this stand test')
+print('high-load joints (peak load > 0.8, joints near stall in this test; confirm across seeds and motions):', ', '.join(sat) if sat else 'none in this stand test')
 print('settled actuator load (last 1 s mean):', ', '.join(f'{n} {w:.2f}' for w, n in sorted(zip(tq[-20:].mean(0), names), reverse=True)[:5]))
 stood = (sag < 30) and tilts.max() < 5 and feet_ok
 print('RESULT:', 'PASS - stands (position hold at zero pose)' if stood else 'FAIL - did not stand')

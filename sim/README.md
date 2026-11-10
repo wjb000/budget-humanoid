@@ -18,7 +18,7 @@
 | `train.py`, `export_policy.py`, `eval_policy.py` | PPO baseline (stable-baselines3), numpy export, evaluation vs a hold-pose baseline |
 | `sysid.py` | Servo system-ID: record protocol (hardware), fit, and a synthetic selftest |
 
-Units: meters, kilograms, radians. Zero pose = standing, arms down, legs straight. Link frames are world-aligned at the zero pose, with the origin on the joint shaft. Total mass 2.151 kg, COM about (-12, 2, 311) mm at the zero pose.
+Units: meters, kilograms, radians. Zero pose = standing, arms down, legs straight. Link frames are world-aligned at the zero pose, with the origin on the joint shaft. Total mass 2.229 kg, COM about (-12, 2, 308) mm at the zero pose.
 
 ## Check it
 
@@ -31,9 +31,9 @@ python -m mujoco.viewer --mjcf=sim/budget19.xml
 `check_mujoco.py` loads the MJCF, resets to the `stand` keyframe (all targets zero), steps 5 s, and reports center-of-mass sag, torso tilt, whether both foot soles are in contact, and actuator load as a fraction of the 2.94 N m servo stall torque. It exits non-zero if sag > 30 mm, tilt > 5 deg, or a foot loses contact. Result at the committed settings (kp 20, kv 0.5):
 
 ```
-model: 21 bodies, 20 joints (1 free), 19 actuators, total mass 2.151 kg
-after 5.0 s: COM z 0.311 m (start 0.313, max sag 2.8 mm), COM xy drift 4.7 mm
-torso tilt: final 1.55 deg, max 1.87 deg; both feet in contact: True
+model: 21 bodies, 20 joints (1 free), 19 actuators, total mass 2.229 kg
+after 5.0 s: COM z 0.308 m (start 0.310, max sag 2.8 mm), COM xy drift 4.6 mm
+torso tilt: final 1.56 deg, max 1.87 deg; both feet in contact: True
 RESULT: PASS - stands (position hold at zero pose)
 ```
 
@@ -43,8 +43,9 @@ This proves the model loads, the masses are sane and a stiff position hold at th
 
 - Joints: 19 revolute. Names `{r,l}_{hip_yaw,hip_roll,hip_pitch,knee,ankle_pitch,ankle_roll,shoulder_pitch,elbow,gripper}` plus `neck_yaw`. Servo IDs: right leg 1 to 6, left leg 7 to 12, right arm 13 to 15, left arm 16 to 18, neck 19.
 - Axes and limits are per joint in `joint_map.csv`. The left side is the mirror of the right side with the **axis vector flipped**, so the same positive angle moves the left and right limb in opposite physical directions and the limits are mirrored (right knee flexes in the negative direction, left knee in the positive direction). **Use the axis column and limits per joint; do not assume left = right.** (A v2 bug where both knees and both grippers carried the same-sign limits, which let the right knee fold the wrong way, was found while building the policy default pose and fixed in `cad/robot.py`.)
-- Actuators in the MJCF: `position` actuators with kp 20 N m/rad, kv 0.5, torque clamp 2.94 N m (STS3215 12 V stall); joint damping 0.05, armature 0.02, friction loss 0.03. Starting values, not identified. The training env replaces these with torque motors driven by `actuator.py`.
-- Velocity limit used for URDF: 4.72 rad/s (no-load, 12 V). Rated torque 0.98 N m, stall 2.94 N m.
+- Servo models, one design: **STS3250 on hip pitch and knee (4 joints, 4.9 N m stall, 7.87 rad/s no-load, 74.5 g), STS3215 on the other 15 (2.94 N m, 4.72 rad/s, 55 g)**, both 12 V datasheet values (`joint_map.csv` columns `servo_model`, `stall_nm`, `rated_nm`, `noload_rad_s`). Masses in `mass_properties.json` use the right servo per joint.
+- Actuators in the MJCF: `position` actuators with kp 20 N m/rad, kv 0.5 and the per-joint torque clamp above; joint damping 0.05, armature 0.02, friction loss 0.03. Starting values, not identified. The training env replaces these with torque motors driven by `actuator.py`.
+- URDF effort/velocity limits are the per-joint stall torque and no-load speed. Rated (continuous) torque: 0.98 N m STS3215, 1.57 N m STS3250.
 - Inertia: per link from the printed mesh (PLA 1.24 g/cc, 0.6 fill), the servo masses (55 g + 4 g hardware) and the electronics, with the parallel-axis theorem; `mass_properties.json` lists the parts.
 - Contacts: **only the two foot soles collide** (a box per foot, friction 1.0). Torso, head and arms have no collision geometry and self-collision is off, so a fall passes through the floor. The training env ends an episode on tilt/height instead.
 - Sensors: `imu` site at the BNO085 location with `imu_quat`, `imu_gyro`, `imu_acc`; `head_cam` at the head lens hole, 66 deg vertical FOV (assumed).
@@ -64,7 +65,7 @@ python deploy/test_deploy.py --policy runs/stand0            # runtime + framing
 ## Isaac Lab notes
 
 1. Convert the URDF to USD with Isaac Lab's `scripts/tools/convert_urdf.py`, `--fix-base` off, joint drive stiffness/damping 0 if you drive with your own actuator model. Meshes are OBJ in meters; keep `meshes/` next to the URDF.
-2. First pass: `ImplicitActuatorCfg(effort_limit=2.94, velocity_limit=4.72, stiffness=20, damping=0.5)`, or a `DCMotorCfg(saturation_effort=2.94, effort_limit=0.98, velocity_limit=4.72)` once servo data exists. Rated torque is 0.98 N m; the stall number is not a continuous limit.
+2. First pass: per-joint `ImplicitActuatorCfg(effort_limit=<stall_nm>, velocity_limit=<noload_rad_s>, stiffness=20, damping=0.5)` (values in `joint_map.csv`), or a `DCMotorCfg(saturation_effort=<stall_nm>, effort_limit=<rated_nm>, velocity_limit=<noload_rad_s>)` once servo data exists. The stall number is not a continuous limit.
 3. The URDF has foot collisions only (as the MJCF). Add torso/head/arm collision before enabling self-collision.
 4. Use `obs.py` as the definition of the observation so a policy trained there matches `deploy/pi_runtime.py`; joint order is the MJCF actuator order (= `policy_meta.json: joint_order`).
 5. Domain randomisation ranges: `domain_randomization.json`.
