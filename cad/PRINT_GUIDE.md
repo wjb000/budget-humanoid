@@ -27,35 +27,35 @@ The horn hole pattern, case-screw positions and cable-slot position were **measu
 | Top/bottom | 5 layers |
 | Supports | Mostly none: overhang area is under 12% on every part (forearm is the worst). The pockets open toward +z or sideways; turn on "supports touching build plate" or tree supports and read the preview for torso and forearm. |
 | Tolerance | pocket clearance 0.3 mm per side, horn-plate gap 0.1 mm (set in `cad/lib.py`) |
-| Printed mass | about 641 g estimated (60% effective fill), roughly 23 parts |
+| Printed mass | about 746 g estimated (60% effective fill), roughly 23 parts |
 
 ## 2. Parts
 
 | Part | Qty | Servos it carries | Print size (mm) | Overhang | Est. mass* | Supports |
 |---|---|---|---|---|---|---|
-| `r_foot` | 1 | - | 122 x 56 x 40 | 0.4% | 25 g | none needed |
-| `r_ankle_link` | 1 | r_ankle_roll | 81 x 30 x 38 | 1.5% | 15 g | none needed |
-| `r_shin` | 1 | r_ankle_pitch | 30 x 48 x 125 | 5.4% | 20 g | supports on cable/screw pockets (see preview) |
-| `r_thigh` | 1 | r_knee | 30 x 128 x 38 | 0.2% | 20 g | none needed |
-| `r_hip_roll_link` | 1 | r_hip_pitch | 43 x 53 x 40 | 3.1% | 16 g | tree/touching-bed supports, check preview |
-| `r_hip_yaw_link` | 1 | r_hip_roll | 55 x 30 x 45 | 1.6% | 15 g | none needed |
-| `r_upper_arm` | 1 | r_elbow | 69 x 39 x 109 | 5.9% | 22 g | supports on cable/screw pockets (see preview) |
-| `r_forearm` | 1 | r_gripper | 37 x 39 x 141 | 9.5% | 26 g | supports on cable/screw pockets (see preview) |
-| `r_finger` | 1 | - | 24 x 87 x 29 | 1.3% | 8 g | none needed |
-| `l_foot` | 1 | - | 122 x 56 x 40 | 0.4% | 25 g | none needed |
-| `l_ankle_link` | 1 | l_ankle_roll | 81 x 30 x 38 | 1.5% | 15 g | none needed |
-| `l_shin` | 1 | l_ankle_pitch | 30 x 48 x 125 | 5.4% | 20 g | supports on cable/screw pockets (see preview) |
-| `l_thigh` | 1 | l_knee | 30 x 128 x 38 | 0.2% | 20 g | none needed |
-| `l_hip_roll_link` | 1 | l_hip_pitch | 43 x 53 x 40 | 3.1% | 16 g | tree/touching-bed supports, check preview |
-| `l_hip_yaw_link` | 1 | l_hip_roll | 55 x 30 x 45 | 1.6% | 15 g | none needed |
-| `l_upper_arm` | 1 | l_elbow | 69 x 39 x 109 | 5.9% | 22 g | supports on cable/screw pockets (see preview) |
-| `l_forearm` | 1 | l_gripper | 37 x 39 x 141 | 9.5% | 26 g | supports on cable/screw pockets (see preview) |
-| `l_finger` | 1 | - | 24 x 87 x 29 | 1.3% | 8 g | none needed |
-| `torso` | 1 | r_hip_yaw, l_hip_yaw, r_shoulder_pitch, l_shoulder_pitch, neck_yaw | 80 x 181 x 218 | 10.4% | 199 g | supports on cable/screw pockets (see preview) |
-| `head` | 1 | - | 54 x 43 x 63 | 6.7% | 42 g | supports on cable/screw pockets (see preview) |
+| `r_foot` | 1 | - | 122 x 63 x 56 | 5.1% | 36 g | supports on cable/screw pockets (see preview) |
+| `r_ankle_link` | 1 | r_ankle_roll | 104 x 30 x 41 | 2.0% | 18 g | none needed |
+| `r_shin` | 1 | r_ankle_pitch | 30 x 54 x 148 | 4.8% | 28 g | tree/touching-bed supports, check preview |
+| `r_thigh` | 1 | r_knee | 30 x 126 x 41 | 1.8% | 23 g | none needed |
+| `r_hip_roll_link` | 1 | r_hip_pitch | 43 x 53 x 41 | 3.2% | 17 g | tree/touching-bed supports, check preview |
+| `r_hip_yaw_link` | 1 | r_hip_roll | 55 x 53 x 45 | 2.0% | 18 g | none needed |
+| `r_upper_arm` | 1 | r_elbow | 69 x 41 x 132 | 8.3% | 31 g | supports on cable/screw pockets (see preview) |
+| `r_forearm` | 1 | r_gripper | 37 x 42 x 167 | 8.9% | 30 g | supports on cable/screw pockets (see preview) |
+| `r_finger` | 1 | - | 30 x 88 x 29 | 1.1% | 10 g | none needed |
+| `l_foot` | 1 | - | 122 x 63 x 56 | 5.1% | 36 g | supports on cable/screw pockets (see preview) |
+| `l_ankle_link` | 1 | l_ankle_roll | 104 x 30 x 41 | 2.0% | 18 g | none needed |
+| `l_shin` | 1 | l_ankle_pitch | 30 x 54 x 148 | 4.8% | 28 g | tree/touching-bed supports, check preview |
+| `l_thigh` | 1 | l_knee | 30 x 126 x 41 | 1.8% | 23 g | none needed |
+| `l_hip_roll_link` | 1 | l_hip_pitch | 43 x 53 x 41 | 3.2% | 17 g | tree/touching-bed supports, check preview |
+| `l_hip_yaw_link` | 1 | l_hip_roll | 55 x 53 x 45 | 2.0% | 18 g | none needed |
+| `l_upper_arm` | 1 | l_elbow | 69 x 41 x 132 | 8.4% | 31 g | supports on cable/screw pockets (see preview) |
+| `l_forearm` | 1 | l_gripper | 37 x 42 x 167 | 8.9% | 30 g | supports on cable/screw pockets (see preview) |
+| `l_finger` | 1 | - | 30 x 88 x 29 | 1.1% | 10 g | none needed |
+| `torso` | 1 | r_hip_yaw, l_hip_yaw, r_shoulder_pitch, l_shoulder_pitch, neck_yaw | 80 x 186 x 224 | 10.3% | 214 g | supports on cable/screw pockets (see preview) |
+| `head` | 1 | - | 58 x 43 x 63 | 4.4% | 44 g | tree/touching-bed supports, check preview |
 | `torso_front_cover` | 1 | - | 12 x 94 x 132 | 3.2% | 37 g | tree/touching-bed supports, check preview |
 | `battery_door` | 1 | - | 5 x 49 x 132 | 1.6% | 19 g | none needed |
-| `head_lid` | 1 | - | 8 x 38 x 50 | 3.9% | 9 g | tree/touching-bed supports, check preview |
+| `head_lid` | 1 | - | 23 x 38 x 50 | 5.2% | 10 g | supports on cable/screw pockets (see preview) |
 
 \* Mass estimate = solid volume x 1.24 g/cc (PLA) x 0.6 effective fill. Weigh your parts and update `PLA_DENSITY`/`FILL` in `cad/export.py` so the sim masses match.
 

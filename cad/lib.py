@@ -15,6 +15,7 @@ CASE_HOLES = [(-20.3 - SHAFT_X, -10.2), (-20.3 - SHAFT_X, 10.2), (4.2 - SHAFT_X,
 WALL = 2.4
 CLR = 0.3
 PT = 4.0     # horn plate thickness
+POD_TOP = -0.4   # v4: pod wall runs up to 0.5 mm below the child's hub plate, so the servo head is hidden
 GAP = 0.1    # plate to horn gap
 
 def unit(v):
@@ -57,7 +58,7 @@ def cqcyl(p, d, r, h):
 class Part:
     def __init__(self, name, group="printed"):
         self.name, self.group = name, group
-        self.adds, self.cuts, self.servos, self.windows = [], [], [], []
+        self.adds, self.cuts, self.servos, self.windows, self.caps = [], [], [], [], []
     def add(self, b, r=None, sel=None):
         """b = (x0,x1,y0,y1,z0,z1). r/sel: fillet radius and edge selector for this box (default: FILLET on all edges)"""
         self.adds.append((tuple(b), r, sel))
@@ -84,7 +85,7 @@ class Part:
         lb = sv.lbox
         ax = int(np.argmax(np.abs(sv.a)))
         # v3: pod corners parallel to the servo axis are rounded (R 5.0 outside; the pocket corner keeps >= 1.1 mm wall)
-        self.add(lb(SRV_X0 - CLR - WALL, SRV_X1 + CLR + WALL, -(SRV_HY + CLR + WALL), SRV_HY + CLR + WALL, -41.5, -3.0), r=self.POD_R, sel=('|X', '|Y', '|Z')[ax])
+        self.add(lb(SRV_X0 - CLR - WALL, SRV_X1 + CLR + WALL, -(SRV_HY + CLR + WALL), SRV_HY + CLR + WALL, -41.5, POD_TOP), r=self.POD_R, sel=('|X', '|Y', '|Z')[ax])
         # pocket (open to horn side)
         self.cutbox(lb(SRV_X0 - CLR, SRV_X1 + CLR, -(SRV_HY + CLR), SRV_HY + CLR, -34.9, 3.0))
         # rear disc / shaft end recess d21
@@ -99,11 +100,17 @@ class Part:
         self.windows.append(sv)
         # cable notch in tail end wall
         self.cutbox(lb(SRV_X0 - CLR - WALL - 0.05, SRV_X0 - CLR + 0.01, -6, 6, -30, -2.0))
-    def plate(self, sv, x0=-15, x1=15, y0=-15, y1=15, extra=None):
+    def plate(self, sv, x0=-15, x1=15, y0=-15, y1=15, extra=None, cover=True):
         """Horn plate on the output side of servo sv (this part is the moving child)."""
         lb = sv.lbox
         ax = int(np.argmax(np.abs(sv.a)))
-        self.add(lb(x0, x1, y0, y1, GAP, GAP + PT), r=99.0, sel=('|X', '|Y', '|Z')[ax])     # round hub disc (pod cap)
+        if cover:
+            # v4: the horn plate is a cover over the whole end face of the neighbouring pod (it turns above it, 0.5 mm clear), so no servo is visible
+            x0, x1, y0, y1 = SRV_X0 - CLR - WALL, SRV_X1 + CLR + WALL, -(SRV_HY + CLR + WALL), SRV_HY + CLR + WALL
+            self.add(lb(x0, x1, y0, y1, GAP, GAP + PT), r=self.POD_R, sel=('|X', '|Y', '|Z')[ax])
+        else:
+            self.add(lb(x0, x1, y0, y1, GAP, GAP + PT), r=99.0, sel=('|X', '|Y', '|Z')[ax])     # round hub disc (pod cap)
+        self.caps.append((sv, (x0, x1, y0, y1)))
         self.cut(cqcyl(sv.w(0, 0, -1), sv.a, 4.0, GAP + PT + 2))
         for sx in (-1, 1):
             for sy in (-1, 1):
