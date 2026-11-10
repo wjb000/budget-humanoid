@@ -6,10 +6,11 @@ What this models (everything numeric is tagged with where it comes from):
   * Servo dead zone: no drive while |error| < deadband (default 2 counts).                     [PLACEHOLDER, STS register 26/27 default is small]
   * Internal position loop approximated as PD: tau = kp*err - kd*qdot.                         [PLACEHOLDER kp/kd, fitted by sysid.py]
   * Torque-speed curve: linear from stall torque at 0 speed to 0 at the no-load speed, scaled with supply voltage.
-        stall 2.94 N m (30 kg cm) and no-load 0.222 s/60 deg = 4.72 rad/s at 12 V             [datasheet, vendor listing]
+        STS3215: stall 2.94 N m (30 kg cm), no-load 4.72 rad/s (0.222 s/60 deg); STS3250: stall 4.90 N m (50 kg cm), 7.87 rad/s (0.133 s/60 deg),
+        both at 12 V. Per-joint arrays are filled from sim/joint_map.csv by the env.                [datasheets]
   * Supply sag: V = V_batt - R_batt * sum(|tau|/kt). kt (N m/A at the output) from stall current ~2.7 A. [PLACEHOLDER, estimated]
   * Encoder read-back: quantised, with hysteresis `backlash_rad` when the direction reverses.   [PLACEHOLDER. The real lash is inside
-        the position loop (encoder is on the output) and this does NOT model that; it only models what the policy sees.]
+        the position loop (encoder is on the output; datasheet backlash <= 0.5 deg for both models) and this does NOT model that; it only models what the policy sees.]
 Not modelled: motor temperature derating, rated (0.98 N m) continuous limit (reported through `thermal_state`), stiction beyond the
 MuJoCo joint frictionloss, gear compliance, bus read-time jitter.
 All parameters are dataclass fields so the domain-randomisation config and the system-ID fit can overwrite them.
@@ -51,6 +52,8 @@ class STS3215Bank:
         self.rng = rng or np.random.default_rng(0)
         self.kp = np.full(n, self.p.kp); self.kd = np.full(n, self.p.kd)
         self.tau_stall = np.full(n, self.p.tau_stall)
+        self.omega_nl = np.full(n, self.p.omega_noload)     # per-joint arrays: the design mixes STS3215 and STS3250 (see joint_map.csv)
+        self.kt = np.full(n, self.p.kt); self.tau_rated = np.full(n, self.p.tau_rated)
         self.zero_offset = np.full(n, self.p.zero_offset_rad)
         self.set_latency(self.p.latency_s)
         self.reset(np.zeros(n))
@@ -91,12 +94,12 @@ class STS3215Bank:
         err = np.where(np.abs(err) < self.p.deadband_rad, 0.0, err)
         tau = self.kp * err - self.kd * qd
         # supply sag from last step's total current
-        i_tot = float(np.sum(np.abs(self._last_tau)) / self.p.kt)
+        i_tot = float(np.sum(np.abs(self._last_tau) / self.kt))
         v = max(0.4 * self.p.v_nominal, self.p.v_batt - self.p.r_batt * i_tot)
         self.vscale[:] = v / self.p.v_nominal
         # torque-speed limit: driving torque falls linearly with speed in the direction of motion; braking is not limited
         w = qd * np.sign(tau)
-        drive_lim = self.tau_stall * self.vscale * np.clip(1.0 - w / (self.p.omega_noload * self.vscale), 0.0, 1.0)
+        drive_lim = self.tau_stall * self.vscale * np.clip(1.0 - w / (self.omega_nl * self.vscale), 0.0, 1.0)
         brake_lim = self.tau_stall * self.vscale
         lim = np.where(w > 0, drive_lim, brake_lim)
         tau = np.clip(tau, -lim, lim)
@@ -106,7 +109,7 @@ class STS3215Bank:
 
     def thermal_state(self, tau_rms):
         """Fraction of the rated continuous torque the given RMS torque uses (>1 means the servo will heat)."""
-        return np.asarray(tau_rms) / self.p.tau_rated
+        return np.asarray(tau_rms) / self.tau_rated
 
 
 def bank_from_dict(n, dt, d, rng=None):

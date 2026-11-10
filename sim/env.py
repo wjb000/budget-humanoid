@@ -42,11 +42,17 @@ class Budget19Env(gym.Env):
         self.lo = m.actuator_ctrlrange[:, 0].copy(); self.hi = m.actuator_ctrlrange[:, 1].copy()   # joint limits from the MJCF
         pose = load_json('default_pose.json')
         self.q_default = np.array([pose[n] for n in self.act_names])
+        import csv
+        jm = {r['joint']: r for r in csv.DictReader(open(os.path.join(HERE, 'joint_map.csv')))}
+        self.stall = np.array([float(jm[n]['stall_nm']) for n in self.act_names])
+        self.rated = np.array([float(jm[n]['rated_nm']) for n in self.act_names])
+        self.noload = np.array([float(jm[n]['noload_rad_s']) for n in self.act_names])
+        self.servo_model = [jm[n]['servo_model'] for n in self.act_names]
         # re-purpose position actuators as torque motors (gain 1, no bias); the torque clamp is the datasheet stall
         m.actuator_gainprm[:, 0] = 1.0; m.actuator_gainprm[:, 1:] = 0.0
         m.actuator_biasprm[:] = 0.0; m.actuator_biastype[:] = 0
-        m.actuator_ctrllimited[:] = 1; m.actuator_ctrlrange[:] = np.array([-2.94, 2.94])
-        m.actuator_forcelimited[:] = 1; m.actuator_forcerange[:] = np.array([-2.94, 2.94])
+        m.actuator_ctrllimited[:] = 1; m.actuator_ctrlrange[:] = np.stack([-self.stall, self.stall], 1)
+        m.actuator_forcelimited[:] = 1; m.actuator_forcerange[:] = np.stack([-self.stall, self.stall], 1)
         # nominal values for DR
         self._nom = dict(mass=m.body_mass.copy(), inertia=m.body_inertia.copy(), fl=m.dof_frictionloss.copy(),
                          damp=m.dof_damping.copy(), arm=m.dof_armature.copy(), fric=m.geom_friction.copy(),
@@ -57,11 +63,17 @@ class Budget19Env(gym.Env):
         self.imu_quat = m.sensor('imu_quat').adr[0]; self.imu_gyro = m.sensor('imu_gyro').adr[0]
         self.substeps = int(round(1.0 / O.CONTROL_HZ / m.opt.timestep))
         self.max_steps = int(episode_s * O.CONTROL_HZ)
-        self.bank = STS3215Bank(self.nu, m.opt.timestep, STS3215Params(), self.rng)
+        self.bank = self._new_bank(STS3215Params())
         self.action_space = spaces.Box(-1.0, 1.0, (self.nu,), np.float32)
         self.observation_space = spaces.Box(-np.inf, np.inf, (O.OBS_DIM,), np.float32)
         self.base_z0 = None
         self._gtilt = np.zeros(3)
+
+    def _new_bank(self, p):
+        b = STS3215Bank(self.nu, self.model.opt.timestep, p, self.rng)
+        b.tau_stall = self.stall.copy(); b.omega_nl = self.noload.copy(); b.tau_rated = self.rated.copy()
+        b.kt = np.where(np.array(self.servo_model) == 'STS3250', 1.08, 1.09)
+        return b
 
     # ------------------------------------------------------------------------------------------------------------
     def _randomize(self):
@@ -82,14 +94,14 @@ class Budget19Env(gym.Env):
             m.geom_friction[self.sole_ids, 0] = u(dr['floor_friction']['range'], 2)
             p.latency_s = u(dr['latency_s']['range']); p.backlash_rad = u(dr['backlash_rad']['range'])
             p.v_batt = u(dr['v_batt']['range']); p.r_batt = u(dr['r_batt']['range'])
-            self.bank = STS3215Bank(self.nu, m.opt.timestep, p, rng)
+            self.bank = self._new_bank(p)
             self.bank.kp = p.kp * u(dr['kp']['range'], self.nu); self.bank.kd = p.kd * u(dr['kd']['range'], self.nu)
-            self.bank.tau_stall = p.tau_stall * u(dr['tau_stall']['range'], self.nu)
+            self.bank.tau_stall = self.stall * u(dr['tau_stall']['range'], self.nu)
             self.bank.zero_offset = u(dr['zero_offset_rad']['range'], self.nu)
             ang = np.radians(u(dr['gravity_tilt_deg']['range'])); az = rng.uniform(0, 2 * np.pi)
             self._gtilt = np.array([np.sin(az), np.cos(az), 0.0]) * np.sin(ang)
         else:
-            self.bank = STS3215Bank(self.nu, m.opt.timestep, p, rng)
+            self.bank = self._new_bank(p)
         self.push_t = rng.uniform(*dr['push']['interval_s']) if (self.randomize and dr.get('enabled', True)) else 1e9
 
     # ------------------------------------------------------------------------------------------------------------
@@ -165,7 +177,7 @@ class Budget19Env(gym.Env):
         if self.task == 'walk' and self.steps % 150 == 0:
             self.cmd = self._sample_cmd()
         obs = self._obs()
-        info = {'tau_rms_max_frac_rated': float(tau_rms.max() / self.bank.p.tau_rated), 'z': float(z)}
+        info = {'tau_rms_max_frac_rated': float((tau_rms / self.rated).max()), 'z': float(z)}
         return obs, float(reward), bool(fallen), self.steps >= self.max_steps, info
 
     def _push_force(self):
