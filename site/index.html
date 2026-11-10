@@ -1,1 +1,163 @@
-<!doctype html><meta charset="utf-8"><title>Budget-22 humanoid</title><h1>Budget-22 humanoid</h1><p>Site is being built. Full design, BOM, 3D viewer and CAD coming in the next commits.</p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Budget-22: dirt-cheap 22-DOF humanoid</title>
+<meta name="description" content="Open design for a ~0.5 m, 22-DOF, ~$791 humanoid on Feetech ST3215 servos: component map, schematic, BOM, 3D viewer, CAD.">
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a313c;--tx:#e6edf3;--mut:#9aa7b4;--acc:#58a6ff;--grn:#3fb950;--org:#f0883e;--red:#f85149;--pur:#a371f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}header{padding:48px 20px 24px;max-width:1200px;margin:0 auto}
+h1{font-size:clamp(28px,5vw,48px);margin:0 0 8px}h2{margin:0 0 12px;font-size:26px}h3{margin:18px 0 6px}
+nav{position:sticky;top:0;background:#0e1116ee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);z-index:10}
+nav div{max-width:1200px;margin:0 auto;padding:8px 20px;display:flex;gap:16px;flex-wrap:wrap;font-size:14px}
+section{max-width:1200px;margin:0 auto;padding:28px 20px;border-top:1px solid var(--line)}
+.lead{color:var(--mut);max-width:820px}.grid{display:grid;gap:14px}.m4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.big{font-size:30px;font-weight:700}.sub{color:var(--mut);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{color:var(--mut);font-weight:600;position:sticky;top:0;background:var(--panel)}td.n,th.n{text-align:right;white-space:nowrap}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;border:1px solid var(--line)}
+.t-page{color:var(--grn);border-color:#238636}.t-search{color:var(--org);border-color:#9e6a03}.t-est{color:var(--mut)}
+button,select{background:var(--panel);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:inherit;cursor:pointer}
+button.on{border-color:var(--acc);color:var(--acc)}
+.map{display:grid;grid-template-columns:minmax(280px,420px) 1fr;gap:20px;align-items:start}@media(max-width:800px){.map{grid-template-columns:1fr}}
+.mapimg{position:relative;background:#fafbfd;border-radius:12px;overflow:hidden;line-height:0}.mapimg img{width:100%}
+.pin{position:absolute;transform:translate(-50%,-50%);width:24px;height:24px;border-radius:50%;color:#fff;font:700 12px/22px system-ui;text-align:center;border:2px solid #fff;box-shadow:0 0 0 1px #0006;cursor:pointer}
+.pin.hl{outline:3px solid #000;z-index:5;transform:translate(-50%,-50%) scale(1.35)}
+.list{display:grid;gap:8px}.item{display:grid;grid-template-columns:30px 1fr auto;gap:10px;background:var(--panel);border:1px solid var(--line);border-left-width:5px;border-radius:10px;padding:8px 12px;cursor:pointer}
+.item.hl{background:#1f2937;border-color:var(--acc)}.item b{display:block}.item span{color:var(--mut);font-size:13px}.num{font-weight:700;color:#fff;border-radius:50%;width:24px;height:24px;text-align:center;font-size:12px;line-height:24px}
+#viewer{height:min(72vh,640px);background:radial-gradient(#1c2430,#0b0e13);border:1px solid var(--line);border-radius:12px;position:relative}
+#tip{position:absolute;left:12px;bottom:12px;background:#000c;border:1px solid var(--line);border-radius:8px;padding:8px 12px;max-width:min(420px,80%);font-size:13px;pointer-events:none}
+.legend span{display:inline-flex;align-items:center;gap:6px;margin-right:14px;font-size:13px;color:var(--mut)}.legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.mermaid{background:#fff;border-radius:12px;padding:12px;overflow-x:auto;color:#000}
+.warn{border-left:4px solid var(--org);background:#2a1f12;padding:10px 14px;border-radius:8px;margin:12px 0}
+code{background:#1f2630;padding:1px 6px;border-radius:5px}footer{max-width:1200px;margin:0 auto;padding:30px 20px 60px;color:var(--mut);font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Budget-22 humanoid</h1>
+  <p class="lead">A dirt-cheap but capable 22-DOF biped: about 0.5 m tall, about 2.2 kg, Feetech ST3215 12&nbsp;V serial-bus servos, Raspberry Pi 5 brain, ESP32-S3 real-time core. Everything here is an open design: component map, 3D viewer, electrical schematic, BOM, and CAD for 3D printing and sim-to-real.</p>
+  <div class="grid m4" id="metrics" style="margin-top:18px"></div>
+  <div class="warn"><b>Status:</b> design study built from published precedents (K2, Open Duck Mini v2, Zeroth-01). Nobody has built this exact 22-DOF robot yet: mass, torque margins and walking speed are engineering estimates. The 3D viewer below is a <b>phase 1 envelope view</b> (dimensionally approximate boxes at approximate positions). Real CAD, URDF/MJCF and a print guide follow in <code>/cad</code> and <code>/sim</code>; see the CAD status section.</div>
+</header>
+<nav><div><a href="#map">Component map</a><a href="#viewer-s">3D viewer</a><a href="#dof">DOF + servo IDs</a><a href="#schematic">Schematic</a><a href="#bom">BOM</a><a href="#refs">Reference designs</a><a href="#cad">CAD status</a><a href="#sources">Sources</a></div></nav>
+
+<section id="map"><h2>Component map</h2>
+<p class="lead">Numbered pins sit where each part goes on the robot (front view; limb parts are mirrored on both sides). Hover or tap a row to highlight its pins. Prices are the recommended-tier BOM.</p>
+<div class="map"><div class="mapimg" id="mapimg"><img id="robotimg" alt="Illustration of the small 3D-printed servo humanoid"></div><div class="list" id="complist"></div></div>
+<p class="sub">The illustration is an AI-generated concept image used only as a backdrop for pin placement; it is not the CAD model.</p></section>
+
+<section id="viewer-s"><h2>Interactive 3D viewer <span class="tag">phase 1: envelopes</span></h2>
+<p class="lead">Drag to orbit, scroll to zoom, hover a part for its name, spec and price. Servo boxes use the real ST3215 envelope (45.2 &times; 24.7 &times; 35 mm). Other parts are datasheet-size envelopes and are not vendor CAD. The real-CAD assembly replaces this view in phase 2.</p>
+<div style="margin:8px 0" class="legend"><button class="on" data-g="servo">Servos</button> <button class="on" data-g="compute">Compute</button> <button class="on" data-g="power">Power</button> <button class="on" data-g="sensor">Sensors/audio</button> <button class="on" data-g="frame">Frame outline</button></div>
+<div id="viewer"><div id="tip">Hover a part</div></div></section>
+
+<section id="dof"><h2>Degrees of freedom and servo IDs</h2>
+<p class="lead">22 servos on two half-duplex 1&nbsp;Mbps TTL buses. Bus A = legs (IDs 1&ndash;12), bus B = arms, grippers, neck (IDs 13&ndash;22). Joint names in the simulation files will match these IDs.</p>
+<div class="tw"><table id="dof-table"></table></div></section>
+
+<section id="schematic"><h2>Electrical block schematic</h2>
+<div class="mermaid">
+flowchart LR
+  BAT["3S LiPo 2200 mAh<br/>11.1 V nom / 12.6 V full"] --> FUSE["30 A fuse + XT60"]
+  FUSE --> RLY["Power relay"]
+  ESTOP(["E-stop: NC latching mushroom"]) -.->|coil loop| RLY
+  ESP -.->|watchdog GPIO| RLY
+  RLY ==>|"VBAT 9-12.6 V"| ADA["Bus adapter A (legs)"]
+  RLY ==>|"VBAT 9-12.6 V"| ADB["Bus adapter B (arms/neck)"]
+  RLY ==>|VBAT| BUCK["Buck 5 V / 5 A"]
+  BUCK -->|5 V| PI["Raspberry Pi 5"]
+  BUCK -->|5 V| ESP["XIAO ESP32-S3"]
+  PI <-->|"USB-CDC or UART"| ESP
+  ESP -->|"UART 3.3 V, 1 Mbps"| ADA
+  ESP -->|"UART 3.3 V, 1 Mbps"| ADB
+  ADA -->|"TTL half-duplex"| LEGS["12x ST3215 (IDs 1-12)"]
+  ADB -->|"TTL half-duplex"| UPPER["10x ST3215 (IDs 13-22)"]
+  IMU["BNO085 IMU"] -->|"I2C 400 kHz, 3.3 V"| ESP
+  CAM["Camera Module 3"] -->|CSI-2| PI
+  MIC["I2S MEMS mic"] -->|I2S| PI
+  PI -->|I2S| AMP["MAX98357A + speaker"]
+  PI <-->|Wi-Fi| OPS(["Laptop / phone / cloud LLM"])
+</div>
+<div class="warn">Waveshare does not publish a connector current rating. Split the servo V+ feed through a terminal block and 16 AWG-class wire. ST3215 stall current is 2.7&nbsp;A per servo, so stalled legs can pull tens of amps.</div></section>
+
+<section id="bom"><h2>Bill of materials</h2>
+<p class="lead">Prices read from the linked pages in November 2026. <span class="tag t-page">Listed on page</span> price visible on the page. <span class="tag t-search">Search listing</span> price seen in a search result, page did not render it. <span class="tag t-est">Estimate</span> no price found; typical or project-BOM figure. Excludes printer, tools, shipping, tax.</p>
+<div style="margin:10px 0"><span id="cfgbtns"></span></div>
+<div class="grid m4" id="bomtotals"></div>
+<div class="tw" style="margin-top:12px"><table id="bom-table"></table></div></section>
+
+<section id="refs"><h2>Reference designs</h2><div class="tw"><table>
+<tr><th>Project</th><th>Size</th><th>DOF</th><th>Actuators</th><th>Published cost</th></tr>
+<tr><td><a href="https://lite.berkeley-humanoid.org/">Berkeley Humanoid Lite</a></td><td>0.8 m</td><td>22</td><td>3D-printed cycloidal BLDC</td><td>$4,312 (paper, 2025); $4,794 at Sept 2026 prices</td></tr>
+<tr><td><a href="https://toddlerbot.github.io/">ToddlerBot</a></td><td>0.56 m, 3.4 kg</td><td>30</td><td>Dynamixel + Jetson Orin NX</td><td>$5,727.94 (2XC essentials)</td></tr>
+<tr><td><a href="https://github.com/zeroth-robotics/zeroth-bot">Zeroth-01</a></td><td>40-50 cm, ~2.8 kg</td><td>16-20</td><td>Feetech STS3250 (STS3215 too slow for legs)</td><td>BOM from ~$350</td></tr>
+<tr><td><a href="https://github.com/apirrone/Open_Duck_Mini">Open Duck Mini v2</a></td><td>42 cm</td><td>14</td><td>14&times; STS3215 (7.4 V)</td><td>&euro;398.10 core BOM</td></tr>
+<tr><td><a href="https://kapalikkhanal.github.io/K2/">K2</a></td><td>~0.45 m</td><td>12</td><td>12&times; STS3215</td><td>~$224 (builder figure)</td></tr>
+</table></div>
+<div class="warn"><b>The Zeroth lesson:</b> K-Scale found STS3215 too slow for the legs of a ~2.8 kg robot and moved to STS3250. Keep mass near 2.2 kg and treat STS3250 on hip pitch and knees as the planned upgrade (+$180.36). STS3250 is rated 6&ndash;12 V, so a full 3S pack (12.6 V) is slightly over: limit charge to 4.1 V/cell or add a 12 V regulator.</div></section>
+
+<section id="cad"><h2>CAD, print and sim status</h2>
+<div class="tw"><table>
+<tr><th>Item</th><th>Status</th><th>Source / license</th></tr>
+<tr><td>Feetech STS3215 servo</td><td>Real STEP found</td><td><a href="https://github.com/TheRobotStudio/SO-ARM100/blob/main/STEP/SO100/STS3215_03a.step">SO-ARM100 <code>STS3215_03a.step</code></a>, Apache-2.0</td></tr>
+<tr><td>Raspberry Pi 5</td><td>Real STEP found</td><td><a href="https://pip.raspberrypi.com/categories/892-raspberry-pi-5">Raspberry Pi product portal</a>, MIT (per bundled LICENSE.txt)</td></tr>
+<tr><td>Pi Camera Module 3</td><td>Real STEP found</td><td><a href="https://datasheets.raspberrypi.com/camera/camera-module-3-step.zip">datasheets.raspberrypi.com</a></td></tr>
+<tr><td>Adafruit BNO085, MAX98357A</td><td>Real STEP found</td><td><a href="https://github.com/adafruit/Adafruit_CAD_Parts">Adafruit_CAD_Parts</a>, MIT</td></tr>
+<tr><td>Seeed XIAO ESP32-S3</td><td>Real STEP found</td><td><a href="https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/">Seeed wiki 3D model</a></td></tr>
+<tr><td>Pololu D24V50F5 buck</td><td>Real STEP found</td><td><a href="https://www.pololu.com/product/2851/resources">Pololu resources</a></td></tr>
+<tr><td>LiPo, Waveshare adapter, mic, speaker, e-stop</td><td>Envelope only</td><td>Sizes from listings/datasheets where published; battery size is assumed. Will be marked as envelopes.</td></tr>
+<tr><td>Printed frame, brackets, links</td><td>Phase 2: parametric CadQuery, one STL per part, FDM-checked</td><td>Generated in this repo</td></tr>
+<tr><td>URDF + MuJoCo MJCF (mass, inertia, STS3215 limits)</td><td>Phase 2</td><td>Generated in this repo</td></tr>
+</table></div></section>
+
+<section id="sources"><h2>Sources</h2><p class="sub">Servo: <a href="https://www.dfrobot.com/product-2962.html">DFRobot ST3215</a> &middot; <a href="https://shop.babsco.com/feetech-sts3250-50kg-heavy-duty-smart-servo">BABSCO STS3250</a> &middot; Pi 5 pricing: <a href="https://www.raspberrypi.com/news/price-increases-for-2gb-raspberry-pi-4-and-raspberry-pi-5/">Raspberry Pi news</a> &middot; sim: <a href="https://github.com/mujocolab/mjlab">mjlab</a>, <a href="https://github.com/google-deepmind/mujoco_playground">MuJoCo Playground</a>, <a href="https://github.com/isaac-sim/IsaacLab">Isaac Lab</a> &middot; <a href="https://github.com/huggingface/lerobot">LeRobot</a></p></section>
+<footer>Budget-22 &middot; design study, no warranty. Hobby use; verify fit, torque and power before building. Component CAD belongs to its vendors under the licenses listed above.</footer>
+
+<script src="assets/robot_img.js"></script>
+<script src="assets/data.js"></script>
+<script>
+document.getElementById('robotimg').src=window.ROBOT_IMG;
+const money=n=>'$'+n.toFixed(2);
+const CATC={compute:'#1f6fe0',power:'#e8710a',sense:'#1a9a55',act:'#7b3fe4',frame:'#5b6773',up:'#d62728'};
+// ---- metrics
+const total=c=>BOM.reduce((s,r)=>s+r.unit*r.q[c],0);
+const est=c=>Math.round(BOM.filter(r=>r.basis==='Estimate').reduce((s,r)=>s+r.unit*r.q[c],0)/total(c)*100);
+document.getElementById('metrics').innerHTML=[['22','DOF (12 legs, 6 arms, 2 grippers, 2 neck)'],[money(total('walker')),'Walker tier, legs only'],[money(total('rec')),'Recommended tier, '+est('rec')+'% estimated'],[money(total('upg')),'With STS3250 hips/knees']].map(a=>`<div class="card"><div class="big">${a[0]}</div><div class="sub">${a[1]}</div></div>`).join('');
+// ---- component map
+const mi=document.getElementById('mapimg'),cl=document.getElementById('complist');
+COMPS.forEach((c,i)=>{
+  const col=CATC[c.cat];
+  cl.insertAdjacentHTML('beforeend',`<div class="item" data-k="${i}" style="border-left-color:${col}"><div class="num" style="background:${col}">${i+1}</div><div><b>${c.name}</b><span>${c.spec}</span></div><div style="text-align:right"><b>${c.price}</b></div></div>`);
+  c.pos.forEach(p=>mi.insertAdjacentHTML('beforeend',`<div class="pin" data-k="${i}" style="left:${p[0]/768*100}%;top:${p[1]/1024*100}%;background:${col}">${i+1}</div>`));
+});
+function hl(k,on){document.querySelectorAll(`[data-k="${k}"]`).forEach(e=>e.classList.toggle('hl',on))}
+document.querySelectorAll('.item,.pin').forEach(e=>{e.addEventListener('mouseenter',()=>hl(e.dataset.k,true));e.addEventListener('mouseleave',()=>hl(e.dataset.k,false));e.addEventListener('click',()=>{document.querySelectorAll('.hl').forEach(x=>x.classList.remove('hl'));hl(e.dataset.k,true)})});
+// ---- DOF table
+document.getElementById('dof-table').innerHTML='<tr><th>Group</th><th>Joint</th><th>Axis</th><th class="n">Right ID</th><th class="n">Left ID</th><th>Servo</th></tr>'+DOF.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="n">${r[3]}</td><td class="n">${r[4]}</td><td>${r[5]}</td></tr>`).join('');
+// ---- BOM
+let cfg='rec';const CL={walker:'Walker: 12-DOF legs only',rec:'Recommended: 22-DOF + Pi 5',upg:'Recommended + STS3250 hips/knees'};
+const bt=document.getElementById('cfgbtns');
+Object.keys(CL).forEach(k=>{const b=document.createElement('button');b.textContent=CL[k];b.dataset.c=k;b.onclick=()=>{cfg=k;renderBom()};bt.appendChild(b)});
+function renderBom(){
+  bt.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.c===cfg));
+  const rows=BOM.filter(r=>r.q[cfg]>0);
+  const cats={};BOM.forEach(r=>cats[r.cat]=(cats[r.cat]||0)+r.unit*r.q[cfg]);
+  document.getElementById('bomtotals').innerHTML=`<div class="card"><div class="big">${money(total(cfg))}</div><div class="sub">Total, ${est(cfg)}% estimated</div></div>`+Object.entries(cats).filter(e=>e[1]>0).map(e=>`<div class="card"><div class="big" style="font-size:22px">${money(e[1])}</div><div class="sub">${e[0]}</div></div>`).join('');
+  const tg={'Listed on page':'t-page','Search listing':'t-search','Estimate':'t-est'};
+  document.getElementById('bom-table').innerHTML='<tr><th>Part</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Price basis</th><th>Source</th></tr>'+rows.map(r=>`<tr><td>${r.part}</td><td class="n">${r.q[cfg]}</td><td class="n">${money(r.unit)}</td><td class="n">${money(r.unit*r.q[cfg])}</td><td><span class="tag ${tg[r.basis]}">${r.basis}</span></td><td>${r.href?`<a href="${r.href}" target="_blank" rel="noreferrer">${r.src}</a>`:'-'}</td></tr>`).join('')+`<tr><th colspan="3">Total (excludes printer, tools, shipping, tax)</th><th class="n">${money(total(cfg))}</th><th colspan="2"></th></tr>`;
+}
+renderBom();
+</script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+mermaid.initialize({startOnLoad:true,theme:'neutral'});
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<script type="module" src="assets/viewer.js"></script>
+</body>
+</html>
