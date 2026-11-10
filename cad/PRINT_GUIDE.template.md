@@ -43,7 +43,7 @@ The horn hole pattern, case-screw positions and cable-slot position were **measu
 - **Fasteners are M2 and M3 only.**
   - Servo sleeves: 4 x M2 x 8 per servo (76 for 19 servos), self-tapping into the servo case. Horn plates: 4 x M3 x 8 per servo (76), plate holes counterbored from outside. Confirm both against the coupons and your servo.
   - Torso front cover: 4 x M2 x 6 into 4 x M2 heat-set inserts (pockets 3.2 mm, 6.5 mm deep) in the front bosses. Battery door: 4 x M2 x 6 into 4 more inserts. That is 8 inserts and 8 screws.
-  - Head lid: 2 x M2 x 8 self-tapping into 1.8 mm pilot holes in the head's back wall.
+  - Head lid: 4 x M2 x 8 self-tapping into 1.8 mm pilot holes (2 in the head's back wall, 2 in its side walls).
   - Pi 5: 4 x M2 x 8 self-tapping into 1.7 mm pilot holes in the 4 torso standoffs. The Pi's own holes are M2.5 (2.75 mm), so M2 screws fit loosely; they hold, they do not locate. Check and shim if the board rocks.
   - Waveshare bus adapters A and B: 4 x M2 x 6 each into 8 M2 self-tapping bosses on the inside of the front cover (37 x 28 mm hole pattern; the board holes are 2.5 mm, so the screws locate loosely).
   - No bearings are used. Opposite-horn bearing supports are not designed (see `cad/README.md`, known gap 8).

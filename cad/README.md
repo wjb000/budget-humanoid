@@ -53,11 +53,15 @@ python sim/check_mujoco.py            # load + stand check
 
 Tested with CadQuery 2.8, Python 3.11 on Linux.
 
+## v3 look (finished-droid pass)
+
+Same 19 servos, same joint axes, same 23 parts in 14 unique designs. Changes: R6.5 rounded torso with R5 shoulder-top edge, a pelvis skirt that carries the torso walls down to the hip pods, three scribed panel lines (0.8 mm deep), R5 pod corners, strips that end in the hub discs, 2.4 mm U-channel flanges on thigh and shin, a one-piece rounded head with a raised camera bezel, ear discs and a 5 mm lid, chamfered covers. Colours in the viewer: off-white shells, graphite joint links and feet, orange covers and head lid. Not printed or fit-tested.
+
 ## What was checked (all in software)
 
 - All 23 parts build as one valid solid each and every STL is watertight (ASCII, 3-decimal coordinates).
-- Every part fits a 220 x 220 mm bed in its print orientation (largest: torso 80 x 181 mm footprint, 218.5 mm tall, so it needs about 220 mm of Z height). Overhang area is at most 11.7% of surface per part (forearm), so slice-preview the forearm and torso.
-- Wall thickness (1st percentile of sampled points): 1.2 to 3.0 mm depending on the part, see `print_report.json`. Designed walls are 2.0 to 2.4 mm. The new window cuts and fillets leave 1.2 to 1.4 mm ligaments on some limb parts (upper arm, head lid, hip links), which is 3 perimeters at a 0.4 mm nozzle. Slice-preview them.
+- Every part fits a 220 x 220 mm bed in its print orientation (largest: torso 80 x 181 mm footprint, 218.5 mm tall, so it needs about 220 mm of Z height). Overhang area is at most 10.4% of surface per part (torso), then 9.5% (forearm), so slice-preview the torso (floor over the pelvis skirt) and the forearm.
+- Wall thickness (1st percentile of sampled points): 1.6 to 3.0 mm depending on the part, see `print_report.json`. Designed walls are 2.0 to 2.4 mm. The thinnest isolated spots (`min` in `print_report.json`) are 0.9 mm on the head, 1.0 mm on the head lid and 0.5 mm on a battery-door boss tip; slice-preview those.
 - Zero pose has no collisions (FCL, servo + printed parts + electronics). Each joint's safe range is the largest range with no collision with every other joint at zero. **Combined multi-joint motion is not swept.**
 - Electronics overlaps: touching contacts only (0.04 mm or less) between bus adapters, torso, BNO085 and the front cover. The covers are included in the check.
 - MuJoCo load and stand check passes (see `../sim/README.md`).
@@ -68,7 +72,7 @@ Tested with CadQuery 2.8, Python 3.11 on Linux.
 2. **STS3250 on hip pitch and knee (4 servos).** Chosen from first-order torque estimates (single-leg stance about 0.95 N m at the knee in the ready pose, stand-with-push peaks 1.0 to 1.45 N m at hip pitch and knee in sim) and the K-Scale Zeroth-01 experience, not from a walking test on hardware. The STS3250 has the same outline, so the pods are unchanged, but its mounting holes were not checked. Hip roll peaks near 1.1 N m in the push test and is the next candidate if it overheats.
 3. **Masses are estimates** (PLA 1.24 g/cc x 0.6 fill, servo 55 g + 4 g hardware, electronics estimated). Weigh the real parts.
 4. **Sim actuator gains** (kp 20, kv 0.5, damping 0.05, armature 0.02, frictionloss 0.03) are starting values, not identified from hardware.
-5. **Joint limits** are conservative and single-joint only. Hip yaw and roll are narrow by design (legs 110 mm apart); arms cannot adduct past the torso.
+5. **Joint limits** are conservative and single-joint only. Hip yaw and roll are narrow by design (legs 110 mm apart; v3 U-channel thigh shells cut the inward hip-yaw range from 0.28 to 0.20 rad); arms cannot adduct past the torso.
 6. **Envelopes** (camera, XIAO, buck, battery, bus adapters, mic, e-stop) are sizes only. Replace them with real CAD once you have licensed models.
 7. **Cable routing is only notches and tie slots**: servo-tail notches, 3.2 x 1.6 mm cable-tie slots through the thigh, shin and torso side walls. There are no enclosed cable channels or strain-relief clips yet.
 8. **No bearings opposite the horn.** The STS3215 STEP has only a ~2 mm, Ø6 rear stub with a Ø2.4 hole, so a bearing there is not physically supported. It needs a fork bracket and a check on a physical servo. Not designed.
