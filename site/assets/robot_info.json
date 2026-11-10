@@ -164,133 +164,133 @@
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 1: r_hip_yaw",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_hip_yaw": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 7: l_hip_yaw",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_shoulder_pitch": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 13: r_shoulder_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_shoulder_pitch": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 16: l_shoulder_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:neck_yaw": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 21: neck_yaw",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_ankle_roll": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 6: r_ankle_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_ankle_pitch": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 5: r_ankle_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_knee": {
-"kind": "real",
+"kind": "modeled",
 "group": "servo",
 "name": "Servo ID 4: r_knee",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
+"spec": "Feetech STS3250, 50 kg.cm, 74.5 g, aluminium case. Same 45.2 x 24.7 x 35 mm outline as the STS3215, so the STS3215 STEP is used as its shape; the STS3250 mounting holes were not checked.",
+"price": "$64.99"
 },
 "servo:r_hip_pitch": {
-"kind": "real",
+"kind": "modeled",
 "group": "servo",
 "name": "Servo ID 3: r_hip_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
+"spec": "Feetech STS3250, 50 kg.cm, 74.5 g, aluminium case. Same 45.2 x 24.7 x 35 mm outline as the STS3215, so the STS3215 STEP is used as its shape; the STS3250 mounting holes were not checked.",
+"price": "$64.99"
 },
 "servo:r_hip_roll": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 2: r_hip_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_elbow": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 14: r_elbow",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:r_gripper": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 15: r_gripper",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_ankle_roll": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 12: l_ankle_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_ankle_pitch": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 11: l_ankle_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_knee": {
-"kind": "real",
+"kind": "modeled",
 "group": "servo",
 "name": "Servo ID 10: l_knee",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
+"spec": "Feetech STS3250, 50 kg.cm, 74.5 g, aluminium case. Same 45.2 x 24.7 x 35 mm outline as the STS3215, so the STS3215 STEP is used as its shape; the STS3250 mounting holes were not checked.",
+"price": "$64.99"
 },
 "servo:l_hip_pitch": {
-"kind": "real",
+"kind": "modeled",
 "group": "servo",
 "name": "Servo ID 9: l_hip_pitch",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
-"price": "$19.90"
+"spec": "Feetech STS3250, 50 kg.cm, 74.5 g, aluminium case. Same 45.2 x 24.7 x 35 mm outline as the STS3215, so the STS3215 STEP is used as its shape; the STS3250 mounting holes were not checked.",
+"price": "$64.99"
 },
 "servo:l_hip_roll": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 8: l_hip_roll",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_elbow": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 17: l_elbow",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "servo:l_gripper": {
 "kind": "real",
 "group": "servo",
 "name": "Servo ID 18: l_gripper",
-"spec": "Feetech STS3215. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
+"spec": "Feetech STS3215, 30 kg.cm. Real vendor STEP (SO-ARM100, Apache-2.0), decimated visual mesh.",
 "price": "$19.90"
 },
 "env:Raspberry Pi 5": {
