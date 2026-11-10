@@ -167,6 +167,27 @@
 "spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad.",
 "price": "filament"
 },
+"part:torso_front_cover": {
+"kind": "generated",
+"group": "cover",
+"name": "Printed part: torso_front_cover",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"price": "filament"
+},
+"part:battery_door": {
+"kind": "generated",
+"group": "cover",
+"name": "Printed part: battery_door",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"price": "filament"
+},
+"part:head_lid": {
+"kind": "generated",
+"group": "cover",
+"name": "Printed part: head_lid",
+"spec": "Parametric CadQuery part (generated, FDM-printable). STEP/STL in /cad. Snap/screw-on cover (M2 heat-set inserts).",
+"price": "filament"
+},
 "servo:r_hip_yaw": {
 "kind": "real",
 "group": "servo",
@@ -327,7 +348,8 @@
 "name": "Raspberry Pi 5",
 "spec": "Raspberry Pi 5 (88.5 x 57.6 x 19 mm incl. connectors). Vendor STEP, MIT. Decimated visual mesh.",
 "price": "$77.50",
-"src": "Raspberry Pi Ltd product portal STEP (MIT)"
+"src": "Raspberry Pi Ltd product portal STEP (MIT)",
+"show": false
 },
 "env:3S LiPo 2200 mAh (assumed size)": {
 "kind": "envelope",
@@ -335,7 +357,8 @@
 "name": "3S LiPo 2200 mAh (assumed size)",
 "spec": "Envelope 105 x 35 x 25 mm: size NOT verified, check your pack",
 "price": "$19.99",
-"src": "listing weight/size varies"
+"src": "listing weight/size varies",
+"show": false
 },
 "env:Pololu D24V50F5 buck": {
 "kind": "envelope",
@@ -343,7 +366,8 @@
 "name": "Pololu D24V50F5 buck",
 "spec": "Envelope 17.8 x 20.3 x 8.8 mm (from vendor STEP bbox; STEP license unknown, not redistributed)",
 "price": "$32.95",
-"src": "Pololu"
+"src": "Pololu",
+"show": false
 },
 "env:Waveshare bus adapter A (legs)": {
 "kind": "envelope",
@@ -351,7 +375,8 @@
 "name": "Waveshare bus adapter A (legs)",
 "spec": "Envelope 42 x 33 x 8 mm assumed",
 "price": "$4.99",
-"src": "assumed"
+"src": "assumed",
+"show": false
 },
 "env:Waveshare bus adapter B (arms/neck)": {
 "kind": "envelope",
@@ -359,7 +384,8 @@
 "name": "Waveshare bus adapter B (arms/neck)",
 "spec": "Envelope 42 x 33 x 8 mm assumed",
 "price": "$4.99",
-"src": "assumed"
+"src": "assumed",
+"show": false
 },
 "env:Seeed XIAO ESP32-S3": {
 "kind": "envelope",
@@ -367,7 +393,8 @@
 "name": "Seeed XIAO ESP32-S3",
 "spec": "Envelope 22.5 x 17.8 x 4.5 mm (vendor STEP bbox; STEP license unknown, not redistributed)",
 "price": "$7.90",
-"src": "Seeed"
+"src": "Seeed",
+"show": false
 },
 "env:Relay + fuse holder": {
 "kind": "envelope",
@@ -375,7 +402,8 @@
 "name": "Relay + fuse holder",
 "spec": "Envelope assumed 30 x 20 x 20 mm",
 "price": "~$12 est.",
-"src": "assumed"
+"src": "assumed",
+"show": false
 },
 "env:Adafruit BNO085 IMU": {
 "kind": "real",
@@ -383,7 +411,8 @@
 "name": "Adafruit BNO085 IMU",
 "spec": "Adafruit 4754 STEMMA QT, 25.4 x 22.9 x 4.5 mm. Vendor STEP, MIT.",
 "price": "$29.50",
-"src": "Adafruit_CAD_Parts (MIT)"
+"src": "Adafruit_CAD_Parts (MIT)",
+"show": false
 },
 "env:40 mm speaker": {
 "kind": "real",
@@ -391,7 +420,8 @@
 "name": "40 mm speaker",
 "spec": "Adafruit 3968, 40 mm dia x 25 mm. Vendor STEP, MIT.",
 "price": "$4.95",
-"src": "Adafruit_CAD_Parts (MIT)"
+"src": "Adafruit_CAD_Parts (MIT)",
+"show": false
 },
 "env:MAX98357A I2S amp": {
 "kind": "real",
@@ -399,7 +429,8 @@
 "name": "MAX98357A I2S amp",
 "spec": "Adafruit 3006, 17.8 x 19.1 x 2.6 mm. Vendor STEP, MIT.",
 "price": "$5.95",
-"src": "Adafruit_CAD_Parts (MIT)"
+"src": "Adafruit_CAD_Parts (MIT)",
+"show": false
 },
 "env:E-stop (NC latching mushroom)": {
 "kind": "envelope",
@@ -407,7 +438,17 @@
 "name": "E-stop (NC latching mushroom)",
 "spec": "Envelope: 22.5 mm panel hole, ~22 mm tall body above plate",
 "price": "$7.50",
-"src": "assumed"
+"src": "assumed",
+"show": true
+},
+"env:XT60 panel connector (charge port)": {
+"kind": "envelope",
+"group": "power",
+"name": "XT60 panel connector (charge port)",
+"spec": "Envelope; 15.8 x 8.2 mm cutout in battery_door. Cost-adding vs a loose pigtail; flagged in BOM.",
+"price": "$1.20",
+"src": "assumed",
+"show": true
 },
 "env:Pi Camera Module 3": {
 "kind": "envelope",
@@ -415,7 +456,8 @@
 "name": "Pi Camera Module 3",
 "spec": "Envelope 23.9 x 25 x 10.3 mm from vendor STEP bbox (STEP license unclear, not redistributed)",
 "price": "$25",
-"src": "Raspberry Pi"
+"src": "Raspberry Pi",
+"show": false
 },
 "env:I2S MEMS mic": {
 "kind": "envelope",
@@ -423,6 +465,7 @@
 "name": "I2S MEMS mic",
 "spec": "Envelope assumed",
 "price": "$6.95",
-"src": "assumed"
+"src": "assumed",
+"show": false
 }
 }
