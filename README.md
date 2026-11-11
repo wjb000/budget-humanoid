@@ -7,7 +7,9 @@ Open design for a ~0.61 m, ~2.2 kg, 19-DOF 3D-printed biped. Current baseline us
 > **Status:** Software-verified design study. Nothing printed or run on hardware yet. See `cad/README.md` for known gaps.
 
 ## Long-term dirt-cheap direction
-Inspired by full AI-generated humanoid CAD+sim designs (e.g. Galatea-style), but optimized for extreme cost: replace commercial servos with **our own 3D-printed, machine-wound actuators** and a matching 3D-printed coil winder. See `CUSTOM_ACTUATORS.md` for the plan, references (Robossembler winder, Berkeley Humanoid Lite cycloidal modules, open QDDs), and next steps. Target is a fully self-made actuator path that drops the BOM well below the current ~$900 commercial-servo version while keeping the open, parametric, sim-verified workflow.
+Inspired by full AI-generated humanoid CAD+sim designs (e.g. Galatea-style), but optimized for extreme cost: replace commercial servos with **our own 3D-printed, machine-wound actuators** and a matching 3D-printed coil winder. See `CUSTOM_ACTUATORS.md` for the plan, references (Robossembler winder, Berkeley Humanoid Lite cycloidal modules, open QDDs), and next steps.
+
+**Useful-work scale:** Target a larger robot (1.0–1.3 m, 12–22 kg, 1–3 kg hand payload) that can actually do useful tasks. See `SCALE_AND_PAYLOAD.md` for joint torque priorities, structure upgrades, power/thermal notes, and next steps. The existing parametric + sim stack supports resizing once hardware measurements exist.
 
 ## Where things are
 - `site/`: website with interactive 3D viewer, DOF table, schematic, BOM.
@@ -15,6 +17,7 @@ Inspired by full AI-generated humanoid CAD+sim designs (e.g. Galatea-style), but
 - `sim/`: URDF, MuJoCo, joint map, actuator model, training env, system-ID.
 - `deploy/`: Pi runtime + ESP32 bridge.
 - `CUSTOM_ACTUATORS.md`: plan for custom wound actuators + winder.
+- `SCALE_AND_PAYLOAD.md`: size, payload, and structure targets for useful work.
 - `HARDWARE_VALIDATION.md`: (on other branch) prioritized path to working hardware.
 
 ## Quick start
@@ -25,4 +28,4 @@ pip install mujoco numpy && python sim/check_mujoco.py
 # python cad/fit_coupon.py
 ```
 
-Design study, no warranty. Verify fit, torque, and power before building. Custom actuator path is experimental.
+Design study, no warranty. Verify fit, torque, and power before building. Custom actuator and scale-up paths are experimental.
