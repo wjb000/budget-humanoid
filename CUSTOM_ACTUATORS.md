@@ -2,12 +2,14 @@
 
 Inspired by agentic full-robot designs (e.g. Galatea-style CAD + sim + visual checks) but optimized for **extreme cost**: replace commercial Feetech STS3215/STS3250 servos with our own 3D-printed, machine-wound actuators.
 
+**Scale note:** For a robot big enough to do useful work, see `SCALE_AND_PAYLOAD.md` (1.0–1.3 m, 12–22 kg, 1–3 kg hand payload). Actuator sizing, copper volume, cooling, and structure all scale with that target. Cost per actuator will be higher than the tiny version but still far below commercial high-torque units.
+
 ## Goal
-- Per-actuator cost well under $20–30 (vs ~$20–65 commercial).
-- Fully printable housings + gears where possible.
+- Per-actuator cost as low as practical (target $25–80 depending on joint torque class).
+- Fully printable housings + gears where possible; selective metal only where strength or heat demands it.
 - Coils wound on a simple 3D-printed machine we also design/print.
-- Compatible with the existing Budget-19 kinematics, URDF, and sim-to-real stack.
-- Still dirt-cheap overall robot (~$300–500 target if successful).
+- Compatible with the existing parametric CadQuery + URDF + sim-to-real stack (resized for useful-work scale).
+- Overall robot still dirt-cheap relative to commercial humanoids.
 
 ## Approach options (ranked for dirt-cheap)
 
@@ -16,36 +18,38 @@ Inspired by agentic full-robot designs (e.g. Galatea-style CAD + sim + visual ch
    - Wind enameled copper wire on a 3D-printed or simple laminated stator.
    - Pair with cheap magnets, bearings, and a low-ratio 3D-printed gearbox (planetary or cycloidal).
    - Control with SimpleFOC or similar on cheap MCUs.
+   - Size differently per joint: more copper and better cooling on hip/knee/shoulder.
 
 2. **Commercial small BLDC + 3D-printed cycloidal gearbox**
-   - Reference: Berkeley Humanoid Lite actuators (5010/6512 style, printed cycloidal, ~$100–150 each including motor/ESC/encoder).
+   - Reference: Berkeley Humanoid Lite actuators (5010/6512 style, printed cycloidal).
    - Higher performance and more proven, but less "make our own coils".
-   - Still far cheaper than industrial QDDs.
+   - Useful as a faster path to a working larger robot while the wound versions mature.
 
 3. **Ironless / Halbach printed QDD**
-   - References: Caden Kraft Ironless-QDD, OpenQDD, etc. (~$40–70).
-   - High torque density possible, but magnets dominate cost and winding/assembly is more involved.
+   - References: Caden Kraft Ironless-QDD, OpenQDD, etc.
+   - High torque density possible, but magnets dominate cost.
 
 ## Coil Winder
 A simple 3D-printed winder is essential for the wound-stator path.
 - Open references: Robossembler motor-wire-winder, various Instructables/GitHub NEMA17 + lead-screw designs (Arduino/ESP32 control, ~$50–150 parts).
-- Requirements for our use: handle stator coils or bobbins for ~20–30 mm diameter, tens to hundreds of turns of ~0.3–0.5 mm wire, basic tension and counting.
-- Plan: start by adapting an existing open design, then customize for our stator geometry.
+- Requirements: handle stator coils or bobbins for the sizes needed by the larger joints, consistent tension and turn counting.
+- Plan: start by adapting an existing open design, then customize for our stator geometries.
 
 ## Integration with Budget-19
-- Keep the current parametric CadQuery frame as the baseline.
-- New actuator modules must match the mounting envelope of the STS3215 pods (or update pods if size changes).
-- Update `sim/actuator.py` and domain randomization once we have measured torque/speed curves.
+- Parametric CadQuery frame is the source of truth — resize it per `SCALE_AND_PAYLOAD.md` and regenerate URDF/MJCF.
+- Actuator modules sized per joint class (high-torque vs low-torque).
+- Update `sim/actuator.py` and domain randomization once we have measured torque/speed curves from real hardware.
 - System-ID tools already exist — use them on the custom actuators.
-- Safety and validation path from `HARDWARE_VALIDATION.md` still applies (fit tests, harness, e-stop, etc.).
+- Safety and validation path still applies (fit tests, harness, e-stop, thermal checks under load).
 
 ## Next concrete steps
-1. Prototype one simple wound-stator actuator (or adapt Robossembler/Berkeley style) and measure torque, speed, efficiency, heat.
-2. Design/print a minimal coil winder and wind consistent test coils.
-3. Update CAD pods if the custom actuator dimensions differ.
-4. Re-export URDF/MJCF and retrain policies with the new actuator model.
-5. Document BOM and print settings for both actuator and winder.
+1. Lock specific height + payload from `SCALE_AND_PAYLOAD.md`.
+2. Prototype one high-torque wound-stator (or hybrid) actuator and measure real performance under load.
+3. Design/print a minimal coil winder and wind consistent test coils.
+4. Resize CAD pods and structure, re-export URDF/MJCF.
+5. Retrain policies with the new actuator model and payload randomization.
+6. Document BOM and print settings for actuators, winder, and structure.
 
-This keeps the project open, software-verified, and hardware-first while pushing the cost floor lower than commercial hobby servos. The AI-generated full-robot aesthetic is a visual target; the dirt-cheap custom actuators are the engineering differentiator.
+This keeps the project open, software-verified, and hardware-first while targeting a robot that can do useful work at a dirt-cheap price point.
 
-**Status:** Plan only. No hardware built yet. See existing known gaps in `cad/README.md`.
+**Status:** Plan only. No hardware built yet. See existing known gaps in `cad/README.md` and the scale targets in `SCALE_AND_PAYLOAD.md`.
